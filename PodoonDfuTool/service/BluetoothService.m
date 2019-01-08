@@ -7,8 +7,6 @@
 //
 
 #import "BluetoothService.h"
-#import "DFUHelper.h"
-#include "DFUHelper.h"
 
 #define BT_Service_FOOT [CBUUID UUIDWithString:@"6E400001-B5A3-F393-E0A9-E50E24DCCA9E"]
 #define BT_Service_FOOT_S130 [CBUUID UUIDWithString:@"1801"]
@@ -33,12 +31,6 @@
 @interface BluetoothService()
 
 @property (strong, nonatomic) CBPeripheral *connectingPeripheral;
-@property (strong, nonatomic) CBPeripheral *peripheral;
-@property (strong, nonatomic) CBPeripheral *dfuPeripheral;
-
-
-@property(strong, nonatomic) DFUOperations *dfuOperations;
-@property(strong, nonatomic) DFUHelper *dfuHelper;
 
 @end
 
@@ -64,7 +56,6 @@
 - (void)search {
     LOG_FUNC
     self.peripheral = nil;
-    self.dfuPeripheral = nil;
     self.connectingPeripheral = nil;
     
     if (searchTimer_) {
@@ -78,8 +69,6 @@
 - (void)stop {
     LOG_FUNC
     
-    self.peripheral = nil;
-    self.dfuPeripheral = nil;
     self.connectingPeripheral = nil;
     
     if (searchTimer_) {
@@ -89,6 +78,20 @@
     
     [self.centermanager stopScan];
     
+}
+
+- (void)disconnect {
+    if (self.peripheral) {
+        self.peripheral.delegate = nil;
+        [self.centermanager cancelPeripheralConnection:self.peripheral];
+        self.peripheral = nil;
+    }
+}
+
+- (void)sendData:(NSString *)cmd {
+    if (self.peripheral) {
+        [self writeCommand:cmd];
+    }
 }
 
 //根据tag值搜索设备
@@ -125,40 +128,14 @@
 //发现设备
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI{
     LOG_FUNC
-    
-    if ([peripheral.name isEqualToString:@"DfuTarg"] && RSSI.integerValue > -55 && RSSI.integerValue != 127) {
-        [self.delegate notifyStartDfu];
-        self.dfuPeripheral = peripheral;
-        
-        //调用DFU部分
-        [self.dfuOperations resetSystem];
-        [self performSelector:@selector(startDFU) withObject:nil afterDelay:0.2];
-        isStartOTA_ = NO;
-        isDFU_ = YES;
-    } else if ([peripheral.name rangeOfString:@"ZT"].location != NSNotFound && RSSI.integerValue > -55 && RSSI.integerValue != 127 ) {
+    NSLog(@"RSSI:%@,%ld",peripheral.identifier.UUIDString, RSSI.integerValue);
+    if ([peripheral.name rangeOfString:@"ZT"].location != NSNotFound && RSSI.integerValue > -50 && RSSI.integerValue != 127 ) {
         [self.delegate notifyDiscover];
         self.connectingPeripheral = peripheral;
         [self.centermanager connectPeripheral:peripheral options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES]
                                                                                              forKey:CBConnectPeripheralOptionNotifyOnDisconnectionKey]];
         self.peripheral = peripheral;
     }
-}
-
-- (void)startDFU {
-    LOG_FUNC
-    
-    [self.dfuOperations setCentralManager:self.centermanager];
-    [self.dfuOperations connectDevice:self.dfuPeripheral];
-}
-
-- (void)clean {
-    LOG_FUNC
-    
-    isStartOTA_ = NO;
-    isDFU_ = NO;
-    
-    [self.dfuOperations cleanCentralManager];
-    self.centermanager = nil;
 }
 
 //连接成功
@@ -206,17 +183,37 @@
     for (CBCharacteristic *c in service.characteristics) {
         if ([c.UUID isEqual:BT_Characteristic_PODOON_WRITE]) {
             _writeCharacteristic = c;
-            [self performSelector:@selector(initAtFoundWrite) withObject:nil afterDelay:0.2];
+//            [self performSelector:@selector(initAtFoundWrite) withObject:nil afterDelay:0.2];
+            [self.delegate notifyReady];
         } else {
             [peripheral setNotifyValue:YES forCharacteristic:c];
         }
     }
 }
 
+-(void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)c error:(NSError *)error{
+    if ([c.UUID isEqual:BT_Characteristic_PODOON_NOTIFY] && self.peripheral.identifier == peripheral.identifier) {
+        NSData *tempData = c.value;
+        if (tempData.length == 0 ) {
+            return;
+        }
+        uint8_t *footData = [tempData bytes];
+        NSString *offlineStr = [[NSString stringWithFormat:@"%s",footData] substringWithRange:NSMakeRange(0, tempData.length)];
+        if ([offlineStr rangeOfString:@"RecvACK:FAT"].location != NSNotFound ||
+            [offlineStr rangeOfString:@"Batt"].location != NSNotFound ||
+            [offlineStr rangeOfString:@"FW"].location != NSNotFound ||
+            [offlineStr rangeOfString:@"HW"].location != NSNotFound ||
+            [offlineStr rangeOfString:@"Fw"].location != NSNotFound) {
+            [self.delegate notifyLog:offlineStr];
+        }
+        
+    }
+}
+
 - (void)initAtFoundWrite {
     LOG_FUNC
-    [self.delegate notifyWriteDfu];
-    [self writeCommand:@"dfu"];
+    
+//    [self writeCommand:@"dfu"];
 }
 
 - (void)writeCommand:(NSString *)command {
@@ -226,100 +223,6 @@
 //        [self debug:[NSString stringWithFormat:@"写入命令：%@",command]];
         NSData *data =[command dataUsingEncoding:NSUTF8StringEncoding];
         [self.peripheral writeValue:data forCharacteristic:_writeCharacteristic type:CBCharacteristicWriteWithoutResponse];
-    }
-}
-
-#pragma mark DFUOperations delegate methods
-- (void)onDeviceConnected:(CBPeripheral *)peripheral {
-    NSLog(@"onDeviceConnected %@", peripheral.name);
-    self.dfuHelper.isDfuVersionExist = NO;
-    
-}
-
-- (void)onDeviceConnectedWithVersion:(CBPeripheral *)peripheral {
-    NSLog(@"onDeviceConnectedWithVersion %@", peripheral.name);
-    self.dfuHelper.isDfuVersionExist = YES;
-}
-
-- (void)onDeviceDisconnected:(CBPeripheral *)peripheral {
-    NSLog(@"device disconnected %@", peripheral.name);
-}
-
-- (void)onReadDFUVersion:(int)version {
-    NSLog(@"onReadDFUVersion %d", version);
-    self.dfuHelper.dfuVersion = version;
-    NSLog(@"DFU Version: %d", self.dfuHelper.dfuVersion);
-    if (self.dfuHelper.dfuVersion == 1) {
-        [self.dfuOperations setAppToBootloaderMode];
-    }
-    //这里已经可以OTA了？
-    if (!isStartOTA_) {
-        [self startOTA];
-        isStartOTA_ = YES;
-    }
-}
-
-- (void)onDFUStarted {
-    NSLog(@"onDFUStarted");
-}
-
-- (void)onDFUCancelled {
-    NSLog(@"onDFUCancelled");
-}
-
-- (void)onSoftDeviceUploadStarted {
-    NSLog(@"onSoftDeviceUploadStarted");
-}
-
-- (void)onSoftDeviceUploadCompleted {
-    NSLog(@"onSoftDeviceUploadCompleted");
-}
-
-- (void)onBootloaderUploadStarted {
-    NSLog(@"onBootloaderUploadStarted");
-    
-}
-
-- (void)onBootloaderUploadCompleted {
-    NSLog(@"onBootloaderUploadCompleted");
-}
-
-- (void)onTransferPercentage:(int)percentage {
-//    [self notifyDfuPercentage:percentage];
-    [self.delegate notifyPercent:percentage];
-    NSLog(@"onTransferPercentage %d", percentage);
-}
-
-- (void)onSuccessfulFileTranferred {
-    [self performSelector:@selector(successAction) withObject:nil afterDelay:0.2];
-}
-
-- (void)successAction {
-//    [self notifyDfuSuccess];
-    [self clean];
-    [self.delegate notifySuccessDfu];
-    NSLog(@"OnSuccessfulFileTransferred");
-}
-
-- (void)onError:(NSString *)errorMessage {
-    NSLog(@"OnError %@", errorMessage);
-    [self.delegate notifyFailDfu];
-//    [self notifyDfuFailed:errorMessage];
-}
-
-- (void)startOTA {
-    LOG_FUNC
-    
-    if (self.dfuPeripheral) {
-        NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:FIRMWARE_FOLDER_NAME ofType:@"zip"]];
-        NSData *fileData = [NSData dataWithContentsOfURL:url];
-        self.dfuHelper.selectedFileSize = fileData.length;
-        self.dfuHelper.selectedFileURL = url;
-        self.dfuHelper.isSelectedFileZipped = YES;
-        self.dfuHelper.isManifestExist = NO;
-        [self.dfuHelper unzipFiles:self.dfuHelper.selectedFileURL];
-        
-        [self.dfuHelper checkAndPerformDFU];
     }
 }
 
@@ -343,21 +246,6 @@
     }
     
     return _centermanager;
-}
-
--(DFUOperations *)dfuOperations {
-    if (!_dfuOperations) {
-        _dfuOperations = [[DFUOperations alloc] initWithDelegate:self];
-    }
-    return _dfuOperations;
-}
-
--(DFUHelper *)dfuHelper {
-    if (!_dfuHelper) {
-        _dfuHelper = [[DFUHelper alloc] initWithData:self.dfuOperations];
-        [_dfuHelper setFirmwareType:FIRMWARE_TYPE_APPLICATION];
-    }
-    return _dfuHelper;
 }
 
 @end

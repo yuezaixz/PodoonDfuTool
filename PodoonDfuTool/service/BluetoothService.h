@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "DFUOperations.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,25 +18,27 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)notifyDiscover;
 - (void)notifyDidConnect;
-- (void)notifyWriteDfu;
-- (void)notifyStartDfu;
-- (void)notifyPercent:(NSInteger)percent;
-- (void)notifySuccessDfu;
-- (void)notifyFailDfu;
+- (void)notifyReady;
+- (void)notifyLog:(NSString *)log;
 
 @end
 
-@interface BluetoothService : NSObject <CBCentralManagerDelegate,CBPeripheralDelegate,DFUOperationsDelegate>
+@interface BluetoothService : NSObject <CBCentralManagerDelegate,CBPeripheralDelegate>
 
 // 搜索蓝牙Server对象
 @property (strong, nonatomic) CBCentralManager *centermanager;
 @property (weak, nonatomic) id<RMBluetoothServiceDelegate> delegate;
+@property (strong, nonatomic) CBPeripheral *peripheral;
 
 + (instancetype)sharedInstance;
 
 - (void)search;
 
 - (void)stop;
+
+- (void)disconnect;
+
+- (void)sendData:(NSString *)cmd;
 
 @end
 

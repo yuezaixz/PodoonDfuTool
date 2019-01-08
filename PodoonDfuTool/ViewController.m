@@ -8,15 +8,35 @@
 
 #import "ViewController.h"
 #import "BluetoothService.h"
+#import "SVProgressHUD/SVProgressHUD.h"
 
-@interface ViewController ()<RMBluetoothServiceDelegate>
+@interface LogTableViewCell:UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *topLabel;
-@property (weak, nonatomic) IBOutlet UILabel *mainLabel;
+@property (weak, nonatomic) IBOutlet UILabel *logLabel;
 
 @end
 
-@implementation ViewController
+@implementation LogTableViewCell
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+}
+
+@end
+
+@interface ViewController ()<RMBluetoothServiceDelegate,UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UIButton *startButton;
+@property (weak, nonatomic) IBOutlet UIButton *pauseBtn;
+
+@property (strong, nonatomic) NSMutableArray *logList;
+@property (weak, nonatomic) IBOutlet UITableView *logTableView;
+
+@end
+
+@implementation ViewController {
+    BOOL isStart_;
+    BOOL isPause_;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,47 +48,87 @@
     
 }
 - (IBAction)actionStart:(id)sender {
-    [[BluetoothService sharedInstance] search];
-    self.topLabel.text = @"运行中";
-    self.mainLabel.text = @"搜索中";
+    if (isStart_) {
+        [[BluetoothService sharedInstance] stop];
+        [[BluetoothService sharedInstance] disconnect];
+        [self.startButton setTitle:@"开始" forState:UIControlStateNormal];
+    } else {
+        [[BluetoothService sharedInstance] search];
+        [self.startButton setTitle:@"结束" forState:UIControlStateNormal];
+        
+    }
+    isStart_ = !isStart_;
 }
-- (IBAction)actionStop:(id)sender {
+
+- (IBAction)actionPause:(id)sender {
+    isPause_ = !isPause_;
+    [self.pauseBtn setTitle:(isPause_?@"继续":@"暂停") forState:UIControlStateNormal];
+}
+
+- (IBAction)actionClean:(id)sender {
+    self.logList = nil;
+    [self.logTableView reloadData];
+}
+
+- (IBAction)actionCMD:(UIButton *)btn {
+    [[BluetoothService sharedInstance] sendData:btn.titleLabel.text];
+}
+
+- (void)notifyLog:(NSString *)log{
+    if (![self hadConnected]) {
+        [SVProgressHUD showErrorWithStatus:@"设备未连接" duration:2];
+        return;
+    }
+    if (!isPause_) {
+        [self.logList insertObject:log atIndex:0];
+        [self.logTableView reloadData];
+    }
+}
+
+-(NSMutableArray *)logList {
+    if (!_logList) {
+        _logList = [NSMutableArray array];
+    }
+    return _logList;
+}
+
+- (void)notifyDiscover{
+    [SVProgressHUD showWithStatus:@"连接中"];
     [[BluetoothService sharedInstance] stop];
-    self.topLabel.text = @"已停止";
-    self.mainLabel.text = @"未运行";
 }
 
-- (void)notifyDidConnect {
-    self.mainLabel.text = @"已连接设备";
-}
-
-- (void)notifyDiscover { 
+- (void)notifyDidConnect{
+    [SVProgressHUD showWithStatus:@"准备中"];
     
-    self.mainLabel.text = @"已发现设备";
 }
 
-- (void)notifyFailDfu {
-    [[BluetoothService sharedInstance] stop];
-    self.mainLabel.text = @"OTA失败";
-    self.topLabel.text = @"已停止";
+- (void)notifyReady{
+    [SVProgressHUD showSuccessWithStatus:@"连接成功" duration:2];
 }
 
-- (void)notifyPercent:(NSInteger)percent { 
-    self.mainLabel.text = [NSString stringWithFormat:@"%@:%ld%%",  @"升级中",(long)percent];
+- (BOOL)hadConnected {
+    return [BluetoothService sharedInstance].peripheral != nil;
 }
 
-- (void)notifyStartDfu { 
-    self.mainLabel.text = @"开始OTA";
+#pragma mark - uitableview deleagate
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 30;
 }
 
-- (void)notifySuccessDfu { 
-    self.mainLabel.text = @"OTA成功";
-    self.topLabel.text = @"已停止";
-    [[BluetoothService sharedInstance] stop];
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.logList count];
 }
 
-- (void)notifyWriteDfu {
-    self.mainLabel.text = @"写入DFU成功";
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    LogTableViewCell *cell = [self.logTableView dequeueReusableCellWithIdentifier:@"LogTableViewCell" forIndexPath:indexPath];
+    NSString *log = [self.logList objectAtIndex:indexPath.row];
+    cell.logLabel.text = log;
+    return cell;
 }
 
 @end
