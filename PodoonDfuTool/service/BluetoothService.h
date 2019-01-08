@@ -20,6 +20,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyDidConnect;
 - (void)notifyReady;
 - (void)notifyLog:(NSString *)log;
+- (void)notifyfatLog:(NSString *)log;
+- (void)notifyghvLog:(NSString *)log;
+- (void)notifygvdLog:(NSString *)log;
+- (void)notifygvd2Log:(NSString *)log;
+- (void)notifygvnLog:(NSString *)log;
+- (void)notifygvhLog:(NSString *)log;
+- (void)notifyMiniError;
 
 @end
 

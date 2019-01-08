@@ -183,7 +183,7 @@
     for (CBCharacteristic *c in service.characteristics) {
         if ([c.UUID isEqual:BT_Characteristic_PODOON_WRITE]) {
             _writeCharacteristic = c;
-//            [self performSelector:@selector(initAtFoundWrite) withObject:nil afterDelay:0.2];
+            [self performSelector:@selector(initAtFoundWrite) withObject:nil afterDelay:0.2];
             [self.delegate notifyReady];
         } else {
             [peripheral setNotifyValue:YES forCharacteristic:c];
@@ -199,13 +199,27 @@
         }
         uint8_t *footData = [tempData bytes];
         NSString *offlineStr = [[NSString stringWithFormat:@"%s",footData] substringWithRange:NSMakeRange(0, tempData.length)];
-        if ([offlineStr rangeOfString:@"RecvACK:FAT"].location != NSNotFound ||
-            [offlineStr rangeOfString:@"Batt"].location != NSNotFound ||
-            [offlineStr rangeOfString:@"FW"].location != NSNotFound ||
-            [offlineStr rangeOfString:@"HW"].location != NSNotFound ||
-            [offlineStr rangeOfString:@"Fw"].location != NSNotFound) {
-            [self.delegate notifyLog:offlineStr];
+        if ([offlineStr rangeOfString:@"Batt"].location != NSNotFound) {
+            [self.delegate notifyghvLog:offlineStr];
+            [self writeCommand:@"FAT"];
+        } else if ([offlineStr rangeOfString:@"RecvACK:FAT"].location != NSNotFound) {
+            [self.delegate notifyfatLog:offlineStr];
+            [self writeCommand:@"GVH"];
+        } else if ([offlineStr rangeOfString:@"HW"].location != NSNotFound) {
+            [self.delegate notifygvhLog:offlineStr];
+            [self writeCommand:@"GVD"];
+        } else if ([offlineStr rangeOfString:@"FwT"].location != NSNotFound) {
+            [self.delegate notifygvd2Log:offlineStr];
+            [self writeCommand:@"GVN"];
+        } else if ([offlineStr rangeOfString:@"FwD"].location != NSNotFound) {
+            [self.delegate notifygvdLog:offlineStr];
+        } else if ([offlineStr rangeOfString:@"FW"].location != NSNotFound) {
+            [self.delegate notifygvnLog:offlineStr];
+        } else if ([offlineStr rangeOfString:@"SENSOR WDT"].location != NSNotFound) {
+            [self.delegate notifyMiniError];
         }
+        
+        [self.delegate notifyLog:offlineStr];
         
     }
 }
@@ -213,7 +227,7 @@
 - (void)initAtFoundWrite {
     LOG_FUNC
     
-//    [self writeCommand:@"dfu"];
+    [self writeCommand:@"GHV"];
 }
 
 - (void)writeCommand:(NSString *)command {

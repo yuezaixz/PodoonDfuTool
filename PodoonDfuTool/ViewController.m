@@ -31,6 +31,22 @@
 @property (strong, nonatomic) NSMutableArray *logList;
 @property (weak, nonatomic) IBOutlet UITableView *logTableView;
 
+@property (weak, nonatomic) IBOutlet UILabel *fatLabel;
+@property (weak, nonatomic) IBOutlet UILabel *ghvLabel;
+@property (weak, nonatomic) IBOutlet UILabel *gvdLabel;
+@property (weak, nonatomic) IBOutlet UILabel *gvd2Label;
+@property (weak, nonatomic) IBOutlet UILabel *gvnLabel;
+@property (weak, nonatomic) IBOutlet UILabel *gvhLabel;
+@property (weak, nonatomic) IBOutlet UILabel *miniPcbLabel;
+
+@property (strong, nonatomic) NSString *fatLog;
+@property (strong, nonatomic) NSString *ghvLog;
+@property (strong, nonatomic) NSString *gvdLog;
+@property (strong, nonatomic) NSString *gvd2Log;
+@property (strong, nonatomic) NSString *gvnLog;
+@property (strong, nonatomic) NSString *gvhLog;
+@property (nonatomic) BOOL miniError;
+
 @end
 
 @implementation ViewController {
@@ -47,6 +63,25 @@
     [super viewDidAppear:animated];
     
 }
+
+- (void)reload {
+    [self.logTableView reloadData];
+    self.fatLabel.text = self.fatLog ?: @"FAT";
+    self.ghvLabel.text = self.ghvLog ?: @"GHV";
+    self.gvdLabel.text = self.gvdLog ?: @"GVD";
+    self.gvd2Label.text = self.gvd2Log ?: @"GVD2";
+    self.gvnLabel.text = self.gvnLog ?: @"GVN";
+    self.gvhLabel.text = self.gvhLog ?: @"GVH";
+    self.miniPcbLabel.text = self.miniError?@"小板异常":@"小板正常";
+}
+
+- (void)clean {
+    self.logList = nil;
+    self.fatLog = self.ghvLog = self.gvdLog = self.gvd2Log = self.gvnLog = self.gvhLog = nil;
+    self.miniError = NO;
+    [self reload];
+}
+
 - (IBAction)actionStart:(id)sender {
     if (isStart_) {
         [[BluetoothService sharedInstance] stop];
@@ -55,7 +90,7 @@
     } else {
         [[BluetoothService sharedInstance] search];
         [self.startButton setTitle:@"结束" forState:UIControlStateNormal];
-        
+        [self clean];
     }
     isStart_ = !isStart_;
 }
@@ -67,7 +102,7 @@
 
 - (IBAction)actionClean:(id)sender {
     self.logList = nil;
-    [self.logTableView reloadData];
+    [self clean];
 }
 
 - (IBAction)actionCMD:(UIButton *)btn {
@@ -108,6 +143,36 @@
 
 - (BOOL)hadConnected {
     return [BluetoothService sharedInstance].peripheral != nil;
+}
+
+
+- (void)notifyfatLog:(NSString *)log{
+    self.fatLog = log;
+    [self reload];
+}
+- (void)notifyghvLog:(NSString *)log{
+    self.ghvLog = log;
+    [self reload];
+}
+- (void)notifygvdLog:(NSString *)log{
+    self.gvdLog = log;
+    [self reload];
+}
+- (void)notifygvd2Log:(NSString *)log{
+    self.gvd2Log = log;
+    [self reload];
+}
+- (void)notifygvnLog:(NSString *)log{
+    self.gvnLog = log;
+    [self reload];
+}
+- (void)notifygvhLog:(NSString *)log{
+    self.gvhLog = log;
+    [self reload];
+}
+- (void)notifyMiniError{
+    self.miniError = YES;
+    [self reload];
 }
 
 #pragma mark - uitableview deleagate
