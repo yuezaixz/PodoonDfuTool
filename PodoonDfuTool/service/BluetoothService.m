@@ -155,6 +155,8 @@
     //断开连接后清空状态
     self.peripheral = nil;
     self.connectingPeripheral = nil;
+    
+    [self.delegate notifyDisConnect];
 }
 
 - (void)centralManagerDidUpdateState:(nonnull CBCentralManager *)central {

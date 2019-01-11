@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)notifyDiscover;
 - (void)notifyDidConnect;
+- (void)notifyDisConnect;
 - (void)notifyReady;
 - (void)notifyLog:(NSString *)log;
 - (void)notifyfatLog:(NSString *)log;

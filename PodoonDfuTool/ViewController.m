@@ -107,6 +107,7 @@
 
 - (IBAction)actionCMD:(UIButton *)btn {
     [[BluetoothService sharedInstance] sendData:btn.titleLabel.text];
+    [SVProgressHUD showWithStatus:@"发送中"];
 }
 
 - (void)notifyLog:(NSString *)log{
@@ -130,11 +131,16 @@
 - (void)notifyDiscover{
     [SVProgressHUD showWithStatus:@"连接中"];
     [[BluetoothService sharedInstance] stop];
+    [self actionStart:nil];
 }
 
 - (void)notifyDidConnect{
     [SVProgressHUD showWithStatus:@"准备中"];
     
+}
+
+- (void)notifyDisConnect {
+    [SVProgressHUD showSuccessWithStatus:@"发送成功·" duration:2];
 }
 
 - (void)notifyReady{
