@@ -9,6 +9,7 @@
 #import "BluetoothService.h"
 #import "DFUHelper.h"
 #include "DFUHelper.h"
+#import <AFNetworking/AFNetworking.h>
 
 #define BT_Service_FOOT [CBUUID UUIDWithString:@"6E400001-B5A3-F393-E0A9-E50E24DCCA9E"]
 #define BT_Service_FOOT_S130 [CBUUID UUIDWithString:@"1801"]
@@ -40,6 +41,8 @@
 @property(strong, nonatomic) DFUOperations *dfuOperations;
 @property(strong, nonatomic) DFUHelper *dfuHelper;
 
+@property (strong, nonatomic) NSURL *filePath;
+
 @end
 
 @implementation BluetoothService {
@@ -59,6 +62,28 @@
         sharedInstance = [[self alloc] init];
     });
     return sharedInstance;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+        
+        NSURL *URL = [NSURL URLWithString:@"http://res-10048881.cossh.myqcloud.com/ZT_H904A.zip"];
+        NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+        
+        NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+            NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+            return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
+        } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+            NSLog(@"File downloaded to: %@", filePath);
+            self.filePath = filePath;
+        }];
+        [downloadTask resume];
+    }
+    return self;
 }
 
 - (void)search {
@@ -311,7 +336,12 @@
     LOG_FUNC
     
     if (self.dfuPeripheral) {
-        NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:FIRMWARE_FOLDER_NAME ofType:@"zip"]];
+        NSURL *url = nil;
+        if (self.filePath) {
+            url = self.filePath;
+        } else {
+            url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:FIRMWARE_FOLDER_NAME ofType:@"zip"]];
+        }
         NSData *fileData = [NSData dataWithContentsOfURL:url];
         self.dfuHelper.selectedFileSize = fileData.length;
         self.dfuHelper.selectedFileURL = url;
