@@ -10,6 +10,7 @@
 #import "DFUHelper.h"
 #include "DFUHelper.h"
 #import <AFNetworking/AFNetworking.h>
+#import "SVProgressHUD.h"
 
 #define BT_Service_FOOT [CBUUID UUIDWithString:@"6E400001-B5A3-F393-E0A9-E50E24DCCA9E"]
 #define BT_Service_FOOT_S130 [CBUUID UUIDWithString:@"1801"]
@@ -78,6 +79,9 @@
             NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
             return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
         } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SVProgressHUD showSuccessWithStatus:@"固件更新成功" duration:2];
+            });
             NSLog(@"File downloaded to: %@", filePath);
             self.filePath = filePath;
         }];
@@ -339,8 +343,14 @@
         NSURL *url = nil;
         if (self.filePath) {
             url = self.filePath;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SVProgressHUD showSuccessWithStatus:@"通过网络固件升级" duration:2];
+            });
         } else {
             url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:FIRMWARE_FOLDER_NAME ofType:@"zip"]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SVProgressHUD showSuccessWithStatus:@"通过本地固件升级" duration:2];
+            });
         }
         NSData *fileData = [NSData dataWithContentsOfURL:url];
         self.dfuHelper.selectedFileSize = fileData.length;
