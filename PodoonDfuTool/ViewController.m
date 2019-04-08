@@ -67,8 +67,11 @@
 
 - (void)notifyWriteDfu {
     self.mainLabel.text = @"写入DFU成功";
-    self.topLabel.text = @"已停止";
+}
+
+-(void)notifyDisConnect {
     [[BluetoothService sharedInstance] stop];
+    self.topLabel.text = @"已停止";
 }
 
 @end

@@ -155,16 +155,7 @@
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI{
     LOG_FUNC
     
-    if ([peripheral.name isEqualToString:@"DfuTarg"] && RSSI.integerValue > -55 && RSSI.integerValue != 127) {
-        [self.delegate notifyStartDfu];
-        self.dfuPeripheral = peripheral;
-        
-        //调用DFU部分
-        [self.dfuOperations resetSystem];
-        [self performSelector:@selector(startDFU) withObject:nil afterDelay:0.2];
-        isStartOTA_ = NO;
-        isDFU_ = YES;
-    } else if ([peripheral.name rangeOfString:@"ZT"].location != NSNotFound && RSSI.integerValue > -55 && RSSI.integerValue != 127 ) {
+    if ([peripheral.name rangeOfString:@"ZT"].location != NSNotFound && RSSI.integerValue > -60 && RSSI.integerValue != 127 ) {
         [self.delegate notifyDiscover];
         self.connectingPeripheral = peripheral;
         [self.centermanager connectPeripheral:peripheral options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES]
@@ -204,6 +195,7 @@
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
     LOG_FUNC
     
+    [self.delegate notifyDisConnect];
     //断开连接后清空状态
     self.peripheral = nil;
     self.connectingPeripheral = nil;
@@ -244,8 +236,8 @@
 
 - (void)initAtFoundWrite {
     LOG_FUNC
-    [self.delegate notifyWriteDfu];
     [self writeCommand:@"dfu"];
+    [self.delegate notifyWriteDfu];
 }
 
 - (void)writeCommand:(NSString *)command {

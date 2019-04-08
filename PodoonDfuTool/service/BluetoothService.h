@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)notifyDiscover;
 - (void)notifyDidConnect;
+- (void)notifyDisConnect;
 - (void)notifyWriteDfu;
 - (void)notifyStartDfu;
 - (void)notifyPercent:(NSInteger)percent;
