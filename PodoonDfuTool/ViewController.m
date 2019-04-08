@@ -63,12 +63,12 @@
 
 - (void)notifySuccessDfu { 
     self.mainLabel.text = @"OTA成功";
-    self.topLabel.text = @"已停止";
-    [[BluetoothService sharedInstance] stop];
 }
 
 - (void)notifyWriteDfu {
     self.mainLabel.text = @"写入DFU成功";
+    self.topLabel.text = @"已停止";
+    [[BluetoothService sharedInstance] stop];
 }
 
 @end

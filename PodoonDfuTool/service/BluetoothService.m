@@ -71,21 +71,21 @@
     if (self) {
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
         AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-        
-        NSURL *URL = [NSURL URLWithString:@"http://res-10048881.cossh.myqcloud.com/ZT_H904A.zip"];
-        NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-        
-        NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-            NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-            return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
-        } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [SVProgressHUD showSuccessWithStatus:@"固件更新成功" duration:2];
-            });
-            NSLog(@"File downloaded to: %@", filePath);
-            self.filePath = filePath;
-        }];
-        [downloadTask resume];
+
+//        NSURL *URL = [NSURL URLWithString:@"http://res-10048881.cossh.myqcloud.com/ZT_H904A.zip"];
+//        NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+//
+//        NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+//            NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+//            return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
+//        } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [SVProgressHUD showSuccessWithStatus:@"固件更新成功" duration:2];
+//            });
+//            NSLog(@"File downloaded to: %@", filePath);
+//            self.filePath = filePath;
+//        }];
+//        [downloadTask resume];
     }
     return self;
 }
