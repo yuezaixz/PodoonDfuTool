@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *topLabel;
 @property (weak, nonatomic) IBOutlet UILabel *mainLabel;
 @property (weak, nonatomic) IBOutlet UIButton *firmwareBtn;
+@property (weak, nonatomic) IBOutlet UILabel *version;
 
 @end
 
@@ -63,14 +64,26 @@
 }
 
 - (IBAction)actionStart:(id)sender {
+    [BluetoothService sharedInstance].isVersion = NO;
+    [BluetoothService sharedInstance].uuidStr = nil;
     [[BluetoothService sharedInstance] search];
     self.topLabel.text = @"运行中";
     self.mainLabel.text = @"搜索中";
 }
 - (IBAction)actionStop:(id)sender {
+    [BluetoothService sharedInstance].isVersion = NO;
+    [BluetoothService sharedInstance].uuidStr = nil;
     [[BluetoothService sharedInstance] stop];
     self.topLabel.text = @"已停止";
     self.mainLabel.text = @"未运行";
+}
+
+- (void)notifyVersion:(NSString *)version {
+    self.version.text = version;
+    [[BluetoothService sharedInstance] disconnect];
+    [[BluetoothService sharedInstance] stop];
+    [BluetoothService sharedInstance].isVersion = NO;
+    [BluetoothService sharedInstance].uuidStr = nil;
 }
 
 - (void)notifyDidConnect {
@@ -99,7 +112,8 @@
 - (void)notifySuccessDfu { 
     self.mainLabel.text = @"OTA成功";
     self.topLabel.text = @"已停止";
-    [[BluetoothService sharedInstance] stop];
+    [BluetoothService sharedInstance].isVersion = YES;
+    [[BluetoothService sharedInstance] search];
 }
 
 - (void)notifyWriteDfu {

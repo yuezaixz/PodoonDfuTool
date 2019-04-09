@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyPercent:(NSInteger)percent;
 - (void)notifySuccessDfu;
 - (void)notifyFailDfu;
+- (void)notifyVersion:(NSString *)version;
 
 @end
 
@@ -34,12 +35,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) id<RMBluetoothServiceDelegate> delegate;
 
 @property (strong, nonatomic) NSString *otaUrl;
+@property (nonatomic) BOOL isVersion;
+@property (strong, nonatomic)  NSString  * _Nullable uuidStr;
 
 + (instancetype)sharedInstance;
 
 - (void)search;
 
 - (void)stop;
+- (void)disconnect;
 
 @end
 

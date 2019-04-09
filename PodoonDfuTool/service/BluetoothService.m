@@ -150,6 +150,13 @@
     
 }
 
+- (void)disconnect {
+    if (self.peripheral && self.peripheral.state == CBPeripheralStateConnected) {
+        [self.centermanager cancelPeripheralConnection:self.peripheral];
+        self.peripheral = nil;
+    }
+}
+
 #pragma mark CBCentralManagerDelegate
 //发现设备
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI{
@@ -164,12 +171,13 @@
         [self performSelector:@selector(startDFU) withObject:nil afterDelay:0.2];
         isStartOTA_ = NO;
         isDFU_ = YES;
-    } else if ([peripheral.name rangeOfString:@"ZT"].location != NSNotFound && RSSI.integerValue > -55 && RSSI.integerValue != 127 ) {
+    } else if (([peripheral.name rangeOfString:@"ZT"].location != NSNotFound && RSSI.integerValue > -55 && RSSI.integerValue != 127) || (self.isVersion && self.uuidStr && [self.uuidStr isEqualToString:peripheral.identifier.UUIDString]) ) {
         [self.delegate notifyDiscover];
         self.connectingPeripheral = peripheral;
         [self.centermanager connectPeripheral:peripheral options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES]
                                                                                              forKey:CBConnectPeripheralOptionNotifyOnDisconnectionKey]];
         self.peripheral = peripheral;
+        self.uuidStr = self.peripheral.identifier.UUIDString;
     }
 }
 
@@ -245,7 +253,12 @@
 - (void)initAtFoundWrite {
     LOG_FUNC
     [self.delegate notifyWriteDfu];
-    [self writeCommand:@"dfu"];
+    if (self.isVersion) {
+        [self writeCommand:@"GVN"];
+        self.isVersion = NO;
+    } else {
+        [self writeCommand:@"dfu"];
+    }
 }
 
 - (void)writeCommand:(NSString *)command {
@@ -255,6 +268,20 @@
 //        [self debug:[NSString stringWithFormat:@"写入命令：%@",command]];
         NSData *data =[command dataUsingEncoding:NSUTF8StringEncoding];
         [self.peripheral writeValue:data forCharacteristic:_writeCharacteristic type:CBCharacteristicWriteWithoutResponse];
+    }
+}
+
+-(void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)c error:(NSError *)error {
+    if ([c.UUID isEqual:BT_Characteristic_PODOON_NOTIFY] && self.peripheral.identifier == peripheral.identifier) {
+        NSData *tempData = c.value;
+        if (tempData.length == 0 ) {
+            return;
+        }
+        uint8_t *footData = [tempData bytes];
+        NSString *offlineStr = [NSString stringWithFormat:@"%s",footData];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(notifyVersion:)] && [offlineStr rangeOfString:@"FW Ver"].location != NSNotFound) {
+            [self.delegate notifyVersion:[offlineStr substringFromIndex:7] ];
+        }
     }
 }
 
