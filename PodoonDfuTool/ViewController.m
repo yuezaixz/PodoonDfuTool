@@ -13,6 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *topLabel;
 @property (weak, nonatomic) IBOutlet UILabel *mainLabel;
+@property (weak, nonatomic) IBOutlet UIButton *firmwareBtn;
 
 @end
 
@@ -27,6 +28,40 @@
     [super viewDidAppear:animated];
     
 }
+
+- (IBAction)actionSelectFirmware:(id)sender {
+    NSArray *firmwares = @[
+                           @"ZT_H904A_20190405-V2.0.28",
+                           @"ZT_H904A_20190321-V2.0.27",
+                           @"ZT_H904A_20190317-V2.0.26",
+                           @"ZT_H904A_20190314-V2.0.25",
+                           @"ZT_H904A_20190310-V2.0.24",
+                           @"ZT_H904A_20190307-V2.0.23",
+                           @"ZT_H904A_20190225-V2.0.22",
+                           @"ZT_H904A_20190119-V2.0.21",
+                           ];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"选择固件"
+                                                                             message:@""
+                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
+    __weak typeof(self) weakSelf = self;
+    
+    for (NSString *firmware in firmwares) {
+        UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:firmware style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [weakSelf.firmwareBtn setTitle:firmware forState:UIControlStateNormal];
+            [BluetoothService sharedInstance].otaUrl = firmware;
+        }];
+        [alertController addAction:defaultAction];
+    }
+    
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消-Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    [alertController addAction:cancelAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
 - (IBAction)actionStart:(id)sender {
     [[BluetoothService sharedInstance] search];
     self.topLabel.text = @"运行中";

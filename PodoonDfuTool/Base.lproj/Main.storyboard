@@ -52,13 +52,26 @@
                                     <action selector="actionStop:" destination="BYZ-38-t0r" eventType="touchUpInside" id="R6C-wT-pvK"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QXo-pE-f8B">
+                                <rect key="frame" x="87.5" y="20" width="200" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="32z-dJ-QM3"/>
+                                    <constraint firstAttribute="height" constant="50" id="v2g-zL-XLn"/>
+                                </constraints>
+                                <state key="normal" title="选择固件"/>
+                                <connections>
+                                    <action selector="actionSelectFirmware:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZLy-Vz-hTy"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="pts-zL-VNo" secondAttribute="bottom" constant="63" id="7m9-oP-jil"/>
+                            <constraint firstItem="QXo-pE-f8B" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="8C6-jc-ZVV"/>
                             <constraint firstItem="Ihk-wC-r0J" firstAttribute="top" secondItem="7Ng-Wu-gyc" secondAttribute="bottom" constant="28" id="9j9-PH-438"/>
                             <constraint firstItem="Ri6-cb-uLh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="100" id="HEo-a9-UcR"/>
                             <constraint firstItem="7Ng-Wu-gyc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="83" id="Jv2-a8-aGp"/>
+                            <constraint firstItem="QXo-pE-f8B" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TQm-bX-cTG"/>
                             <constraint firstItem="pts-zL-VNo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-100" id="fr9-Ga-s5U"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Ri6-cb-uLh" secondAttribute="bottom" constant="63" id="i82-69-E6m"/>
                             <constraint firstItem="Ihk-wC-r0J" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jg1-Uv-wmg"/>
@@ -67,6 +80,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="firmwareBtn" destination="QXo-pE-f8B" id="e1g-EL-zE2"/>
                         <outlet property="mainLabel" destination="Ihk-wC-r0J" id="OSc-nE-GWF"/>
                         <outlet property="topLabel" destination="7Ng-Wu-gyc" id="3Ar-2U-GRZ"/>
                     </connections>

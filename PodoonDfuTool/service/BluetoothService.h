@@ -33,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) CBCentralManager *centermanager;
 @property (weak, nonatomic) id<RMBluetoothServiceDelegate> delegate;
 
+@property (strong, nonatomic) NSString *otaUrl;
+
 + (instancetype)sharedInstance;
 
 - (void)search;
