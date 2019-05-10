@@ -68,7 +68,7 @@
 
 - (void)clean {
     self.logList = nil;
-    self.gvnLabel = self.gvhLabel = self.macLabel = nil;
+    self.gvnLog = self.ghvLog = self.macLog = nil;
     self.titleLabel.text = @"设备未连接";
     [self reload];
 }
@@ -87,8 +87,11 @@
 }
 
 - (IBAction)actionPause:(id)sender {
+    [[BluetoothService sharedInstance] stop];
     [[BluetoothService sharedInstance] disconnect];
     [self clean];
+    [self.startButton setTitle:@"开始" forState:UIControlStateNormal];
+    isStart_ = NO;
 }
 
 - (IBAction)actionCMD:(UIButton *)btn {
@@ -129,7 +132,10 @@
     [SVProgressHUD showErrorWithStatus:@"设备已断开" duration:2];
     
     self.titleLabel.text = @"设备未连接";
+    [[BluetoothService sharedInstance] stop];
     [self clean];
+    [self.startButton setTitle:@"开始" forState:UIControlStateNormal];
+    isStart_ = NO;
 }
 
 - (void)notifyReady{
