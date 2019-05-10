@@ -155,6 +155,7 @@
     //断开连接后清空状态
     self.peripheral = nil;
     self.connectingPeripheral = nil;
+    [self.delegate notifyDisConnect];
 }
 
 - (void)centralManagerDidUpdateState:(nonnull CBCentralManager *)central {
@@ -201,22 +202,12 @@
         NSString *offlineStr = [[NSString stringWithFormat:@"%s",footData] substringWithRange:NSMakeRange(0, tempData.length)];
         if ([offlineStr rangeOfString:@"Batt"].location != NSNotFound) {
             [self.delegate notifyghvLog:offlineStr];
-            [self writeCommand:@"FAT"];
-        } else if ([offlineStr rangeOfString:@"RecvACK:FAT"].location != NSNotFound) {
-            [self.delegate notifyfatLog:offlineStr];
-            [self writeCommand:@"GVH"];
-        } else if ([offlineStr rangeOfString:@"HW"].location != NSNotFound) {
-            [self.delegate notifygvhLog:offlineStr];
-            [self writeCommand:@"GVD"];
-        } else if ([offlineStr rangeOfString:@"FwT"].location != NSNotFound) {
-            [self.delegate notifygvd2Log:offlineStr];
             [self writeCommand:@"GVN"];
-        } else if ([offlineStr rangeOfString:@"FwD"].location != NSNotFound) {
-            [self.delegate notifygvdLog:offlineStr];
         } else if ([offlineStr rangeOfString:@"FW"].location != NSNotFound) {
             [self.delegate notifygvnLog:offlineStr];
-        } else if ([offlineStr rangeOfString:@"SENSOR WDT"].location != NSNotFound) {
-            [self.delegate notifyMiniError];
+            [self writeCommand:@"GMAC"];
+        } else if ([offlineStr rangeOfString:@"MC:"].location != NSNotFound) {
+            [self.delegate notifymacLog:offlineStr];
         }
         
         [self.delegate notifyLog:offlineStr];
@@ -228,6 +219,16 @@
     LOG_FUNC
     
     [self writeCommand:@"GHV"];
+    [self performSelector:@selector(SDL11) withObject:nil afterDelay:0.02];
+    [self performSelector:@selector(SDI2) withObject:nil afterDelay:0.04];
+}
+
+- (void)SDL11 {
+    [self writeCommand:@"SDL:11"];
+}
+
+- (void)SDI2 {
+    [self writeCommand:@"SDI:2"];
 }
 
 - (void)writeCommand:(NSString *)command {

@@ -31,21 +31,15 @@
 @property (strong, nonatomic) NSMutableArray *logList;
 @property (weak, nonatomic) IBOutlet UITableView *logTableView;
 
-@property (weak, nonatomic) IBOutlet UILabel *fatLabel;
-@property (weak, nonatomic) IBOutlet UILabel *ghvLabel;
-@property (weak, nonatomic) IBOutlet UILabel *gvdLabel;
-@property (weak, nonatomic) IBOutlet UILabel *gvd2Label;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *gvnLabel;
 @property (weak, nonatomic) IBOutlet UILabel *gvhLabel;
-@property (weak, nonatomic) IBOutlet UILabel *miniPcbLabel;
+@property (weak, nonatomic) IBOutlet UILabel *macLabel;
 
-@property (strong, nonatomic) NSString *fatLog;
 @property (strong, nonatomic) NSString *ghvLog;
-@property (strong, nonatomic) NSString *gvdLog;
-@property (strong, nonatomic) NSString *gvd2Log;
 @property (strong, nonatomic) NSString *gvnLog;
-@property (strong, nonatomic) NSString *gvhLog;
-@property (nonatomic) BOOL miniError;
+@property (strong, nonatomic) NSString *macLog;
 
 @end
 
@@ -66,19 +60,16 @@
 
 - (void)reload {
     [self.logTableView reloadData];
-    self.fatLabel.text = self.fatLog ?: @"FAT";
-    self.ghvLabel.text = self.ghvLog ?: @"GHV";
-    self.gvdLabel.text = self.gvdLog ?: @"GVD";
-    self.gvd2Label.text = self.gvd2Log ?: @"GVD2";
-    self.gvnLabel.text = self.gvnLog ?: @"GVN";
-    self.gvhLabel.text = self.gvhLog ?: @"GVH";
-    self.miniPcbLabel.text = self.miniError?@"小板异常":@"小板正常";
+
+    self.gvnLabel.text = self.gvnLog ?: @"版本";
+    self.gvhLabel.text = self.ghvLog ?: @"电量";
+    self.macLabel.text = self.macLog ?: @"物理地址";
 }
 
 - (void)clean {
     self.logList = nil;
-    self.fatLog = self.ghvLog = self.gvdLog = self.gvd2Log = self.gvnLog = self.gvhLog = nil;
-    self.miniError = NO;
+    self.gvnLabel = self.gvhLabel = self.macLabel = nil;
+    self.titleLabel.text = @"设备未连接";
     [self reload];
 }
 
@@ -96,12 +87,7 @@
 }
 
 - (IBAction)actionPause:(id)sender {
-    isPause_ = !isPause_;
-    [self.pauseBtn setTitle:(isPause_?@"继续":@"暂停") forState:UIControlStateNormal];
-}
-
-- (IBAction)actionClean:(id)sender {
-    self.logList = nil;
+    [[BluetoothService sharedInstance] disconnect];
     [self clean];
 }
 
@@ -128,6 +114,7 @@
 }
 
 - (void)notifyDiscover{
+    self.titleLabel.text = @"设备连接中";
     [SVProgressHUD showWithStatus:@"连接中"];
     [[BluetoothService sharedInstance] stop];
 }
@@ -135,9 +122,19 @@
 - (void)notifyDidConnect{
     [SVProgressHUD showWithStatus:@"准备中"];
     
+    self.titleLabel.text = @"设备未连接";
+}
+
+- (void)notifyDisConnect{
+    [SVProgressHUD showErrorWithStatus:@"设备已断开" duration:2];
+    
+    self.titleLabel.text = @"设备未连接";
+    [self clean];
 }
 
 - (void)notifyReady{
+    
+    self.titleLabel.text = @"设备已连接";
     [SVProgressHUD showSuccessWithStatus:@"连接成功" duration:2];
 }
 
@@ -146,32 +143,16 @@
 }
 
 
-- (void)notifyfatLog:(NSString *)log{
-    self.fatLog = log;
-    [self reload];
-}
 - (void)notifyghvLog:(NSString *)log{
     self.ghvLog = log;
-    [self reload];
-}
-- (void)notifygvdLog:(NSString *)log{
-    self.gvdLog = log;
-    [self reload];
-}
-- (void)notifygvd2Log:(NSString *)log{
-    self.gvd2Log = log;
     [self reload];
 }
 - (void)notifygvnLog:(NSString *)log{
     self.gvnLog = log;
     [self reload];
 }
-- (void)notifygvhLog:(NSString *)log{
-    self.gvhLog = log;
-    [self reload];
-}
-- (void)notifyMiniError{
-    self.miniError = YES;
+- (void)notifymacLog:(NSString *)mac{
+    self.macLog = mac;
     [self reload];
 }
 
