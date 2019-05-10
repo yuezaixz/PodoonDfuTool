@@ -17,6 +17,7 @@
 		A64621EF225C6B62001AEA54 /* ZT_H904A_20190307-V2.0.23.zip in Resources */ = {isa = PBXBuildFile; fileRef = A64621E6225C6B62001AEA54 /* ZT_H904A_20190307-V2.0.23.zip */; };
 		A64621F0225C6B62001AEA54 /* ZT_H904A_20190405-V2.0.28.zip in Resources */ = {isa = PBXBuildFile; fileRef = A64621E7225C6B62001AEA54 /* ZT_H904A_20190405-V2.0.28.zip */; };
 		A64621F1225C6B62001AEA54 /* ZT_H904A_20190317-V2.0.26.zip in Resources */ = {isa = PBXBuildFile; fileRef = A64621E8225C6B62001AEA54 /* ZT_H904A_20190317-V2.0.26.zip */; };
+		A66B8BDB226873CD00FB5823 /* ZT_H904A_20190417-V2.0.29.zip in Resources */ = {isa = PBXBuildFile; fileRef = A66B8BDA226873CC00FB5823 /* ZT_H904A_20190417-V2.0.29.zip */; };
 		A6AFDEDE21DC48AE00F313D2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6AFDEDD21DC48AE00F313D2 /* AppDelegate.m */; };
 		A6AFDEE121DC48AE00F313D2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6AFDEE021DC48AE00F313D2 /* ViewController.m */; };
 		A6AFDEE421DC48AE00F313D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDEE221DC48AE00F313D2 /* Main.storyboard */; };
@@ -58,6 +59,7 @@
 		A64621E6225C6B62001AEA54 /* ZT_H904A_20190307-V2.0.23.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190307-V2.0.23.zip"; sourceTree = "<group>"; };
 		A64621E7225C6B62001AEA54 /* ZT_H904A_20190405-V2.0.28.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190405-V2.0.28.zip"; sourceTree = "<group>"; };
 		A64621E8225C6B62001AEA54 /* ZT_H904A_20190317-V2.0.26.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190317-V2.0.26.zip"; sourceTree = "<group>"; };
+		A66B8BDA226873CC00FB5823 /* ZT_H904A_20190417-V2.0.29.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190417-V2.0.29.zip"; sourceTree = "<group>"; };
 		A6AFDED921DC48AE00F313D2 /* PodoonDfuTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PodoonDfuTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6AFDEDC21DC48AE00F313D2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A6AFDEDD21DC48AE00F313D2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				A64621E8225C6B62001AEA54 /* ZT_H904A_20190317-V2.0.26.zip */,
 				A64621E2225C6B61001AEA54 /* ZT_H904A_20190321-V2.0.27.zip */,
 				A64621E7225C6B62001AEA54 /* ZT_H904A_20190405-V2.0.28.zip */,
+				A66B8BDA226873CC00FB5823 /* ZT_H904A_20190417-V2.0.29.zip */,
 				A6AFDF3B21DC666100F313D2 /* s130_ota_zt.zip */,
 				A6AFDF3921DC5D7C00F313D2 /* s130_ota.zip */,
 			);
@@ -381,6 +384,7 @@
 				A6AFDF3821DC5A5500F313D2 /* SVProgressHUD.bundle in Resources */,
 				A6AFDEE921DC48B200F313D2 /* LaunchScreen.storyboard in Resources */,
 				A64621EA225C6B62001AEA54 /* ZT_H904A_20190225-V2.0.22.zip in Resources */,
+				A66B8BDB226873CD00FB5823 /* ZT_H904A_20190417-V2.0.29.zip in Resources */,
 				A6AFDF3A21DC5D7C00F313D2 /* s130_ota.zip in Resources */,
 				A64621EC225C6B62001AEA54 /* ZT_H904A_20190119-V2.0.21.zip in Resources */,
 				A6AFDF3C21DC666200F313D2 /* s130_ota_zt.zip in Resources */,
