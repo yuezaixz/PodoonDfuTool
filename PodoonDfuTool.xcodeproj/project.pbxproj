@@ -45,6 +45,7 @@
 		A6AFDF3821DC5A5500F313D2 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDF3621DC5A5500F313D2 /* SVProgressHUD.bundle */; };
 		A6AFDF3A21DC5D7C00F313D2 /* s130_ota.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDF3921DC5D7C00F313D2 /* s130_ota.zip */; };
 		A6AFDF3C21DC666200F313D2 /* s130_ota_zt.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDF3B21DC666100F313D2 /* s130_ota_zt.zip */; };
+		A6FB3CE52285533E0040B9D9 /* ZT_H904A_20190510-V2.0.31.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6FB3CE42285533E0040B9D9 /* ZT_H904A_20190510-V2.0.31.zip */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -110,6 +111,7 @@
 		A6AFDF3621DC5A5500F313D2 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		A6AFDF3921DC5D7C00F313D2 /* s130_ota.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = s130_ota.zip; sourceTree = "<group>"; };
 		A6AFDF3B21DC666100F313D2 /* s130_ota_zt.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = s130_ota_zt.zip; sourceTree = "<group>"; };
+		A6FB3CE42285533E0040B9D9 /* ZT_H904A_20190510-V2.0.31.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190510-V2.0.31.zip"; sourceTree = "<group>"; };
 		BCC8ACAC1F9DE87B49B4E41A /* Pods-PodoonDfuTool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PodoonDfuTool.release.xcconfig"; path = "Pods/Target Support Files/Pods-PodoonDfuTool/Pods-PodoonDfuTool.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -271,6 +273,7 @@
 				A64621E2225C6B61001AEA54 /* ZT_H904A_20190321-V2.0.27.zip */,
 				A64621E7225C6B62001AEA54 /* ZT_H904A_20190405-V2.0.28.zip */,
 				A66B8BDA226873CC00FB5823 /* ZT_H904A_20190417-V2.0.29.zip */,
+				A6FB3CE42285533E0040B9D9 /* ZT_H904A_20190510-V2.0.31.zip */,
 				A6AFDF3B21DC666100F313D2 /* s130_ota_zt.zip */,
 				A6AFDF3921DC5D7C00F313D2 /* s130_ota.zip */,
 			);
@@ -383,6 +386,7 @@
 				A64621EB225C6B62001AEA54 /* ZT_H904A_20190321-V2.0.27.zip in Resources */,
 				A6AFDF3821DC5A5500F313D2 /* SVProgressHUD.bundle in Resources */,
 				A6AFDEE921DC48B200F313D2 /* LaunchScreen.storyboard in Resources */,
+				A6FB3CE52285533E0040B9D9 /* ZT_H904A_20190510-V2.0.31.zip in Resources */,
 				A64621EA225C6B62001AEA54 /* ZT_H904A_20190225-V2.0.22.zip in Resources */,
 				A66B8BDB226873CD00FB5823 /* ZT_H904A_20190417-V2.0.29.zip in Resources */,
 				A6AFDF3A21DC5D7C00F313D2 /* s130_ota.zip in Resources */,

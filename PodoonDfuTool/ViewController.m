@@ -32,15 +32,16 @@
 
 - (IBAction)actionSelectFirmware:(id)sender {
     NSArray *firmwares = @[
+                           @"ZT_H904A_20190510-V2.0.31",
                            @"ZT_H904A_20190417-V2.0.29",
                            @"ZT_H904A_20190405-V2.0.28",
-                           @"ZT_H904A_20190321-V2.0.27",
-                           @"ZT_H904A_20190317-V2.0.26",
-                           @"ZT_H904A_20190314-V2.0.25",
-                           @"ZT_H904A_20190310-V2.0.24",
-                           @"ZT_H904A_20190307-V2.0.23",
-                           @"ZT_H904A_20190225-V2.0.22",
-                           @"ZT_H904A_20190119-V2.0.21",
+//                           @"ZT_H904A_20190321-V2.0.27",
+//                           @"ZT_H904A_20190317-V2.0.26",
+//                           @"ZT_H904A_20190314-V2.0.25",
+//                           @"ZT_H904A_20190310-V2.0.24",
+//                           @"ZT_H904A_20190307-V2.0.23",
+//                           @"ZT_H904A_20190225-V2.0.22",
+//                           @"ZT_H904A_20190119-V2.0.21",
                            ];
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"选择固件"
                                                                              message:@""
