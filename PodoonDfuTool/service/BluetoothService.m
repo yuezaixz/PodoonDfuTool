@@ -85,11 +85,12 @@
         self.peripheral.delegate = nil;
         [self.centermanager cancelPeripheralConnection:self.peripheral];
         self.peripheral = nil;
+        _writeCharacteristic = nil;
     }
 }
 
 - (void)sendData:(NSString *)cmd {
-    if (self.peripheral) {
+    if (self.peripheral && self.peripheral.state == CBPeripheralStateConnected && _writeCharacteristic) {
         [self writeCommand:cmd];
     }
 }
@@ -208,6 +209,8 @@
             [self writeCommand:@"GMAC"];
         } else if ([offlineStr rangeOfString:@"MC:"].location != NSNotFound) {
             [self.delegate notifymacLog:offlineStr];
+        } else if ([offlineStr rangeOfString:@"RT BAR:"].location != NSNotFound) {
+            [self.delegate notifyAirPressure:offlineStr];
         }
         
         [self.delegate notifyLog:offlineStr];

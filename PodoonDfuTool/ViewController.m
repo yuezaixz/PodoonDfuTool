@@ -41,6 +41,8 @@
 @property (strong, nonatomic) NSString *gvnLog;
 @property (strong, nonatomic) NSString *macLog;
 
+@property (strong, nonatomic) NSTimer *airTimer;
+
 @end
 
 @implementation ViewController {
@@ -55,7 +57,24 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    // 创建
+    self.airTimer = [NSTimer scheduledTimerWithTimeInterval:1.5
+                                                     target:self
+                                                   selector:@selector(sendAirPressure)
+                                                   userInfo:nil
+                                                    repeats:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     
+    // 取消
+    [self.airTimer invalidate];
+    self.airTimer = nil;
+}
+
+- (void)sendAirPressure {
+    [[BluetoothService sharedInstance] sendData:@"GBP"];
 }
 
 - (void)reload {
@@ -99,14 +118,14 @@
 }
 
 - (void)notifyLog:(NSString *)log{
-    if (![self hadConnected]) {
-        [SVProgressHUD showErrorWithStatus:@"设备未连接" duration:2];
-        return;
-    }
-    if (!isPause_) {
-        [self.logList insertObject:log atIndex:0];
-        [self.logTableView reloadData];
-    }
+//    if (![self hadConnected]) {
+//        [SVProgressHUD showErrorWithStatus:@"设备未连接" duration:2];
+//        return;
+//    }
+//    if (!isPause_) {
+//        [self.logList insertObject:log atIndex:0];
+//        [self.logTableView reloadData];
+//    }
 }
 
 -(NSMutableArray *)logList {
@@ -160,6 +179,17 @@
 - (void)notifymacLog:(NSString *)mac{
     self.macLog = mac;
     [self reload];
+}
+
+-(void)notifyAirPressure:(NSString *)log {
+    if (![self hadConnected]) {
+        [SVProgressHUD showErrorWithStatus:@"设备未连接" duration:1];
+        return;
+    }
+    if (!isPause_) {
+        [self.logList insertObject:log atIndex:0];
+        [self.logTableView reloadData];
+    }
 }
 
 #pragma mark - uitableview deleagate
