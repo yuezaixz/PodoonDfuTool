@@ -32,6 +32,7 @@
 
 - (IBAction)actionSelectFirmware:(id)sender {
     NSArray *firmwares = @[
+                           @"ZT_H904A_20190528-V2.0.32",
                            @"ZT_H904A_20190510-V2.0.31",
                            @"ZT_H904A_20190417-V2.0.29",
                            @"ZT_H904A_20190405-V2.0.28",
