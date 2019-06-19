@@ -17,6 +17,7 @@
 		A64621EF225C6B62001AEA54 /* ZT_H904A_20190307-V2.0.23.zip in Resources */ = {isa = PBXBuildFile; fileRef = A64621E6225C6B62001AEA54 /* ZT_H904A_20190307-V2.0.23.zip */; };
 		A64621F0225C6B62001AEA54 /* ZT_H904A_20190405-V2.0.28.zip in Resources */ = {isa = PBXBuildFile; fileRef = A64621E7225C6B62001AEA54 /* ZT_H904A_20190405-V2.0.28.zip */; };
 		A64621F1225C6B62001AEA54 /* ZT_H904A_20190317-V2.0.26.zip in Resources */ = {isa = PBXBuildFile; fileRef = A64621E8225C6B62001AEA54 /* ZT_H904A_20190317-V2.0.26.zip */; };
+		A657554022B0B6A900FF7784 /* ZT_H904A_20190609-V2.0.33.zip in Resources */ = {isa = PBXBuildFile; fileRef = A657553F22B0B6A900FF7784 /* ZT_H904A_20190609-V2.0.33.zip */; };
 		A66B8BDB226873CD00FB5823 /* ZT_H904A_20190417-V2.0.29.zip in Resources */ = {isa = PBXBuildFile; fileRef = A66B8BDA226873CC00FB5823 /* ZT_H904A_20190417-V2.0.29.zip */; };
 		A69670F7229CDC5D00E7E5A1 /* ZT_H904A_20190528-V2.0.32.zip in Resources */ = {isa = PBXBuildFile; fileRef = A69670F6229CDC5D00E7E5A1 /* ZT_H904A_20190528-V2.0.32.zip */; };
 		A6AFDEDE21DC48AE00F313D2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6AFDEDD21DC48AE00F313D2 /* AppDelegate.m */; };
@@ -61,6 +62,7 @@
 		A64621E6225C6B62001AEA54 /* ZT_H904A_20190307-V2.0.23.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190307-V2.0.23.zip"; sourceTree = "<group>"; };
 		A64621E7225C6B62001AEA54 /* ZT_H904A_20190405-V2.0.28.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190405-V2.0.28.zip"; sourceTree = "<group>"; };
 		A64621E8225C6B62001AEA54 /* ZT_H904A_20190317-V2.0.26.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190317-V2.0.26.zip"; sourceTree = "<group>"; };
+		A657553F22B0B6A900FF7784 /* ZT_H904A_20190609-V2.0.33.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190609-V2.0.33.zip"; sourceTree = "<group>"; };
 		A66B8BDA226873CC00FB5823 /* ZT_H904A_20190417-V2.0.29.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190417-V2.0.29.zip"; sourceTree = "<group>"; };
 		A69670F6229CDC5D00E7E5A1 /* ZT_H904A_20190528-V2.0.32.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190528-V2.0.32.zip"; sourceTree = "<group>"; };
 		A6AFDED921DC48AE00F313D2 /* PodoonDfuTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PodoonDfuTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -265,6 +267,7 @@
 		A6AFDF1321DC4D7E00F313D2 /* firmwares */ = {
 			isa = PBXGroup;
 			children = (
+				A657553F22B0B6A900FF7784 /* ZT_H904A_20190609-V2.0.33.zip */,
 				A64621E4225C6B61001AEA54 /* ZT_H904A_20190114-V2.0.19.zip */,
 				A64621E3225C6B61001AEA54 /* ZT_H904A_20190119-V2.0.21.zip */,
 				A64621E1225C6B61001AEA54 /* ZT_H904A_20190225-V2.0.22.zip */,
@@ -400,6 +403,7 @@
 				A69670F7229CDC5D00E7E5A1 /* ZT_H904A_20190528-V2.0.32.zip in Resources */,
 				A6AFDEE421DC48AE00F313D2 /* Main.storyboard in Resources */,
 				A64621F0225C6B62001AEA54 /* ZT_H904A_20190405-V2.0.28.zip in Resources */,
+				A657554022B0B6A900FF7784 /* ZT_H904A_20190609-V2.0.33.zip in Resources */,
 				A64621E9225C6B62001AEA54 /* ZT_H904A_20190314-V2.0.25.zip in Resources */,
 				A64621F1225C6B62001AEA54 /* ZT_H904A_20190317-V2.0.26.zip in Resources */,
 				A64621EE225C6B62001AEA54 /* ZT_H904A_20190310-V2.0.24.zip in Resources */,
