@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="x5B-8T-gt5">
-                                <rect key="frame" x="0.0" y="40" width="375" height="484"/>
+                                <rect key="frame" x="0.0" y="40" width="375" height="462"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LogTableViewCell" rowHeight="30" id="9ba-Wn-F3L" customClass="LogTableViewCell">
@@ -97,7 +97,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="dNw-em-QeL"/>
                                     <constraint firstAttribute="width" constant="60" id="yCD-dG-Afc"/>
                                 </constraints>
-                                <state key="normal" title="断开"/>
+                                <state key="normal" title="上报"/>
                                 <connections>
                                     <action selector="actionPause:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GdL-Jl-auS"/>
                                 </connections>
@@ -176,12 +176,25 @@
                                     <action selector="actionCMD:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FUI-5V-duB"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3cu-uh-hAR">
+                                <rect key="frame" x="20" y="504" width="163" height="30"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Esk-8o-YNR"/>
+                                </constraints>
+                                <state key="normal" title="上报序号(点击复制)：--"/>
+                                <connections>
+                                    <action selector="actionCopy:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oca-oZ-XDD"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Vhs-nI-NsS" firstAttribute="leading" secondItem="TrF-Sb-2wt" secondAttribute="leading" id="0GQ-wA-jO2"/>
+                            <constraint firstItem="3cu-uh-hAR" firstAttribute="leading" secondItem="Vhs-nI-NsS" secondAttribute="leading" id="0Uo-PV-TTY"/>
                             <constraint firstItem="Y7m-Ap-Abl" firstAttribute="centerY" secondItem="JQW-W7-1ZP" secondAttribute="centerY" id="2It-sE-96r"/>
                             <constraint firstItem="TyO-8d-khh" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="11" id="8Jz-EE-ahu"/>
+                            <constraint firstItem="Vhs-nI-NsS" firstAttribute="top" secondItem="3cu-uh-hAR" secondAttribute="bottom" constant="8" id="8nd-Lq-sri"/>
                             <constraint firstItem="cG7-IZ-gJQ" firstAttribute="centerY" secondItem="kfY-KP-pPq" secondAttribute="centerY" id="95v-0M-POa"/>
                             <constraint firstItem="JQW-W7-1ZP" firstAttribute="centerX" secondItem="9BV-Lv-B1m" secondAttribute="centerX" id="DVs-kM-Ikd"/>
                             <constraint firstItem="zPf-3V-ism" firstAttribute="bottom" secondItem="DZt-g0-KVf" secondAttribute="bottom" id="J0X-cZ-hNo"/>
@@ -190,7 +203,7 @@
                             <constraint firstItem="kfY-KP-pPq" firstAttribute="centerY" secondItem="Vhs-nI-NsS" secondAttribute="centerY" id="N7e-CB-6gF"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="DZt-g0-KVf" secondAttribute="bottom" constant="15" id="S4J-qQ-Vky"/>
                             <constraint firstItem="zPf-3V-ism" firstAttribute="width" secondItem="TrF-Sb-2wt" secondAttribute="width" id="Wse-D1-rct"/>
-                            <constraint firstItem="Vhs-nI-NsS" firstAttribute="top" secondItem="x5B-8T-gt5" secondAttribute="bottom" constant="18" id="Xrd-MO-rFo"/>
+                            <constraint firstItem="Vhs-nI-NsS" firstAttribute="top" secondItem="x5B-8T-gt5" secondAttribute="bottom" constant="40" id="Xrd-MO-rFo"/>
                             <constraint firstItem="XWc-gw-72L" firstAttribute="trailing" secondItem="DZt-g0-KVf" secondAttribute="trailing" id="aKE-pL-1WV"/>
                             <constraint firstItem="x5B-8T-gt5" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="40" id="fPd-d8-VjS"/>
                             <constraint firstItem="TrF-Sb-2wt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="fgK-CQ-RaQ"/>
@@ -216,6 +229,7 @@
                         <outlet property="gvnLabel" destination="kfY-KP-pPq" id="lgm-LW-Rur"/>
                         <outlet property="logTableView" destination="x5B-8T-gt5" id="Jzt-kp-wzJ"/>
                         <outlet property="macLabel" destination="Vhs-nI-NsS" id="aKx-ng-ck0"/>
+                        <outlet property="noButton" destination="3cu-uh-hAR" id="6Pr-yy-0ns"/>
                         <outlet property="pauseBtn" destination="DZt-g0-KVf" id="pVw-9m-OcZ"/>
                         <outlet property="startButton" destination="XWc-gw-72L" id="PTl-KQ-KV1"/>
                         <outlet property="titleLabel" destination="TyO-8d-khh" id="WqI-vb-VBn"/>

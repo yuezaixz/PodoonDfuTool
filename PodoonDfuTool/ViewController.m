@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "BluetoothService.h"
 #import "SVProgressHUD/SVProgressHUD.h"
+#import "RMHTTPSessionManager.h"
+#import <AFNetworking.h>
 
 @interface LogTableViewCell:UITableViewCell
 
@@ -27,6 +29,7 @@
 @interface ViewController ()<RMBluetoothServiceDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
 @property (weak, nonatomic) IBOutlet UIButton *pauseBtn;
+@property (weak, nonatomic) IBOutlet UIButton *noButton;
 
 @property (strong, nonatomic) NSMutableArray *logList;
 @property (weak, nonatomic) IBOutlet UITableView *logTableView;
@@ -40,6 +43,7 @@
 @property (strong, nonatomic) NSString *ghvLog;
 @property (strong, nonatomic) NSString *gvnLog;
 @property (strong, nonatomic) NSString *macLog;
+@property (strong, nonatomic) NSString *currentNO;
 
 @end
 
@@ -69,6 +73,7 @@
 - (void)clean {
     self.logList = nil;
     self.gvnLog = self.ghvLog = self.macLog = nil;
+    [self.noButton setTitle:@"上报序号(点击复制)：--" forState:UIControlStateNormal];
     self.titleLabel.text = @"设备未连接";
     [self reload];
 }
@@ -77,6 +82,7 @@
     if (isStart_) {
         [[BluetoothService sharedInstance] stop];
         [[BluetoothService sharedInstance] disconnect];
+        [self clean];
         [self.startButton setTitle:@"开始" forState:UIControlStateNormal];
     } else {
         [[BluetoothService sharedInstance] search];
@@ -87,12 +93,46 @@
 }
 
 - (IBAction)actionPause:(id)sender {
-    [[BluetoothService sharedInstance] stop];
-    [[BluetoothService sharedInstance] disconnect];
-    [self clean];
-    [self.startButton setTitle:@"开始" forState:UIControlStateNormal];
-    isStart_ = NO;
+    if (!self.gvnLog || !self.ghvLog || !self.macLog) {
+         [SVProgressHUD showErrorWithStatus:@"未连接或无数据" duration:2];
+        return;
+    }
+    
+    __weak AFHTTPSessionManager *session = [RMHTTPSessionManager sharedManager];
+    
+    
+    NSParameterAssert(session); // prevent infinite loop
+    
+    [session POST:@"https://service.runmaf.com/services/mobile/user/upload_product_record"
+       parameters:@{
+        @"version": self.gvnLog,
+        @"mac_address": self.macLog,
+        @"voltage": self.ghvLog
+       } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * _Nullable msg) {
+        if (msg && [[msg objectForKey:@"success"] boolValue] && [msg objectForKey:@"data"]) {
+            self.currentNO = [msg objectForKey:@"data"];
+            [self.noButton setTitle:[NSString stringWithFormat:@"上报序号(点击复制)：%@",self.currentNO] forState:UIControlStateNormal];
+        }else{
+            [SVProgressHUD showErrorWithStatus:@"上报失败" duration:2];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [SVProgressHUD showErrorWithStatus:@"上报失败" duration:2];
+    }];
+    
+    
 }
+
+- (IBAction)actionCopy:(id)sender {
+    if (self.currentNO) {
+        [[UIPasteboard generalPasteboard] setString:self.currentNO];
+        [SVProgressHUD showSuccessWithStatus:@"复制成功" duration:2];
+    } else {
+        [SVProgressHUD showErrorWithStatus:@"编号不存在" duration:2];
+    }
+}
+
 
 - (IBAction)actionCMD:(UIButton *)btn {
     [[BluetoothService sharedInstance] sendData:btn.titleLabel.text];
