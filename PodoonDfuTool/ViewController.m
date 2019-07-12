@@ -39,12 +39,6 @@
                            @"ZT_H904A_20190417-V2.0.29",
 //                           @"ZT_H904A_20190405-V2.0.28",
 //                           @"ZT_H904A_20190321-V2.0.27",
-//                           @"ZT_H904A_20190317-V2.0.26",
-//                           @"ZT_H904A_20190314-V2.0.25",
-//                           @"ZT_H904A_20190310-V2.0.24",
-//                           @"ZT_H904A_20190307-V2.0.23",
-//                           @"ZT_H904A_20190225-V2.0.22",
-//                           @"ZT_H904A_20190119-V2.0.21",
                            ];
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"选择固件"
                                                                              message:@""
@@ -85,10 +79,17 @@
 
 - (void)notifyVersion:(NSString *)version {
     self.version.text = version;
-    [[BluetoothService sharedInstance] disconnect];
+//    [[BluetoothService sharedInstance] disconnect];
+    [[BluetoothService sharedInstance] writeCommand:@"SRC"];
     [[BluetoothService sharedInstance] stop];
     [BluetoothService sharedInstance].isVersion = NO;
     [BluetoothService sharedInstance].uuidStr = nil;
+    
+    [self performSelector:@selector(removeDevice) withObject:nil afterDelay:1];
+}
+
+- (void)removeDevice{
+    [[BluetoothService sharedInstance] removeDevice];
 }
 
 - (void)notifyDidConnect {

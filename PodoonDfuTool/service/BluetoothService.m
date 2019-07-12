@@ -157,6 +157,12 @@
     }
 }
 
+- (void)removeDevice {
+    if (self.peripheral && self.peripheral.state == CBPeripheralStateConnected) {
+        self.peripheral = nil;
+    }
+}
+
 #pragma mark CBCentralManagerDelegate
 //发现设备
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI{
@@ -254,11 +260,15 @@
     LOG_FUNC
     [self.delegate notifyWriteDfu];
     if (self.isVersion) {
-        [self writeCommand:@"GVN"];
+        [self performSelector:@selector(readVersion) withObject:nil afterDelay:0.5];
         self.isVersion = NO;
     } else {
         [self writeCommand:@"dfu"];
     }
+}
+
+- (void)readVersion {
+    [self writeCommand:@"GVN"];
 }
 
 - (void)writeCommand:(NSString *)command {

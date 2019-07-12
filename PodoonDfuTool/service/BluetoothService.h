@@ -44,6 +44,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)stop;
 - (void)disconnect;
+- (void)removeDevice;
+
+- (void)writeCommand:(NSString *)command;
 
 @end
 
