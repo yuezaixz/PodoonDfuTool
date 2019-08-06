@@ -43,6 +43,7 @@
 @property (strong, nonatomic) NSString *ghvLog;
 @property (strong, nonatomic) NSString *gvnLog;
 @property (strong, nonatomic) NSString *macLog;
+@property (strong, nonatomic) NSString *gbpLog;
 @property (strong, nonatomic) NSString *currentNO;
 
 @end
@@ -65,14 +66,14 @@
 - (void)reload {
     [self.logTableView reloadData];
 
-    self.gvnLabel.text = self.gvnLog ?: @"版本";
+    self.gvnLabel.text = self.gbpLog ?: @"版本";
     self.gvhLabel.text = self.ghvLog ?: @"电量";
     self.macLabel.text = self.macLog ?: @"物理地址";
 }
 
 - (void)clean {
     self.logList = nil;
-    self.gvnLog = self.ghvLog = self.macLog = nil;
+    self.gbpLog = self.ghvLog = self.macLog = nil;
     [self.noButton setTitle:@"上报序号(点击复制)：--" forState:UIControlStateNormal];
     self.titleLabel.text = @"设备未连接";
     [self reload];
@@ -93,33 +94,36 @@
 }
 
 - (IBAction)actionPause:(id)sender {
-    if (!self.gvnLog || !self.ghvLog || !self.macLog) {
-         [SVProgressHUD showErrorWithStatus:@"未连接或无数据" duration:2];
-        return;
-    }
+    [[BluetoothService sharedInstance] sendData:@"HCM0"];
+    [self performSelector:@selector(actionStart:) withObject:nil afterDelay:0.3];
     
-    __weak AFHTTPSessionManager *session = [RMHTTPSessionManager sharedManager];
-    
-    
-    NSParameterAssert(session); // prevent infinite loop
-    
-    [session POST:@"https://service.runmaf.com/services/mobile/user/upload_product_record"
-       parameters:@{
-        @"version": self.gvnLog,
-        @"mac_address": self.macLog,
-        @"voltage": self.ghvLog
-       } progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * _Nullable msg) {
-        if (msg && [[msg objectForKey:@"success"] boolValue] && [msg objectForKey:@"data"]) {
-            self.currentNO = [msg objectForKey:@"data"];
-            [self.noButton setTitle:[NSString stringWithFormat:@"上报序号(点击复制)：%@",self.currentNO] forState:UIControlStateNormal];
-        }else{
-            [SVProgressHUD showErrorWithStatus:@"上报失败" duration:2];
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [SVProgressHUD showErrorWithStatus:@"上报失败" duration:2];
-    }];
+//    if (!self.gvnLog || !self.ghvLog || !self.macLog) {
+//         [SVProgressHUD showErrorWithStatus:@"未连接或无数据" duration:2];
+//        return;
+//    }
+//
+//    __weak AFHTTPSessionManager *session = [RMHTTPSessionManager sharedManager];
+//
+//
+//    NSParameterAssert(session); // prevent infinite loop
+//
+//    [session POST:@"https://service.runmaf.com/services/mobile/user/upload_product_record"
+//       parameters:@{
+//        @"version": self.gvnLog,
+//        @"mac_address": self.macLog,
+//        @"voltage": self.ghvLog
+//       } progress:^(NSProgress * _Nonnull uploadProgress) {
+//
+//    } success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * _Nullable msg) {
+//        if (msg && [[msg objectForKey:@"success"] boolValue] && [msg objectForKey:@"data"]) {
+//            self.currentNO = [msg objectForKey:@"data"];
+//            [self.noButton setTitle:[NSString stringWithFormat:@"上报序号(点击复制)：%@",self.currentNO] forState:UIControlStateNormal];
+//        }else{
+//            [SVProgressHUD showErrorWithStatus:@"上报失败" duration:2];
+//        }
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        [SVProgressHUD showErrorWithStatus:@"上报失败" duration:2];
+//    }];
     
     
 }
@@ -199,6 +203,11 @@
 }
 - (void)notifymacLog:(NSString *)mac{
     self.macLog = mac;
+    [self reload];
+}
+
+-(void)notifyGBP:(NSString *)log {
+    self.gbpLog = log;
     [self reload];
 }
 

@@ -208,6 +208,8 @@
             [self writeCommand:@"GMAC"];
         } else if ([offlineStr rangeOfString:@"MC:"].location != NSNotFound) {
             [self.delegate notifymacLog:offlineStr];
+        } else if ([offlineStr rangeOfString:@"RT BAR:"].location != NSNotFound) {
+            [self.delegate notifyGBP:[offlineStr substringFromIndex:7]];
         }
         
         [self.delegate notifyLog:offlineStr];
@@ -221,6 +223,7 @@
     [self writeCommand:@"GHV"];
     [self performSelector:@selector(SDL11) withObject:nil afterDelay:0.02];
     [self performSelector:@selector(SDI2) withObject:nil afterDelay:0.04];
+    [self performSelector:@selector(HCM1) withObject:nil afterDelay:0.06];
 }
 
 - (void)SDL11 {
@@ -230,6 +233,11 @@
 - (void)SDI2 {
     [self writeCommand:@"SDI:2"];
 }
+
+- (void)HCM1 {
+    [self writeCommand:@"HCM1"];
+}
+
 
 - (void)writeCommand:(NSString *)command {
     LOG_FUNC

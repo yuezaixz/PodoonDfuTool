@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyghvLog:(NSString *)log;
 - (void)notifygvnLog:(NSString *)log;
 - (void)notifymacLog:(NSString *)log;
+- (void)notifyGBP:(NSString *)log;
 
 @end
 
