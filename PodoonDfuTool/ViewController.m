@@ -46,6 +46,8 @@
 @property (strong, nonatomic) NSString *gbpLog;
 @property (strong, nonatomic) NSString *currentNO;
 
+@property (strong, nonatomic) NSMutableArray *calArray;
+
 @end
 
 @implementation ViewController {
@@ -73,6 +75,7 @@
 
 - (void)clean {
     self.logList = nil;
+    self.calArray = nil;
     self.gbpLog = self.ghvLog = self.macLog = nil;
     [self.noButton setTitle:@"上报序号(点击复制)：--" forState:UIControlStateNormal];
     self.titleLabel.text = @"设备未连接";
@@ -137,6 +140,15 @@
     }
 }
 
+- (IBAction)actionGCD:(id)sender {
+    if (self.calArray && [self.calArray count]) {
+        self.calArray = nil;
+    } else {
+        [self.calArray addObject:@"GCD日志："];
+        [self actionCMD:sender];
+    }
+}
+
 
 - (IBAction)actionCMD:(UIButton *)btn {
     [[BluetoothService sharedInstance] sendData:btn.titleLabel.text];
@@ -151,6 +163,13 @@
         [self.logList insertObject:log atIndex:0];
         [self.logTableView reloadData];
     }
+}
+
+- (NSMutableArray *)calArray {
+    if (!_calArray) {
+        _calArray = [NSMutableArray array];
+    }
+    return _calArray;
 }
 
 -(NSMutableArray *)logList {
@@ -211,6 +230,11 @@
     [self reload];
 }
 
+-(void)notifyGCD:(NSString *)log {
+    [self.calArray addObject:log];
+    [self reload];
+}
+
 #pragma mark - uitableview deleagate
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -218,6 +242,9 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (self.calArray && [self.calArray count]) {
+        return [self.calArray count];
+    }
     return [self.logList count];
 }
 
@@ -227,7 +254,13 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LogTableViewCell *cell = [self.logTableView dequeueReusableCellWithIdentifier:@"LogTableViewCell" forIndexPath:indexPath];
-    NSString *log = [self.logList objectAtIndex:indexPath.row];
+    NSString *log;
+    if (self.calArray && [self.calArray count]) {
+        log = [self.calArray objectAtIndex:indexPath.row];
+    } else {
+        log = [self.logList objectAtIndex:indexPath.row];
+    }
+    
     cell.logLabel.text = log;
     return cell;
 }

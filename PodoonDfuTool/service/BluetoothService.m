@@ -210,6 +210,8 @@
             [self.delegate notifymacLog:offlineStr];
         } else if ([offlineStr rangeOfString:@"RT BAR:"].location != NSNotFound) {
             [self.delegate notifyGBP:[offlineStr substringFromIndex:7]];
+        } else if ([offlineStr rangeOfString:@"CAL"].location != NSNotFound) {
+            [self.delegate notifyGCD:offlineStr];
         }
         
         [self.delegate notifyLog:offlineStr];
