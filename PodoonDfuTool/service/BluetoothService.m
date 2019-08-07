@@ -225,7 +225,6 @@
     [self writeCommand:@"GHV"];
     [self performSelector:@selector(SDL11) withObject:nil afterDelay:0.02];
     [self performSelector:@selector(SDI2) withObject:nil afterDelay:0.04];
-    [self performSelector:@selector(HCM1) withObject:nil afterDelay:0.06];
 }
 
 - (void)SDL11 {

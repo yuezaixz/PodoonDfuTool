@@ -97,8 +97,8 @@
 }
 
 - (IBAction)actionPause:(id)sender {
-    [[BluetoothService sharedInstance] sendData:@"HCM0"];
-    [self performSelector:@selector(actionStart:) withObject:nil afterDelay:0.3];
+//    [[BluetoothService sharedInstance] sendData:@"HCM0"];
+    [self performSelector:@selector(actionStart:) withObject:nil afterDelay:0];
     
 //    if (!self.gvnLog || !self.ghvLog || !self.macLog) {
 //         [SVProgressHUD showErrorWithStatus:@"未连接或无数据" duration:2];
