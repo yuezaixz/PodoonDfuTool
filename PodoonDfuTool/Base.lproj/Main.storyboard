@@ -72,7 +72,7 @@
                                     <constraint firstAttribute="width" constant="70" id="QtE-aE-RbG"/>
                                     <constraint firstAttribute="height" constant="30" id="jl6-FT-Lix"/>
                                 </constraints>
-                                <state key="normal" title="GMAC"/>
+                                <state key="normal" title="GCD"/>
                                 <connections>
                                     <action selector="actionCMD:" destination="BYZ-38-t0r" eventType="touchUpInside" id="83R-Sk-oMl"/>
                                 </connections>
@@ -83,7 +83,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="5tv-mV-IoP"/>
                                 </constraints>
-                                <state key="normal" title="GVN"/>
+                                <state key="normal" title="写入值"/>
                                 <connections>
                                     <action selector="actionCMD:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sBB-3V-lWZ"/>
                                 </connections>

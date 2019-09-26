@@ -135,7 +135,22 @@
 
 
 - (IBAction)actionCMD:(UIButton *)btn {
-    [[BluetoothService sharedInstance] sendData:btn.titleLabel.text];
+    if ([btn.titleLabel.text isEqualToString:@"写入值"]) {
+        [SVProgressHUD showWithStatus:@"写入中"];
+        [self performSelector:@selector(writeCmd:) withObject:@"SSAS:120" afterDelay:0.02];
+        [self performSelector:@selector(writeCmd:) withObject:@"SSMS:6" afterDelay:0.04];
+        [self performSelector:@selector(writeCmd:) withObject:@"SSAF:90" afterDelay:0.06];
+        [self performSelector:@selector(writeCmd:) withObject:@"SSAB:60" afterDelay:0.08];
+        [self performSelector:@selector(writeCmd:) withObject:@"SSTB:20" afterDelay:0.1];
+        [self performSelector:@selector(writeCmd:) withObject:@"SSMB:4" afterDelay:0.12];
+        [SVProgressHUD performSelector:@selector(dismiss) withObject:nil afterDelay:0.2];
+    } else {
+        [[BluetoothService sharedInstance] sendData:btn.titleLabel.text];
+    }
+}
+
+- (void)writeCmd:(NSString *)cmd {
+    [[BluetoothService sharedInstance] sendData:cmd];
 }
 
 - (void)notifyLog:(NSString *)log{
