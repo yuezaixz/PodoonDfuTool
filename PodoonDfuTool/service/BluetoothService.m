@@ -208,6 +208,8 @@
             [self writeCommand:@"GMAC"];
         } else if ([offlineStr rangeOfString:@"MC:"].location != NSNotFound) {
             [self.delegate notifymacLog:offlineStr];
+        } else if ([offlineStr rangeOfString:@"Slp:"].location != NSNotFound) {
+            [self.delegate notifySlpLog:offlineStr];
         }
         
         [self.delegate notifyLog:offlineStr];

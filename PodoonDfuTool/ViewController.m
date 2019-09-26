@@ -144,6 +144,8 @@
         [self performSelector:@selector(writeCmd:) withObject:@"SSTB:20" afterDelay:0.1];
         [self performSelector:@selector(writeCmd:) withObject:@"SSMB:4" afterDelay:0.12];
         [SVProgressHUD performSelector:@selector(dismiss) withObject:nil afterDelay:0.2];
+    } else if ([btn.titleLabel.text isEqualToString:@"SCB"]) {
+        [self performSelector:@selector(writeCmd:) withObject:@"SCB:167" afterDelay:0.02];
     } else {
         [[BluetoothService sharedInstance] sendData:btn.titleLabel.text];
     }
@@ -194,9 +196,12 @@
 }
 
 - (void)notifyReady{
-    
     self.titleLabel.text = @"设备已连接";
     [SVProgressHUD showSuccessWithStatus:@"连接成功" duration:2];
+}
+
+- (void)notifySlpLog:(NSString *)log {
+    self.titleLabel.text = log;
 }
 
 - (BOOL)hadConnected {
