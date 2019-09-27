@@ -23,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [BluetoothService sharedInstance].delegate = self;
-    [BluetoothService sharedInstance].otaUrl = @"ZT_H905A_20190809-V2.0.44";
+    [BluetoothService sharedInstance].otaUrl = @"ZT_H905A_20190926-V2.0.55";
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -33,16 +33,17 @@
 
 - (IBAction)actionSelectFirmware:(id)sender {
     NSArray *firmwares = @[
+                           @"ZT_H905A_20190926-V2.0.55",
                            @"ZT_H905A_20190809-V2.0.44",
                            @"ZT_H905A_20190731-V2.0.41",
                            @"ZT_H905A_20190721-V2.0.39",
                            @"ZT_H905A_20190718-V2.0.38",
                            @"ZT_H905A_20190712-V2.0.37",
-                           @"ZT_H904A_20190625-V2.0.36",
-                           @"ZT_H904A_20190609-V2.0.33",
-                           @"ZT_H904A_20190528-V2.0.32",
-                           @"ZT_H904A_20190510-V2.0.31",
-                           @"ZT_H904A_20190417-V2.0.29",
+//                           @"ZT_H904A_20190625-V2.0.36",
+//                           @"ZT_H904A_20190609-V2.0.33",
+//                           @"ZT_H904A_20190528-V2.0.32",
+//                           @"ZT_H904A_20190510-V2.0.31",
+//                           @"ZT_H904A_20190417-V2.0.29",
 //                           @"ZT_H904A_20190405-V2.0.28",
 //                           @"ZT_H904A_20190321-V2.0.27",
                            ];
