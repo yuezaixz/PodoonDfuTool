@@ -47,6 +47,20 @@
 
 @property (strong, nonatomic) NSString *sstpVal;
 
+@property (nonatomic) NSInteger valSSAS;
+@property (nonatomic) NSInteger valSSTS;
+@property (nonatomic) NSInteger valSSMS;
+@property (nonatomic) NSInteger valSSAA;
+@property (nonatomic) NSInteger valSSTA;
+@property (nonatomic) NSInteger valSSMA;
+@property (nonatomic) NSInteger valSSAF;
+@property (nonatomic) NSInteger valSSTF;
+@property (nonatomic) NSInteger valSSMF;
+@property (nonatomic) NSInteger valSSAB;
+@property (nonatomic) NSInteger valSSTB;
+@property (nonatomic) NSInteger valSSMB;
+@property (nonatomic) NSInteger valSSSC;
+
 @end
 
 @implementation ViewController {
@@ -167,8 +181,130 @@
         [self presentViewController:alertVc animated:YES completion:nil];
     } else if ([btn.titleLabel.text isEqualToString:@"写SSTP"]) {
         if (self.sstpVal) {
-            [SVProgressHUD showSuccessWithStatus:self.sstpValur duration:1];
+            [SVProgressHUD showSuccessWithStatus:self.sstpVal duration:1];
             [self performSelector:@selector(writeCmd:) withObject:self.sstpVal afterDelay:0.02];
+        }
+    } else if ([btn.titleLabel.text isEqualToString:@"设阈值"]) {
+        UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:
+                                      UIAlertControllerStyleAlert];
+        // 添加输入框 (注意:在UIAlertControllerStyleActionSheet样式下是不能添加下面这行代码的)
+        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"SSAS均方差综合侧卧门限";
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }];
+        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"SSTSTOP2综合侧卧门限";
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }];
+        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"SSMSMAX综合侧卧门限";
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }];
+        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"SSAA均方差强条件侧卧门限";
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }];
+        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"SSTATOP2强条件侧卧门限";
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }];
+        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"SSMAMAX强条件侧卧门限";
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }];
+        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"SSAF均方差综合仰卧门限";
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }];
+        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"SSTFTOP2综合仰卧门限";
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }];
+        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"SSMFMAX综合仰卧门限";
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }];
+        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"SSAB均方差强条件仰卧门限";
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }];
+        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"SSTBTOP2强条件仰卧门限";
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }];
+        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"SSMBMAX强条件仰卧门限";
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }];
+        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"SSSC灵敏度系数";
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }];
+        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            self.valSSAS = [[alertVc textFields] objectAtIndex:0].text?[[alertVc textFields] objectAtIndex:0].text.integerValue:0;
+            self.valSSTS = [[alertVc textFields] objectAtIndex:1].text?[[alertVc textFields] objectAtIndex:1].text.integerValue:0;
+            self.valSSMS = [[alertVc textFields] objectAtIndex:2].text?[[alertVc textFields] objectAtIndex:2].text.integerValue:0;
+            self.valSSAA = [[alertVc textFields] objectAtIndex:3].text?[[alertVc textFields] objectAtIndex:3].text.integerValue:0;
+            self.valSSTA = [[alertVc textFields] objectAtIndex:4].text?[[alertVc textFields] objectAtIndex:4].text.integerValue:0;
+            self.valSSMA = [[alertVc textFields] objectAtIndex:5].text?[[alertVc textFields] objectAtIndex:5].text.integerValue:0;
+            self.valSSAF = [[alertVc textFields] objectAtIndex:6].text?[[alertVc textFields] objectAtIndex:6].text.integerValue:0;
+            self.valSSTF = [[alertVc textFields] objectAtIndex:7].text?[[alertVc textFields] objectAtIndex:7].text.integerValue:0;
+            self.valSSMF = [[alertVc textFields] objectAtIndex:8].text?[[alertVc textFields] objectAtIndex:8].text.integerValue:0;
+            self.valSSAB = [[alertVc textFields] objectAtIndex:9].text?[[alertVc textFields] objectAtIndex:9].text.integerValue:0;
+            self.valSSTB = [[alertVc textFields] objectAtIndex:10].text?[[alertVc textFields] objectAtIndex:10].text.integerValue:0;
+            self.valSSMB = [[alertVc textFields] objectAtIndex:11].text?[[alertVc textFields] objectAtIndex:11].text.integerValue:0;
+            self.valSSSC = [[alertVc textFields] objectAtIndex:12].text?[[alertVc textFields] objectAtIndex:12].text.integerValue:0;
+        }];
+        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        // 添加行为
+        [alertVc addAction:action2];
+        [alertVc addAction:action1];
+        [self presentViewController:alertVc animated:YES completion:nil];
+    } else if ([btn.titleLabel.text isEqualToString:@"写阈值"]) {
+        NSMutableArray *cmdList = [NSMutableArray array];
+        if (self.valSSAA && self.valSSAA != 0) {
+            [cmdList addObject:[NSString stringWithFormat:@"SSAS:%ld",self.valSSAS]];
+        }
+        if (self.valSSTS && self.valSSTS != 0) {
+            [cmdList addObject:[NSString stringWithFormat:@"SSTS:%ld",self.valSSTS]];
+        }
+        if (self.valSSMS && self.valSSMS != 0) {
+            [cmdList addObject:[NSString stringWithFormat:@"SSMS:%ld",self.valSSMS]];
+        }
+        if (self.valSSAA && self.valSSAA != 0) {
+            [cmdList addObject:[NSString stringWithFormat:@"SSAA:%ld",self.valSSAA]];
+        }
+        if (self.valSSTA && self.valSSTA != 0) {
+            [cmdList addObject:[NSString stringWithFormat:@"SSTA:%ld",self.valSSTA]];
+        }
+        if (self.valSSMA && self.valSSMA != 0) {
+            [cmdList addObject:[NSString stringWithFormat:@"SSMA:%ld",self.valSSMA]];
+        }
+        if (self.valSSAF && self.valSSAF != 0) {
+            [cmdList addObject:[NSString stringWithFormat:@"SSAF:%ld",self.valSSAF]];
+        }
+        if (self.valSSTF && self.valSSTF != 0) {
+            [cmdList addObject:[NSString stringWithFormat:@"SSTF:%ld",self.valSSTF]];
+        }
+        if (self.valSSMF && self.valSSMF != 0) {
+            [cmdList addObject:[NSString stringWithFormat:@"SSMF:%ld",self.valSSMF]];
+        }
+        if (self.valSSAB && self.valSSAB != 0) {
+            [cmdList addObject:[NSString stringWithFormat:@"SSAB:%ld",self.valSSAB]];
+        }
+        if (self.valSSTB && self.valSSTB != 0) {
+            [cmdList addObject:[NSString stringWithFormat:@"SSTB:%ld",self.valSSTB]];
+        }
+        if (self.valSSMB && self.valSSMB != 0) {
+            [cmdList addObject:[NSString stringWithFormat:@"SSMB:%ld",self.valSSMB]];
+        }
+        if (self.valSSSC && self.valSSSC != 0) {
+            [cmdList addObject:[NSString stringWithFormat:@"SSSC:%ld",self.valSSSC]];
+        }
+        double delayTime = 0.02;
+        for (NSString *cmd in cmdList) {
+            [self performSelector:@selector(writeCmd:) withObject:cmd afterDelay:delayTime];
+            delayTime += 0.02;
         }
     } else {
         [[BluetoothService sharedInstance] sendData:btn.titleLabel.text];
@@ -176,6 +312,7 @@
 }
 
 - (void)writeCmd:(NSString *)cmd {
+    NSLog(@"write cmd : %@", cmd);
     [[BluetoothService sharedInstance] sendData:cmd];
 }
 
