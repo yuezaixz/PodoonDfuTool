@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="x5B-8T-gt5">
-                                <rect key="frame" x="0.0" y="40" width="375" height="462"/>
+                                <rect key="frame" x="0.0" y="40" width="375" height="422"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LogTableViewCell" rowHeight="30" id="9ba-Wn-F3L" customClass="LogTableViewCell">
@@ -187,12 +187,37 @@
                                     <action selector="actionCopy:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oca-oZ-XDD"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="huI-50-apa">
+                                <rect key="frame" x="20" y="466" width="70" height="30"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="1ba-Zf-IX9"/>
+                                    <constraint firstAttribute="width" constant="70" id="axo-vm-ZZb"/>
+                                </constraints>
+                                <state key="normal" title="设SSTP"/>
+                                <connections>
+                                    <action selector="actionCMD:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qVq-xc-TdP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gxX-FD-vza">
+                                <rect key="frame" x="110" y="466" width="70" height="30"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="AWc-HW-kBp"/>
+                                    <constraint firstAttribute="height" constant="30" id="c3i-VT-e5N"/>
+                                </constraints>
+                                <state key="normal" title="写SSTP"/>
+                                <connections>
+                                    <action selector="actionCMD:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Vc-BG-6en"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Vhs-nI-NsS" firstAttribute="leading" secondItem="TrF-Sb-2wt" secondAttribute="leading" id="0GQ-wA-jO2"/>
                             <constraint firstItem="3cu-uh-hAR" firstAttribute="leading" secondItem="Vhs-nI-NsS" secondAttribute="leading" id="0Uo-PV-TTY"/>
                             <constraint firstItem="Y7m-Ap-Abl" firstAttribute="centerY" secondItem="JQW-W7-1ZP" secondAttribute="centerY" id="2It-sE-96r"/>
+                            <constraint firstItem="gxX-FD-vza" firstAttribute="bottom" secondItem="huI-50-apa" secondAttribute="bottom" id="309-nl-LdX"/>
                             <constraint firstItem="TyO-8d-khh" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="11" id="8Jz-EE-ahu"/>
                             <constraint firstItem="Vhs-nI-NsS" firstAttribute="top" secondItem="3cu-uh-hAR" secondAttribute="bottom" constant="8" id="8nd-Lq-sri"/>
                             <constraint firstItem="cG7-IZ-gJQ" firstAttribute="centerY" secondItem="kfY-KP-pPq" secondAttribute="centerY" id="95v-0M-POa"/>
@@ -202,9 +227,11 @@
                             <constraint firstItem="x5B-8T-gt5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="McU-c5-QVv"/>
                             <constraint firstItem="kfY-KP-pPq" firstAttribute="centerY" secondItem="Vhs-nI-NsS" secondAttribute="centerY" id="N7e-CB-6gF"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="DZt-g0-KVf" secondAttribute="bottom" constant="15" id="S4J-qQ-Vky"/>
+                            <constraint firstItem="gxX-FD-vza" firstAttribute="leading" secondItem="huI-50-apa" secondAttribute="trailing" constant="20" id="SNT-8s-wtF"/>
                             <constraint firstItem="zPf-3V-ism" firstAttribute="width" secondItem="TrF-Sb-2wt" secondAttribute="width" id="Wse-D1-rct"/>
-                            <constraint firstItem="Vhs-nI-NsS" firstAttribute="top" secondItem="x5B-8T-gt5" secondAttribute="bottom" constant="40" id="Xrd-MO-rFo"/>
+                            <constraint firstItem="Vhs-nI-NsS" firstAttribute="top" secondItem="x5B-8T-gt5" secondAttribute="bottom" constant="80" id="Xrd-MO-rFo"/>
                             <constraint firstItem="XWc-gw-72L" firstAttribute="trailing" secondItem="DZt-g0-KVf" secondAttribute="trailing" id="aKE-pL-1WV"/>
+                            <constraint firstItem="huI-50-apa" firstAttribute="leading" secondItem="3cu-uh-hAR" secondAttribute="leading" id="dxC-Pj-hsb"/>
                             <constraint firstItem="x5B-8T-gt5" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="40" id="fPd-d8-VjS"/>
                             <constraint firstItem="TrF-Sb-2wt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="fgK-CQ-RaQ"/>
                             <constraint firstItem="zPf-3V-ism" firstAttribute="top" secondItem="9BV-Lv-B1m" secondAttribute="top" id="h7d-iS-kF2"/>
@@ -215,6 +242,7 @@
                             <constraint firstItem="zPf-3V-ism" firstAttribute="leading" secondItem="9BV-Lv-B1m" secondAttribute="trailing" constant="20" id="nVe-si-ygO"/>
                             <constraint firstItem="TrF-Sb-2wt" firstAttribute="top" secondItem="gAX-Qk-gbG" secondAttribute="bottom" constant="19" id="ng5-8M-j5d"/>
                             <constraint firstItem="x5B-8T-gt5" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="r0t-Bd-3Ry"/>
+                            <constraint firstItem="huI-50-apa" firstAttribute="top" secondItem="x5B-8T-gt5" secondAttribute="bottom" constant="4" id="sND-zX-I1t"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DZt-g0-KVf" secondAttribute="trailing" constant="10" id="skv-T5-qnp"/>
                             <constraint firstItem="kfY-KP-pPq" firstAttribute="trailing" secondItem="XWc-gw-72L" secondAttribute="trailing" id="sx2-W5-Jkl"/>
                             <constraint firstItem="DZt-g0-KVf" firstAttribute="top" secondItem="XWc-gw-72L" secondAttribute="bottom" constant="19" id="uZ9-c5-z4v"/>

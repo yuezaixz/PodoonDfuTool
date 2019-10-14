@@ -45,6 +45,8 @@
 @property (strong, nonatomic) NSString *macLog;
 @property (strong, nonatomic) NSString *currentNO;
 
+@property (strong, nonatomic) NSString *sstpVal;
+
 @end
 
 @implementation ViewController {
@@ -146,6 +148,28 @@
         [SVProgressHUD performSelector:@selector(dismiss) withObject:nil afterDelay:0.2];
     } else if ([btn.titleLabel.text isEqualToString:@"SCB"]) {
         [self performSelector:@selector(writeCmd:) withObject:@"SCB:167" afterDelay:0.02];
+        [SVProgressHUD showSuccessWithStatus:@"发送成功" duration:1];
+    } else if ([btn.titleLabel.text isEqualToString:@"设SSTP"]) {
+        UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:
+                                      UIAlertControllerStyleAlert];
+        // 添加输入框 (注意:在UIAlertControllerStyleActionSheet样式下是不能添加下面这行代码的)
+        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"请输入相似度";
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }];
+        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            self.sstpVal = [NSString stringWithFormat:@"SSTP:%@",[[alertVc textFields] objectAtIndex:0].text];
+        }];
+        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        // 添加行为
+        [alertVc addAction:action2];
+        [alertVc addAction:action1];
+        [self presentViewController:alertVc animated:YES completion:nil];
+    } else if ([btn.titleLabel.text isEqualToString:@"写SSTP"]) {
+        if (self.sstpVal) {
+            [SVProgressHUD showSuccessWithStatus:self.sstpValur duration:1];
+            [self performSelector:@selector(writeCmd:) withObject:self.sstpVal afterDelay:0.02];
+        }
     } else {
         [[BluetoothService sharedInstance] sendData:btn.titleLabel.text];
     }
