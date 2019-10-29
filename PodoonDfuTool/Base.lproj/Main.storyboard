@@ -235,6 +235,18 @@
                                     <action selector="actionCMD:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Rgo-ZL-pWt"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fqy-3A-ise">
+                                <rect key="frame" x="289" y="504" width="70" height="30"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="JkT-dc-jWY"/>
+                                    <constraint firstAttribute="width" constant="70" id="TUZ-XA-6ML"/>
+                                </constraints>
+                                <state key="normal" title="型号--"/>
+                                <connections>
+                                    <action selector="actionModel:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XlX-CR-kO9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -247,6 +259,7 @@
                             <constraint firstItem="TyO-8d-khh" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="11" id="8Jz-EE-ahu"/>
                             <constraint firstItem="Vhs-nI-NsS" firstAttribute="top" secondItem="3cu-uh-hAR" secondAttribute="bottom" constant="8" id="8nd-Lq-sri"/>
                             <constraint firstItem="cG7-IZ-gJQ" firstAttribute="centerY" secondItem="kfY-KP-pPq" secondAttribute="centerY" id="95v-0M-POa"/>
+                            <constraint firstItem="Fqy-3A-ise" firstAttribute="trailing" secondItem="dPW-ZN-TR2" secondAttribute="trailing" id="9cO-cU-KCV"/>
                             <constraint firstItem="JQW-W7-1ZP" firstAttribute="centerX" secondItem="9BV-Lv-B1m" secondAttribute="centerX" id="DVs-kM-Ikd"/>
                             <constraint firstItem="zPf-3V-ism" firstAttribute="bottom" secondItem="DZt-g0-KVf" secondAttribute="bottom" id="J0X-cZ-hNo"/>
                             <constraint firstItem="9BV-Lv-B1m" firstAttribute="top" secondItem="TrF-Sb-2wt" secondAttribute="top" id="L32-Dm-2Hd"/>
@@ -254,6 +267,7 @@
                             <constraint firstItem="kfY-KP-pPq" firstAttribute="centerY" secondItem="Vhs-nI-NsS" secondAttribute="centerY" id="N7e-CB-6gF"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="DZt-g0-KVf" secondAttribute="bottom" constant="15" id="S4J-qQ-Vky"/>
                             <constraint firstItem="gxX-FD-vza" firstAttribute="leading" secondItem="huI-50-apa" secondAttribute="trailing" constant="20" id="SNT-8s-wtF"/>
+                            <constraint firstItem="Fqy-3A-ise" firstAttribute="top" secondItem="dPW-ZN-TR2" secondAttribute="bottom" constant="8" id="UpU-QV-dQU"/>
                             <constraint firstItem="zPf-3V-ism" firstAttribute="width" secondItem="TrF-Sb-2wt" secondAttribute="width" id="Wse-D1-rct"/>
                             <constraint firstItem="Vhs-nI-NsS" firstAttribute="top" secondItem="x5B-8T-gt5" secondAttribute="bottom" constant="80" id="Xrd-MO-rFo"/>
                             <constraint firstItem="eRa-vm-uM9" firstAttribute="centerY" secondItem="gxX-FD-vza" secondAttribute="centerY" id="Yiq-6v-7bx"/>
@@ -285,6 +299,7 @@
                         <outlet property="gvnLabel" destination="kfY-KP-pPq" id="lgm-LW-Rur"/>
                         <outlet property="logTableView" destination="x5B-8T-gt5" id="Jzt-kp-wzJ"/>
                         <outlet property="macLabel" destination="Vhs-nI-NsS" id="aKx-ng-ck0"/>
+                        <outlet property="modelButton" destination="Fqy-3A-ise" id="VFJ-yX-adS"/>
                         <outlet property="noButton" destination="3cu-uh-hAR" id="6Pr-yy-0ns"/>
                         <outlet property="pauseBtn" destination="DZt-g0-KVf" id="pVw-9m-OcZ"/>
                         <outlet property="startButton" destination="XWc-gw-72L" id="PTl-KQ-KV1"/>

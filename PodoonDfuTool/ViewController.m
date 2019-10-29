@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
 @property (weak, nonatomic) IBOutlet UIButton *pauseBtn;
 @property (weak, nonatomic) IBOutlet UIButton *noButton;
+@property (weak, nonatomic) IBOutlet UIButton *modelButton;
 
 @property (strong, nonatomic) NSMutableArray *logList;
 @property (weak, nonatomic) IBOutlet UITableView *logTableView;
@@ -60,6 +61,8 @@
 @property (nonatomic) NSInteger valSSTB;
 @property (nonatomic) NSInteger valSSMB;
 @property (nonatomic) NSInteger valSSSC;
+
+@property (strong, nonatomic) NSString *model;
 
 @end
 
@@ -118,13 +121,16 @@
     
     
     NSParameterAssert(session); // prevent infinite loop
-    
+    NSMutableDictionary *postData = [@{
+                                      @"version": self.gvnLog,
+                                      @"mac_address": self.macLog,
+                                      @"voltage": self.ghvLog
+                                      } mutableCopy];
+    if (self.model && [self.model length] == 1) {
+        [postData setObject:self.model forKey:@"model"];
+    }
     [session POST:@"https://service.runmaf.com/services/mobile/user/upload_product_record"
-       parameters:@{
-        @"version": self.gvnLog,
-        @"mac_address": self.macLog,
-        @"voltage": self.ghvLog
-       } progress:^(NSProgress * _Nonnull uploadProgress) {
+       parameters:[postData copy] progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * _Nullable msg) {
         if (msg && [[msg objectForKey:@"success"] boolValue] && [msg objectForKey:@"data"]) {
@@ -149,6 +155,22 @@
     }
 }
 
+- (IBAction)actionModel:(id)sender {
+    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"选择型号" message:nil preferredStyle:
+                                  UIAlertControllerStyleAlert];
+    UIAlertAction *sAction = [UIAlertAction actionWithTitle:@"S" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self.model = @"S";
+        [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
+    }];
+    UIAlertAction *mAction = [UIAlertAction actionWithTitle:@"M" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        self.model = @"M";
+        [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
+    }];
+    
+    [alertVc addAction:sAction];
+    [alertVc addAction:mAction];
+    [self presentViewController:alertVc animated:YES completion:nil];
+}
 
 - (IBAction)actionCMD:(UIButton *)btn {
     if ([btn.titleLabel.text isEqualToString:@"写入值"]) {
