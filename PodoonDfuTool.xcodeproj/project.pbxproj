@@ -24,6 +24,7 @@
 		A64621F1225C6B62001AEA54 /* ZT_H904A_20190317-V2.0.26.zip in Resources */ = {isa = PBXBuildFile; fileRef = A64621E8225C6B62001AEA54 /* ZT_H904A_20190317-V2.0.26.zip */; };
 		A657554022B0B6A900FF7784 /* ZT_H904A_20190609-V2.0.33.zip in Resources */ = {isa = PBXBuildFile; fileRef = A657553F22B0B6A900FF7784 /* ZT_H904A_20190609-V2.0.33.zip */; };
 		A65FF3EE22D828B800FDF8BD /* ZT_H905A_20190712-V2.0.37.zip in Resources */ = {isa = PBXBuildFile; fileRef = A65FF3ED22D828B800FDF8BD /* ZT_H905A_20190712-V2.0.37.zip */; };
+		A666C3F123746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip in Resources */ = {isa = PBXBuildFile; fileRef = A666C3F023746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip */; };
 		A66B8BDB226873CD00FB5823 /* ZT_H904A_20190417-V2.0.29.zip in Resources */ = {isa = PBXBuildFile; fileRef = A66B8BDA226873CC00FB5823 /* ZT_H904A_20190417-V2.0.29.zip */; };
 		A690FEEB233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip in Resources */ = {isa = PBXBuildFile; fileRef = A690FEEA233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip */; };
 		A69670F7229CDC5D00E7E5A1 /* ZT_H904A_20190528-V2.0.32.zip in Resources */ = {isa = PBXBuildFile; fileRef = A69670F6229CDC5D00E7E5A1 /* ZT_H904A_20190528-V2.0.32.zip */; };
@@ -77,6 +78,7 @@
 		A64621E8225C6B62001AEA54 /* ZT_H904A_20190317-V2.0.26.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190317-V2.0.26.zip"; sourceTree = "<group>"; };
 		A657553F22B0B6A900FF7784 /* ZT_H904A_20190609-V2.0.33.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190609-V2.0.33.zip"; sourceTree = "<group>"; };
 		A65FF3ED22D828B800FDF8BD /* ZT_H905A_20190712-V2.0.37.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20190712-V2.0.37.zip"; sourceTree = "<group>"; };
+		A666C3F023746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191025-V2.0.58.zip"; sourceTree = "<group>"; };
 		A66B8BDA226873CC00FB5823 /* ZT_H904A_20190417-V2.0.29.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190417-V2.0.29.zip"; sourceTree = "<group>"; };
 		A690FEEA233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20190926-V2.0.55.zip"; sourceTree = "<group>"; };
 		A69670F6229CDC5D00E7E5A1 /* ZT_H904A_20190528-V2.0.32.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190528-V2.0.32.zip"; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 		A6AFDF1321DC4D7E00F313D2 /* firmwares */ = {
 			isa = PBXGroup;
 			children = (
+				A666C3F023746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip */,
 				A6030F362356FAB7000CB5C2 /* ZT_H905A_20191015-V2.0.57.zip */,
 				A690FEEA233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip */,
 				A6001B9A2300F9B20062C06A /* ZT_H905A_20190809-V2.0.44.zip */,
@@ -416,6 +419,7 @@
 				A64621EB225C6B62001AEA54 /* ZT_H904A_20190321-V2.0.27.zip in Resources */,
 				A6AFDF3821DC5A5500F313D2 /* SVProgressHUD.bundle in Resources */,
 				A6AFDEE921DC48B200F313D2 /* LaunchScreen.storyboard in Resources */,
+				A666C3F123746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip in Resources */,
 				A6FB3CE52285533E0040B9D9 /* ZT_H904A_20190510-V2.0.31.zip in Resources */,
 				A64621EA225C6B62001AEA54 /* ZT_H904A_20190225-V2.0.22.zip in Resources */,
 				A6DA8BDB22E69A750045F4A4 /* ZT_H905A_20190721-V2.0.39.zip in Resources */,
@@ -634,7 +638,9 @@
 			baseConfigurationReference = 9ACA71290D4CC50A3A426F12 /* Pods-PodoonDfuTool.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = L6U7BB57HF;
 				INFOPLIST_FILE = PodoonDfuTool/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -643,7 +649,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.podoon.PodoonDfuTool;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -652,7 +659,9 @@
 			baseConfigurationReference = BCC8ACAC1F9DE87B49B4E41A /* Pods-PodoonDfuTool.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = L6U7BB57HF;
 				INFOPLIST_FILE = PodoonDfuTool/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -661,7 +670,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.podoon.PodoonDfuTool;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
