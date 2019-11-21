@@ -8,26 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3BC789DBE1E8BC0CCE62CC27 /* libPods-PodoonDfuTool.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B956D12766AD2C948D7423B /* libPods-PodoonDfuTool.a */; };
-		A6001B9922F13A080062C06A /* ZT_H905A_20190731-V2.0.41.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6001B9822F13A080062C06A /* ZT_H905A_20190731-V2.0.41.zip */; };
 		A6001B9B2300F9B20062C06A /* ZT_H905A_20190809-V2.0.44.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6001B9A2300F9B20062C06A /* ZT_H905A_20190809-V2.0.44.zip */; };
 		A6030F372356FAB7000CB5C2 /* ZT_H905A_20191015-V2.0.57.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6030F362356FAB7000CB5C2 /* ZT_H905A_20191015-V2.0.57.zip */; };
-		A612B16F22E01D38002B2379 /* ZT_H905A_20190718-V2.0.38.zip in Resources */ = {isa = PBXBuildFile; fileRef = A612B16E22E01D38002B2379 /* ZT_H905A_20190718-V2.0.38.zip */; };
-		A61455BA22C20CFB0078D1C8 /* ZT_H904A_20190625-V2.0.36.zip in Resources */ = {isa = PBXBuildFile; fileRef = A61455B922C20CFB0078D1C8 /* ZT_H904A_20190625-V2.0.36.zip */; };
-		A64621E9225C6B62001AEA54 /* ZT_H904A_20190314-V2.0.25.zip in Resources */ = {isa = PBXBuildFile; fileRef = A64621E0225C6B61001AEA54 /* ZT_H904A_20190314-V2.0.25.zip */; };
-		A64621EA225C6B62001AEA54 /* ZT_H904A_20190225-V2.0.22.zip in Resources */ = {isa = PBXBuildFile; fileRef = A64621E1225C6B61001AEA54 /* ZT_H904A_20190225-V2.0.22.zip */; };
-		A64621EB225C6B62001AEA54 /* ZT_H904A_20190321-V2.0.27.zip in Resources */ = {isa = PBXBuildFile; fileRef = A64621E2225C6B61001AEA54 /* ZT_H904A_20190321-V2.0.27.zip */; };
-		A64621EC225C6B62001AEA54 /* ZT_H904A_20190119-V2.0.21.zip in Resources */ = {isa = PBXBuildFile; fileRef = A64621E3225C6B61001AEA54 /* ZT_H904A_20190119-V2.0.21.zip */; };
-		A64621ED225C6B62001AEA54 /* ZT_H904A_20190114-V2.0.19.zip in Resources */ = {isa = PBXBuildFile; fileRef = A64621E4225C6B61001AEA54 /* ZT_H904A_20190114-V2.0.19.zip */; };
-		A64621EE225C6B62001AEA54 /* ZT_H904A_20190310-V2.0.24.zip in Resources */ = {isa = PBXBuildFile; fileRef = A64621E5225C6B61001AEA54 /* ZT_H904A_20190310-V2.0.24.zip */; };
-		A64621EF225C6B62001AEA54 /* ZT_H904A_20190307-V2.0.23.zip in Resources */ = {isa = PBXBuildFile; fileRef = A64621E6225C6B62001AEA54 /* ZT_H904A_20190307-V2.0.23.zip */; };
-		A64621F0225C6B62001AEA54 /* ZT_H904A_20190405-V2.0.28.zip in Resources */ = {isa = PBXBuildFile; fileRef = A64621E7225C6B62001AEA54 /* ZT_H904A_20190405-V2.0.28.zip */; };
-		A64621F1225C6B62001AEA54 /* ZT_H904A_20190317-V2.0.26.zip in Resources */ = {isa = PBXBuildFile; fileRef = A64621E8225C6B62001AEA54 /* ZT_H904A_20190317-V2.0.26.zip */; };
-		A657554022B0B6A900FF7784 /* ZT_H904A_20190609-V2.0.33.zip in Resources */ = {isa = PBXBuildFile; fileRef = A657553F22B0B6A900FF7784 /* ZT_H904A_20190609-V2.0.33.zip */; };
-		A65FF3EE22D828B800FDF8BD /* ZT_H905A_20190712-V2.0.37.zip in Resources */ = {isa = PBXBuildFile; fileRef = A65FF3ED22D828B800FDF8BD /* ZT_H905A_20190712-V2.0.37.zip */; };
 		A666C3F123746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip in Resources */ = {isa = PBXBuildFile; fileRef = A666C3F023746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip */; };
-		A66B8BDB226873CD00FB5823 /* ZT_H904A_20190417-V2.0.29.zip in Resources */ = {isa = PBXBuildFile; fileRef = A66B8BDA226873CC00FB5823 /* ZT_H904A_20190417-V2.0.29.zip */; };
 		A690FEEB233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip in Resources */ = {isa = PBXBuildFile; fileRef = A690FEEA233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip */; };
-		A69670F7229CDC5D00E7E5A1 /* ZT_H904A_20190528-V2.0.32.zip in Resources */ = {isa = PBXBuildFile; fileRef = A69670F6229CDC5D00E7E5A1 /* ZT_H904A_20190528-V2.0.32.zip */; };
 		A6AFDEDE21DC48AE00F313D2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6AFDEDD21DC48AE00F313D2 /* AppDelegate.m */; };
 		A6AFDEE121DC48AE00F313D2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6AFDEE021DC48AE00F313D2 /* ViewController.m */; };
 		A6AFDEE421DC48AE00F313D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDEE221DC48AE00F313D2 /* Main.storyboard */; };
@@ -55,33 +39,16 @@
 		A6AFDF3821DC5A5500F313D2 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDF3621DC5A5500F313D2 /* SVProgressHUD.bundle */; };
 		A6AFDF3A21DC5D7C00F313D2 /* s130_ota.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDF3921DC5D7C00F313D2 /* s130_ota.zip */; };
 		A6AFDF3C21DC666200F313D2 /* s130_ota_zt.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDF3B21DC666100F313D2 /* s130_ota_zt.zip */; };
-		A6DA8BDB22E69A750045F4A4 /* ZT_H905A_20190721-V2.0.39.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6DA8BDA22E69A740045F4A4 /* ZT_H905A_20190721-V2.0.39.zip */; };
-		A6FB3CE52285533E0040B9D9 /* ZT_H904A_20190510-V2.0.31.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6FB3CE42285533E0040B9D9 /* ZT_H904A_20190510-V2.0.31.zip */; };
+		A6DA8E762386714000B1519A /* ZT_H905A_20191121-V2.0.62.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6DA8E752386714000B1519A /* ZT_H905A_20191121-V2.0.62.zip */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1B956D12766AD2C948D7423B /* libPods-PodoonDfuTool.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PodoonDfuTool.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ACA71290D4CC50A3A426F12 /* Pods-PodoonDfuTool.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PodoonDfuTool.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PodoonDfuTool/Pods-PodoonDfuTool.debug.xcconfig"; sourceTree = "<group>"; };
-		A6001B9822F13A080062C06A /* ZT_H905A_20190731-V2.0.41.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20190731-V2.0.41.zip"; sourceTree = "<group>"; };
 		A6001B9A2300F9B20062C06A /* ZT_H905A_20190809-V2.0.44.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20190809-V2.0.44.zip"; sourceTree = "<group>"; };
 		A6030F362356FAB7000CB5C2 /* ZT_H905A_20191015-V2.0.57.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191015-V2.0.57.zip"; sourceTree = "<group>"; };
-		A612B16E22E01D38002B2379 /* ZT_H905A_20190718-V2.0.38.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20190718-V2.0.38.zip"; sourceTree = "<group>"; };
-		A61455B922C20CFB0078D1C8 /* ZT_H904A_20190625-V2.0.36.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190625-V2.0.36.zip"; sourceTree = "<group>"; };
-		A64621E0225C6B61001AEA54 /* ZT_H904A_20190314-V2.0.25.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190314-V2.0.25.zip"; sourceTree = "<group>"; };
-		A64621E1225C6B61001AEA54 /* ZT_H904A_20190225-V2.0.22.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190225-V2.0.22.zip"; sourceTree = "<group>"; };
-		A64621E2225C6B61001AEA54 /* ZT_H904A_20190321-V2.0.27.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190321-V2.0.27.zip"; sourceTree = "<group>"; };
-		A64621E3225C6B61001AEA54 /* ZT_H904A_20190119-V2.0.21.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190119-V2.0.21.zip"; sourceTree = "<group>"; };
-		A64621E4225C6B61001AEA54 /* ZT_H904A_20190114-V2.0.19.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190114-V2.0.19.zip"; sourceTree = "<group>"; };
-		A64621E5225C6B61001AEA54 /* ZT_H904A_20190310-V2.0.24.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190310-V2.0.24.zip"; sourceTree = "<group>"; };
-		A64621E6225C6B62001AEA54 /* ZT_H904A_20190307-V2.0.23.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190307-V2.0.23.zip"; sourceTree = "<group>"; };
-		A64621E7225C6B62001AEA54 /* ZT_H904A_20190405-V2.0.28.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190405-V2.0.28.zip"; sourceTree = "<group>"; };
-		A64621E8225C6B62001AEA54 /* ZT_H904A_20190317-V2.0.26.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190317-V2.0.26.zip"; sourceTree = "<group>"; };
-		A657553F22B0B6A900FF7784 /* ZT_H904A_20190609-V2.0.33.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190609-V2.0.33.zip"; sourceTree = "<group>"; };
-		A65FF3ED22D828B800FDF8BD /* ZT_H905A_20190712-V2.0.37.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20190712-V2.0.37.zip"; sourceTree = "<group>"; };
 		A666C3F023746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191025-V2.0.58.zip"; sourceTree = "<group>"; };
-		A66B8BDA226873CC00FB5823 /* ZT_H904A_20190417-V2.0.29.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190417-V2.0.29.zip"; sourceTree = "<group>"; };
 		A690FEEA233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20190926-V2.0.55.zip"; sourceTree = "<group>"; };
-		A69670F6229CDC5D00E7E5A1 /* ZT_H904A_20190528-V2.0.32.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190528-V2.0.32.zip"; sourceTree = "<group>"; };
 		A6AFDED921DC48AE00F313D2 /* PodoonDfuTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PodoonDfuTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6AFDEDC21DC48AE00F313D2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A6AFDEDD21DC48AE00F313D2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -132,8 +99,7 @@
 		A6AFDF3621DC5A5500F313D2 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		A6AFDF3921DC5D7C00F313D2 /* s130_ota.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = s130_ota.zip; sourceTree = "<group>"; };
 		A6AFDF3B21DC666100F313D2 /* s130_ota_zt.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = s130_ota_zt.zip; sourceTree = "<group>"; };
-		A6DA8BDA22E69A740045F4A4 /* ZT_H905A_20190721-V2.0.39.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20190721-V2.0.39.zip"; sourceTree = "<group>"; };
-		A6FB3CE42285533E0040B9D9 /* ZT_H904A_20190510-V2.0.31.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H904A_20190510-V2.0.31.zip"; sourceTree = "<group>"; };
+		A6DA8E752386714000B1519A /* ZT_H905A_20191121-V2.0.62.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191121-V2.0.62.zip"; sourceTree = "<group>"; };
 		BCC8ACAC1F9DE87B49B4E41A /* Pods-PodoonDfuTool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PodoonDfuTool.release.xcconfig"; path = "Pods/Target Support Files/Pods-PodoonDfuTool/Pods-PodoonDfuTool.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -285,28 +251,11 @@
 		A6AFDF1321DC4D7E00F313D2 /* firmwares */ = {
 			isa = PBXGroup;
 			children = (
+				A6DA8E752386714000B1519A /* ZT_H905A_20191121-V2.0.62.zip */,
 				A666C3F023746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip */,
 				A6030F362356FAB7000CB5C2 /* ZT_H905A_20191015-V2.0.57.zip */,
 				A690FEEA233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip */,
 				A6001B9A2300F9B20062C06A /* ZT_H905A_20190809-V2.0.44.zip */,
-				A6001B9822F13A080062C06A /* ZT_H905A_20190731-V2.0.41.zip */,
-				A6DA8BDA22E69A740045F4A4 /* ZT_H905A_20190721-V2.0.39.zip */,
-				A612B16E22E01D38002B2379 /* ZT_H905A_20190718-V2.0.38.zip */,
-				A65FF3ED22D828B800FDF8BD /* ZT_H905A_20190712-V2.0.37.zip */,
-				A61455B922C20CFB0078D1C8 /* ZT_H904A_20190625-V2.0.36.zip */,
-				A657553F22B0B6A900FF7784 /* ZT_H904A_20190609-V2.0.33.zip */,
-				A64621E4225C6B61001AEA54 /* ZT_H904A_20190114-V2.0.19.zip */,
-				A64621E3225C6B61001AEA54 /* ZT_H904A_20190119-V2.0.21.zip */,
-				A64621E1225C6B61001AEA54 /* ZT_H904A_20190225-V2.0.22.zip */,
-				A64621E6225C6B62001AEA54 /* ZT_H904A_20190307-V2.0.23.zip */,
-				A64621E5225C6B61001AEA54 /* ZT_H904A_20190310-V2.0.24.zip */,
-				A64621E0225C6B61001AEA54 /* ZT_H904A_20190314-V2.0.25.zip */,
-				A64621E8225C6B62001AEA54 /* ZT_H904A_20190317-V2.0.26.zip */,
-				A64621E2225C6B61001AEA54 /* ZT_H904A_20190321-V2.0.27.zip */,
-				A64621E7225C6B62001AEA54 /* ZT_H904A_20190405-V2.0.28.zip */,
-				A66B8BDA226873CC00FB5823 /* ZT_H904A_20190417-V2.0.29.zip */,
-				A6FB3CE42285533E0040B9D9 /* ZT_H904A_20190510-V2.0.31.zip */,
-				A69670F6229CDC5D00E7E5A1 /* ZT_H904A_20190528-V2.0.32.zip */,
 				A6AFDF3B21DC666100F313D2 /* s130_ota_zt.zip */,
 				A6AFDF3921DC5D7C00F313D2 /* s130_ota.zip */,
 			);
@@ -416,34 +365,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A64621EB225C6B62001AEA54 /* ZT_H904A_20190321-V2.0.27.zip in Resources */,
 				A6AFDF3821DC5A5500F313D2 /* SVProgressHUD.bundle in Resources */,
 				A6AFDEE921DC48B200F313D2 /* LaunchScreen.storyboard in Resources */,
 				A666C3F123746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip in Resources */,
-				A6FB3CE52285533E0040B9D9 /* ZT_H904A_20190510-V2.0.31.zip in Resources */,
-				A64621EA225C6B62001AEA54 /* ZT_H904A_20190225-V2.0.22.zip in Resources */,
-				A6DA8BDB22E69A750045F4A4 /* ZT_H905A_20190721-V2.0.39.zip in Resources */,
-				A6001B9922F13A080062C06A /* ZT_H905A_20190731-V2.0.41.zip in Resources */,
-				A66B8BDB226873CD00FB5823 /* ZT_H904A_20190417-V2.0.29.zip in Resources */,
+				A6DA8E762386714000B1519A /* ZT_H905A_20191121-V2.0.62.zip in Resources */,
 				A6AFDF3A21DC5D7C00F313D2 /* s130_ota.zip in Resources */,
-				A65FF3EE22D828B800FDF8BD /* ZT_H905A_20190712-V2.0.37.zip in Resources */,
-				A64621EC225C6B62001AEA54 /* ZT_H904A_20190119-V2.0.21.zip in Resources */,
 				A6AFDF3C21DC666200F313D2 /* s130_ota_zt.zip in Resources */,
-				A64621ED225C6B62001AEA54 /* ZT_H904A_20190114-V2.0.19.zip in Resources */,
 				A6AFDEE621DC48B200F313D2 /* Assets.xcassets in Resources */,
-				A69670F7229CDC5D00E7E5A1 /* ZT_H904A_20190528-V2.0.32.zip in Resources */,
-				A612B16F22E01D38002B2379 /* ZT_H905A_20190718-V2.0.38.zip in Resources */,
 				A6001B9B2300F9B20062C06A /* ZT_H905A_20190809-V2.0.44.zip in Resources */,
 				A690FEEB233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip in Resources */,
 				A6AFDEE421DC48AE00F313D2 /* Main.storyboard in Resources */,
-				A64621F0225C6B62001AEA54 /* ZT_H904A_20190405-V2.0.28.zip in Resources */,
 				A6030F372356FAB7000CB5C2 /* ZT_H905A_20191015-V2.0.57.zip in Resources */,
-				A657554022B0B6A900FF7784 /* ZT_H904A_20190609-V2.0.33.zip in Resources */,
-				A64621E9225C6B62001AEA54 /* ZT_H904A_20190314-V2.0.25.zip in Resources */,
-				A64621F1225C6B62001AEA54 /* ZT_H904A_20190317-V2.0.26.zip in Resources */,
-				A64621EE225C6B62001AEA54 /* ZT_H904A_20190310-V2.0.24.zip in Resources */,
-				A64621EF225C6B62001AEA54 /* ZT_H904A_20190307-V2.0.23.zip in Resources */,
-				A61455BA22C20CFB0078D1C8 /* ZT_H904A_20190625-V2.0.36.zip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,7 +572,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = L6U7BB57HF;
 				INFOPLIST_FILE = PodoonDfuTool/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -661,7 +593,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = L6U7BB57HF;
 				INFOPLIST_FILE = PodoonDfuTool/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
