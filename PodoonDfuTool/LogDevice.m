@@ -14,4 +14,8 @@
     return [NSString stringWithFormat:@"%@,%@,%ld,%@", self.macAddress, self.no?self.no:@"", self.connectCount, self.lastDate];
 }
 
+-(NSString *)stringDetailFormat {
+    return [NSString stringWithFormat:@"MAC:%@,NO:%@,次数:%ld", self.macAddress, self.no?self.no:@"", self.connectCount];
+}
+
 @end

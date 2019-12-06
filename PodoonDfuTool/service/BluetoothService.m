@@ -129,8 +129,8 @@
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI{
     LOG_FUNC
     NSLog(@"RSSI:%@,%ld",peripheral.identifier.UUIDString, RSSI.integerValue);
-    if ([peripheral.name rangeOfString:@"ZT"].location != NSNotFound && RSSI.integerValue > -95 && RSSI.integerValue != 127 && self.delegate && [self.delegate respondsToSelector:@selector(canconnect:)] && [self.delegate canconnect:peripheral.identifier.UUIDString] ) {
-        [self.delegate notifyDiscover];
+    if (!self.connectingPeripheral && [peripheral.name rangeOfString:@"ZT"].location != NSNotFound && RSSI.integerValue > -95 && RSSI.integerValue != 127 && self.delegate && [self.delegate respondsToSelector:@selector(canconnect:)] && [self.delegate canconnect:peripheral.identifier.UUIDString] ) {
+        [self.delegate notifyDiscover:peripheral.identifier.UUIDString];
         self.connectingPeripheral = peripheral;
         [self.centermanager connectPeripheral:peripheral options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES]
                                                                                              forKey:CBConnectPeripheralOptionNotifyOnDisconnectionKey]];
@@ -138,11 +138,16 @@
     }
 }
 
+-(void)clear:(NSString *)uuid {
+    if (self.connectingPeripheral && [self.connectingPeripheral.identifier.UUIDString isEqualToString:uuid]) {
+        self.connectingPeripheral = nil;
+    }
+}
+
 //连接成功
 -(void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral{
     LOG_FUNC
     [self.delegate notifyDidConnect:peripheral];
-    self.connectingPeripheral = nil;
     
     peripheral.delegate = self;
     

@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @required
 
-- (void)notifyDiscover;
+- (void)notifyDiscover:(NSString *)uuidString;
 - (void)notifyDidConnect:(CBPeripheral *)peripheral;
 - (void)notifyDisConnect;
 - (void)notifyReady;
@@ -41,6 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)disconnect;
 
 - (void)sendData:(NSString *)cmd;
+
+-(void)clear:(NSString *)uuid;
 
 @end
 

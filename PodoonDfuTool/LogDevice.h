@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSDate *lastDate;
 @property (strong, nonatomic) CBPeripheral *peripheral;
 
+-(NSString *)stringDetailFormat;
 -(NSString *)stringFormat;
 
 @end

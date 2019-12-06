@@ -56,23 +56,18 @@
 }
 
 - (IBAction)actionClean:(id)sender {
+
+    [[BluetoothService sharedInstance] stop];
+    [[BluetoothService sharedInstance] disconnect];
+    isStart_ = false;
     self.logList = nil;
     self.titleLabel.text = @"";
     [self reload];
 }
 
 - (IBAction)actionStart:(id)sender {
-    if (isStart_) {
-        [[BluetoothService sharedInstance] stop];
-        [[BluetoothService sharedInstance] disconnect];
-        [self actionClean:sender];
-        [self.startButton setTitle:@"开始" forState:UIControlStateNormal];
-    } else {
-        [[BluetoothService sharedInstance] search];
-        [self.startButton setTitle:@"结束" forState:UIControlStateNormal];
-        [self actionClean:sender];
-    }
-    isStart_ = !isStart_;
+    [[BluetoothService sharedInstance] search];
+    isStart_ = true;
 }
 
 - (IBAction)actionCMD:(UIButton *)btn {
@@ -83,7 +78,7 @@
             NSMutableString *copyResult = [NSMutableString string];
             for (LogDevice *device in self.logList) {
                 [copyResult appendString:@"\n"];
-                [copyResult appendString:[device stringFormat]];
+                [copyResult appendString:[device stringDetailFormat]];
             }
             [[UIPasteboard generalPasteboard] setString:copyResult];
             [SVProgressHUD showSuccessWithStatus:@"复制成功" duration:1];
@@ -100,10 +95,11 @@
     
 }
 
-- (void)notifyDiscover{
+- (void)notifyDiscover:(NSString *)uuidString{
     self.titleLabel.text = @"设备连接中";
     [SVProgressHUD showSuccessWithStatus:@"连接中" duration:1];
-    [[BluetoothService sharedInstance] stop];
+    [[BluetoothService sharedInstance] performSelector:@selector(clear:) withObject:uuidString afterDelay:5];
+//    [[BluetoothService sharedInstance] stop];
 }
 
 - (void)notifyDidConnect:(CBPeripheral *)peripheral{
