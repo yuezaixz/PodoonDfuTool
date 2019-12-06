@@ -39,7 +39,7 @@
 		A6AFDF3821DC5A5500F313D2 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDF3621DC5A5500F313D2 /* SVProgressHUD.bundle */; };
 		A6AFDF3A21DC5D7C00F313D2 /* s130_ota.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDF3921DC5D7C00F313D2 /* s130_ota.zip */; };
 		A6AFDF3C21DC666200F313D2 /* s130_ota_zt.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDF3B21DC666100F313D2 /* s130_ota_zt.zip */; };
-		A6DA8E762386714000B1519A /* ZT_H905A_20191121-V2.0.62.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6DA8E752386714000B1519A /* ZT_H905A_20191121-V2.0.62.zip */; };
+		A6C017B9238E212500403F7E /* ZT_H905A_20191125-V2.0.65.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6C017B8238E212400403F7E /* ZT_H905A_20191125-V2.0.65.zip */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,7 +99,7 @@
 		A6AFDF3621DC5A5500F313D2 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		A6AFDF3921DC5D7C00F313D2 /* s130_ota.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = s130_ota.zip; sourceTree = "<group>"; };
 		A6AFDF3B21DC666100F313D2 /* s130_ota_zt.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = s130_ota_zt.zip; sourceTree = "<group>"; };
-		A6DA8E752386714000B1519A /* ZT_H905A_20191121-V2.0.62.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191121-V2.0.62.zip"; sourceTree = "<group>"; };
+		A6C017B8238E212400403F7E /* ZT_H905A_20191125-V2.0.65.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191125-V2.0.65.zip"; sourceTree = "<group>"; };
 		BCC8ACAC1F9DE87B49B4E41A /* Pods-PodoonDfuTool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PodoonDfuTool.release.xcconfig"; path = "Pods/Target Support Files/Pods-PodoonDfuTool/Pods-PodoonDfuTool.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -251,7 +251,7 @@
 		A6AFDF1321DC4D7E00F313D2 /* firmwares */ = {
 			isa = PBXGroup;
 			children = (
-				A6DA8E752386714000B1519A /* ZT_H905A_20191121-V2.0.62.zip */,
+				A6C017B8238E212400403F7E /* ZT_H905A_20191125-V2.0.65.zip */,
 				A666C3F023746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip */,
 				A6030F362356FAB7000CB5C2 /* ZT_H905A_20191015-V2.0.57.zip */,
 				A690FEEA233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip */,
@@ -368,13 +368,13 @@
 				A6AFDF3821DC5A5500F313D2 /* SVProgressHUD.bundle in Resources */,
 				A6AFDEE921DC48B200F313D2 /* LaunchScreen.storyboard in Resources */,
 				A666C3F123746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip in Resources */,
-				A6DA8E762386714000B1519A /* ZT_H905A_20191121-V2.0.62.zip in Resources */,
 				A6AFDF3A21DC5D7C00F313D2 /* s130_ota.zip in Resources */,
 				A6AFDF3C21DC666200F313D2 /* s130_ota_zt.zip in Resources */,
 				A6AFDEE621DC48B200F313D2 /* Assets.xcassets in Resources */,
 				A6001B9B2300F9B20062C06A /* ZT_H905A_20190809-V2.0.44.zip in Resources */,
 				A690FEEB233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip in Resources */,
 				A6AFDEE421DC48AE00F313D2 /* Main.storyboard in Resources */,
+				A6C017B9238E212500403F7E /* ZT_H905A_20191125-V2.0.65.zip in Resources */,
 				A6030F372356FAB7000CB5C2 /* ZT_H905A_20191015-V2.0.57.zip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -572,7 +572,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = L6U7BB57HF;
 				INFOPLIST_FILE = PodoonDfuTool/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -593,7 +593,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = L6U7BB57HF;
 				INFOPLIST_FILE = PodoonDfuTool/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
