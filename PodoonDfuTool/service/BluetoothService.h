@@ -17,14 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
 @required
 
 - (void)notifyDiscover;
-- (void)notifyDidConnect;
+- (void)notifyDidConnect:(CBPeripheral *)peripheral;
 - (void)notifyDisConnect;
 - (void)notifyReady;
-- (void)notifyLog:(NSString *)log;
-- (void)notifyghvLog:(NSString *)log;
-- (void)notifygvnLog:(NSString *)log;
-- (void)notifymacLog:(NSString *)log;
-- (void)notifySlpLog:(NSString *)log;
+- (void)notifymacLog:(NSString *)log  atPeripheral:(CBPeripheral *)peripheral;
+- (bool)canconnect:(NSString *)uuidString;
 
 @end
 

@@ -129,7 +129,7 @@
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI{
     LOG_FUNC
     NSLog(@"RSSI:%@,%ld",peripheral.identifier.UUIDString, RSSI.integerValue);
-    if ([peripheral.name rangeOfString:@"ZT"].location != NSNotFound && RSSI.integerValue > -50 && RSSI.integerValue != 127 ) {
+    if ([peripheral.name rangeOfString:@"ZT"].location != NSNotFound && RSSI.integerValue > -95 && RSSI.integerValue != 127 && self.delegate && [self.delegate respondsToSelector:@selector(canconnect:)] && [self.delegate canconnect:peripheral.identifier.UUIDString] ) {
         [self.delegate notifyDiscover];
         self.connectingPeripheral = peripheral;
         [self.centermanager connectPeripheral:peripheral options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES]
@@ -141,7 +141,7 @@
 //连接成功
 -(void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral{
     LOG_FUNC
-    [self.delegate notifyDidConnect];
+    [self.delegate notifyDidConnect:peripheral];
     self.connectingPeripheral = nil;
     
     peripheral.delegate = self;
@@ -201,18 +201,11 @@
         uint8_t *footData = [tempData bytes];
         NSString *offlineStr = [[NSString stringWithFormat:@"%s",footData] substringWithRange:NSMakeRange(0, tempData.length)];
         if ([offlineStr rangeOfString:@"Batt"].location != NSNotFound) {
-            [self.delegate notifyghvLog:offlineStr];
+//            [self.delegate notifyghvLog:offlineStr];
             [self writeCommand:@"GVN"];
-        } else if ([offlineStr rangeOfString:@"FW"].location != NSNotFound) {
-            [self.delegate notifygvnLog:offlineStr];
-            [self writeCommand:@"GMAC"];
         } else if ([offlineStr rangeOfString:@"MC:"].location != NSNotFound) {
-            [self.delegate notifymacLog:offlineStr];
-        } else if ([offlineStr rangeOfString:@"Slp:"].location != NSNotFound) {
-            [self.delegate notifySlpLog:offlineStr];
+            [self.delegate notifymacLog:[offlineStr substringFromIndex:3] atPeripheral:peripheral];
         }
-        
-        [self.delegate notifyLog:offlineStr];
         
     }
 }
@@ -220,9 +213,7 @@
 - (void)initAtFoundWrite {
     LOG_FUNC
     
-    [self writeCommand:@"GHV"];
-    [self performSelector:@selector(SDL11) withObject:nil afterDelay:0.02];
-    [self performSelector:@selector(SDI2) withObject:nil afterDelay:0.04];
+    [self writeCommand:@"GMAC"];
 }
 
 - (void)SDL11 {

@@ -36,6 +36,7 @@
 		A6AFDF3821DC5A5500F313D2 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDF3621DC5A5500F313D2 /* SVProgressHUD.bundle */; };
 		A6AFDF3A21DC5D7C00F313D2 /* s130_ota.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDF3921DC5D7C00F313D2 /* s130_ota.zip */; };
 		A6AFDF3C21DC666200F313D2 /* s130_ota_zt.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDF3B21DC666100F313D2 /* s130_ota_zt.zip */; };
+		A6BFB7702399F22D00A1218A /* LogDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BFB76F2399F22D00A1218A /* LogDevice.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +94,8 @@
 		A6AFDF3621DC5A5500F313D2 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		A6AFDF3921DC5D7C00F313D2 /* s130_ota.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = s130_ota.zip; sourceTree = "<group>"; };
 		A6AFDF3B21DC666100F313D2 /* s130_ota_zt.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = s130_ota_zt.zip; sourceTree = "<group>"; };
+		A6BFB76E2399F22D00A1218A /* LogDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogDevice.h; sourceTree = "<group>"; };
+		A6BFB76F2399F22D00A1218A /* LogDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogDevice.m; sourceTree = "<group>"; };
 		D655C77DD41DD495EF0AE946 /* Pods-PodoonDfuTool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PodoonDfuTool.release.xcconfig"; path = "Target Support Files/Pods-PodoonDfuTool/Pods-PodoonDfuTool.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -154,6 +157,8 @@
 				A6AFDEDD21DC48AE00F313D2 /* AppDelegate.m */,
 				A6AFDEDF21DC48AE00F313D2 /* ViewController.h */,
 				A6AFDEE021DC48AE00F313D2 /* ViewController.m */,
+				A6BFB76E2399F22D00A1218A /* LogDevice.h */,
+				A6BFB76F2399F22D00A1218A /* LogDevice.m */,
 				A6AFDEE221DC48AE00F313D2 /* Main.storyboard */,
 				A6AFDEE521DC48B200F313D2 /* Assets.xcassets */,
 				A6AFDEE721DC48B200F313D2 /* LaunchScreen.storyboard */,
@@ -402,6 +407,7 @@
 				A6AFDEF521DC4A0700F313D2 /* BluetoothService.m in Sources */,
 				A6AFDF3121DC59FC00F313D2 /* mztools.c in Sources */,
 				A6AFDF1A21DC4D7F00F313D2 /* JsonParser.m in Sources */,
+				A6BFB7702399F22D00A1218A /* LogDevice.m in Sources */,
 				A6AFDF1921DC4D7F00F313D2 /* InitData.m in Sources */,
 				A6AFDEE121DC48AE00F313D2 /* ViewController.m in Sources */,
 				A6AFDF3021DC59FC00F313D2 /* ioapi.c in Sources */,
