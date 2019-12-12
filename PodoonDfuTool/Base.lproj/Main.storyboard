@@ -90,7 +90,19 @@
                                 </constraints>
                                 <state key="normal" title="结束"/>
                                 <connections>
-                                    <action selector="actionClean:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8RO-Fa-AHp"/>
+                                    <action selector="actionStop:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Klg-Nl-q8y"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qd7-oo-dRF">
+                                <rect key="frame" x="180" y="617" width="70" height="30"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="L6B-Bs-WBU"/>
+                                    <constraint firstAttribute="width" constant="70" id="pra-BP-LLw"/>
+                                </constraints>
+                                <state key="normal" title="清除"/>
+                                <connections>
+                                    <action selector="actionClean:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oaP-uc-gGC"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -101,6 +113,7 @@
                             <constraint firstItem="dhw-4f-f7m" firstAttribute="centerY" secondItem="gAX-Qk-gbG" secondAttribute="centerY" id="9Mq-Nj-CFf"/>
                             <constraint firstItem="Y7m-Ap-Abl" firstAttribute="top" secondItem="x5B-8T-gt5" secondAttribute="bottom" constant="15" id="AR1-lH-nRB"/>
                             <constraint firstItem="x5B-8T-gt5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="McU-c5-QVv"/>
+                            <constraint firstItem="Qd7-oo-dRF" firstAttribute="centerY" secondItem="dhw-4f-f7m" secondAttribute="centerY" id="OSX-6m-GBD"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Y7m-Ap-Abl" secondAttribute="trailing" constant="9" id="YOE-au-pOR"/>
                             <constraint firstItem="gAX-Qk-gbG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="bQV-ZW-5j8"/>
                             <constraint firstItem="dhw-4f-f7m" firstAttribute="leading" secondItem="gAX-Qk-gbG" secondAttribute="trailing" constant="16" id="dBX-oI-2m2"/>
@@ -108,6 +121,7 @@
                             <constraint firstItem="TyO-8d-khh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="12" id="myU-d2-R0q"/>
                             <constraint firstItem="gAX-Qk-gbG" firstAttribute="top" secondItem="x5B-8T-gt5" secondAttribute="bottom" constant="15" id="oWF-eM-Vvc"/>
                             <constraint firstItem="x5B-8T-gt5" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="r0t-Bd-3Ry"/>
+                            <constraint firstItem="Qd7-oo-dRF" firstAttribute="leading" secondItem="dhw-4f-f7m" secondAttribute="trailing" constant="8" id="rjZ-Lw-Isu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

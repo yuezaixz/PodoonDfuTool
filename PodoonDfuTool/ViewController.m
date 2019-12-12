@@ -31,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
 
 @property (strong, nonatomic) NSMutableArray *logList;
+@property (strong, nonatomic) NSString *logStr;
 @property (weak, nonatomic) IBOutlet UITableView *logTableView;
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -39,35 +40,69 @@
 
 @implementation ViewController {
     BOOL isStart_;
+    NSTimer *stopAnimationtimer;
+    BOOL _hadConnect;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [BluetoothService sharedInstance].delegate = self;
+    _hadConnect = true;
+    
+    NSUserDefaults *udf = [NSUserDefaults standardUserDefaults];
+    self.logStr = [udf objectForKey:@"log_list"]?:@"";
 }
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
 }
 
 - (void)reload {
     [self.logTableView reloadData];
 }
 
-- (IBAction)actionClean:(id)sender {
-
+- (IBAction)actionStop:(id)sender {
+    if (stopAnimationtimer) {
+        [stopAnimationtimer invalidate];
+        stopAnimationtimer = nil;
+    }
     [[BluetoothService sharedInstance] stop];
     [[BluetoothService sharedInstance] disconnect];
     isStart_ = false;
-    self.logList = nil;
     self.titleLabel.text = @"";
+    [self reload];
+    
+}
+
+- (IBAction)actionClean:(id)sender {
+    self.logList = [NSMutableArray array];
+    self.logStr = @"";
+    
+    NSUserDefaults *udf = [NSUserDefaults standardUserDefaults];
+    [udf setObject:self.logStr forKey:@"log_list"];
+    [udf synchronize];
     [self reload];
 }
 
 - (IBAction)actionStart:(id)sender {
     [[BluetoothService sharedInstance] search];
     isStart_ = true;
+    
+    // 创建
+    stopAnimationtimer = [NSTimer scheduledTimerWithTimeInterval:30
+                                                          target:self
+                                                        selector:@selector(check)
+                                                        userInfo:nil
+                                                         repeats:YES];
+    [stopAnimationtimer fire];
+}
+
+- (void)check {
+    if (!_hadConnect) {
+        NSLog(@"开始重启");
+        [[BluetoothService sharedInstance] search];
+    }
+    _hadConnect = false;
 }
 
 - (IBAction)actionCMD:(UIButton *)btn {
@@ -75,15 +110,20 @@
         
     } else if ([btn.titleLabel.text isEqualToString:@"复制"]) {
         if (self.logList && [self.logList count] > 0) {
-            NSMutableString *copyResult = [NSMutableString string];
-            for (LogDevice *device in self.logList) {
-                [copyResult appendString:@"\n"];
-                [copyResult appendString:[device stringDetailFormat]];
-            }
-            [[UIPasteboard generalPasteboard] setString:copyResult];
+            NSString *copyStr = self.logStr?:[self getLogSt];
+            [[UIPasteboard generalPasteboard] setString:copyStr];
             [SVProgressHUD showSuccessWithStatus:@"复制成功" duration:1];
         }
     }
+}
+
+- (NSString *)getLogSt {
+    NSMutableString *copyResult = [NSMutableString string];
+    for (LogDevice *device in self.logList) {
+        [copyResult appendString:@"\n"];
+        [copyResult appendString:[device stringDetailFormat]];
+    }
+    return copyResult;
 }
 
 - (void)writeCmd:(NSString *)cmd {
@@ -131,6 +171,7 @@
 }
 
 - (void)notifymacLog:(NSString *)mac atPeripheral:(CBPeripheral *)peripheral;{
+    _hadConnect = true;
     LogDevice *findDevice;
     for (LogDevice *device in self.logList) {
         if ([device.uuid isEqualToString:peripheral.identifier.UUIDString]) {
@@ -161,6 +202,10 @@
             if (msg && [[msg objectForKey:@"success"] boolValue] && [msg objectForKey:@"data"]) {
                 findDevice.no = [NSString stringWithFormat:@"%@", [[msg objectForKey:@"data"] objectForKey:@"id"]];
                 [self reload];
+                NSUserDefaults *udf = [NSUserDefaults standardUserDefaults];
+                self.logStr = [self getLogSt];
+                [udf setObject:self.logStr forKey:@"log_list"];
+                [udf synchronize];
             }else{
 //                [SVProgressHUD showErrorWithStatus:@"编号获取失败" duration:2];
             }
@@ -172,6 +217,12 @@
     findDevice.connectCount += 1;
     findDevice.lastDate = [NSDate date];
     [self performSelector:@selector(disconnectAndStop) withObject:nil afterDelay:2];
+    
+    
+    NSUserDefaults *udf = [NSUserDefaults standardUserDefaults];
+    self.logStr = [self getLogSt];
+    [udf setObject:self.logStr forKey:@"log_list"];
+    [udf synchronize];
     [self reload];
 }
 
