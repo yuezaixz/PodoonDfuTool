@@ -243,9 +243,7 @@
     if (!findDevice) {
         return true;
     } else {
-        
-        NSLog(@"1111aaaaa:%ld", abs((int)[findDevice.lastDate timeIntervalSinceNow]));
-        if (abs((int)[findDevice.lastDate timeIntervalSinceNow]) > 120) {
+        if (abs((int)[findDevice.lastDate timeIntervalSinceNow]) > 25) {
             return true;
         }
     }
