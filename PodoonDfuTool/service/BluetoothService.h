@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyDisConnect;
 - (void)notifyReady;
 - (void)notifyLog:(NSString *)log;
+- (void)notifyRemainDayLog:(NSString *)log;
 - (void)notifyghvLog:(NSString *)log;
 - (void)notifygvnLog:(NSString *)log;
 - (void)notifymacLog:(NSString *)log;

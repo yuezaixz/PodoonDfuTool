@@ -206,6 +206,8 @@
         } else if ([offlineStr rangeOfString:@"FW"].location != NSNotFound) {
             [self.delegate notifygvnLog:offlineStr];
             [self writeCommand:@"GMAC"];
+        } else if ([offlineStr rangeOfString:@"DownCnt:"].location != NSNotFound) {
+           [self.delegate notifyRemainDayLog:[offlineStr substringFromIndex:8]];
         } else if ([offlineStr rangeOfString:@"MC:"].location != NSNotFound) {
             [self.delegate notifymacLog:offlineStr];
         } else if ([offlineStr rangeOfString:@"Slp:"].location != NSNotFound) {
@@ -221,10 +223,10 @@
     LOG_FUNC
     
     [self writeCommand:@"GHV"];
-    [self performSelector:@selector(SDL11) withObject:nil afterDelay:0.02];
-    [self performSelector:@selector(SDI2) withObject:nil afterDelay:0.04];
+    [self performSelector:@selector(writeCommand:) withObject:@"GDC" afterDelay:0.02];
+    [self performSelector:@selector(SDL11) withObject:nil afterDelay:0.04];
+    [self performSelector:@selector(SDI2) withObject:nil afterDelay:0.06];
 }
-
 - (void)SDL11 {
     [self writeCommand:@"SDL:11"];
 }

@@ -40,6 +40,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *gvnLabel;
 @property (weak, nonatomic) IBOutlet UILabel *gvhLabel;
 @property (weak, nonatomic) IBOutlet UILabel *macLabel;
+@property (weak, nonatomic) IBOutlet UILabel *remainDayLabel;
+@property (strong, nonatomic) NSString *remainDayStr;
 
 @property (strong, nonatomic) NSString *ghvLog;
 @property (strong, nonatomic) NSString *gvnLog;
@@ -62,6 +64,8 @@
 @property (nonatomic) NSInteger valSSMB;
 @property (nonatomic) NSInteger valSSSC;
 
+@property (nonatomic) NSInteger valDay;
+
 @property (strong, nonatomic) NSString *model;
 
 @end
@@ -74,6 +78,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [BluetoothService sharedInstance].delegate = self;
+    [self.logTableView setBackgroundColor:[UIColor whiteColor]];
+    self.valDay = -1;
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -328,8 +334,28 @@
             [self performSelector:@selector(writeCmd:) withObject:cmd afterDelay:delayTime];
             delayTime += 0.02;
         }
-    } else {
-        [[BluetoothService sharedInstance] sendData:btn.titleLabel.text];
+    } else if ([btn.titleLabel.text isEqualToString:@"设天数"]) {
+       UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"输入天数" message:nil preferredStyle:
+                                     UIAlertControllerStyleAlert];
+       [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+           textField.placeholder = @"输入天数";
+           textField.keyboardType = UIKeyboardTypeNumberPad;
+       }];
+       UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+           self.valDay = [[alertVc textFields] objectAtIndex:0].text?[[alertVc textFields] objectAtIndex:0].text.integerValue:0;
+       }];
+       UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+       // 添加行为
+       [alertVc addAction:action2];
+       [alertVc addAction:action1];
+       [self presentViewController:alertVc animated:YES completion:nil];
+   } else if ([btn.titleLabel.text isEqualToString:@"写天数"]) {
+       if (self.valDay != -1) {
+           [self writeCmd:[NSString stringWithFormat:@"SDD:%ld", self.valDay]];
+           [self performSelector:@selector(writeCmd:) withObject:@"GDC" afterDelay:1];
+       }
+   } else {
+    [[BluetoothService sharedInstance] sendData:btn.titleLabel.text];
     }
 }
 
@@ -398,6 +424,12 @@
 }
 - (void)notifygvnLog:(NSString *)log{
     self.gvnLog = log;
+    [self reload];
+}
+- (void)notifyRemainDayLog:(NSString *)log{
+    self.remainDayStr = log;
+    self.remainDayLabel.text = [NSString stringWithFormat:@"剩余:%@", log];
+    [SVProgressHUD showSuccessWithStatus:@"刷新剩余时间" duration:2];
     [self reload];
 }
 - (void)notifymacLog:(NSString *)mac{
