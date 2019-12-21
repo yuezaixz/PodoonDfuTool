@@ -351,8 +351,8 @@
        [self presentViewController:alertVc animated:YES completion:nil];
    } else if ([btn.titleLabel.text isEqualToString:@"写天数"]) {
        if (self.valDay != -1) {
-           [self writeCmd:[NSString stringWithFormat:@"SDD:%ld", self.valDay]];
-           [self performSelector:@selector(writeCmd:) withObject:@"GDC" afterDelay:1];
+           [self writeCmd:[NSString stringWithFormat:@"SDD:%ld", self.valDay*3600*24]];
+           [self performSelector:@selector(writeCmd:) withObject:@"GDC" afterDelay:0.2];
        }
    } else {
     [[BluetoothService sharedInstance] sendData:btn.titleLabel.text];
@@ -434,6 +434,25 @@
 }
 - (void)notifymacLog:(NSString *)mac{
     self.macLog = mac;
+    if (mac) {
+        __weak AFHTTPSessionManager *session = [RMHTTPSessionManager sharedManager];
+        
+        
+        NSParameterAssert(session); // prevent infinite loop
+        NSMutableDictionary *postData = @{
+                                          @"mac_address": [self.macLog substringFromIndex:3],
+                                          };
+        [session POST:@"https://service.runmaf.com/services/mobile/user/query_product_record"
+           parameters:[postData copy] progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * _Nullable msg) {
+            if (msg && [[msg objectForKey:@"success"] boolValue] && [msg objectForKey:@"data"] && [[msg objectForKey:@"data"] objectForKey:@"no"]) {
+                self.currentNO = [[msg objectForKey:@"data"] objectForKey:@"no"];
+                [self.noButton setTitle:[NSString stringWithFormat:@"上报序号(点击复制)：%@",self.currentNO] forState:UIControlStateNormal];
+            }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        }];
+    }
     [self reload];
 }
 

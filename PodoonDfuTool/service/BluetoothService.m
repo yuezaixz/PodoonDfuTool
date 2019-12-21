@@ -224,8 +224,9 @@
     
     [self writeCommand:@"GHV"];
     [self performSelector:@selector(writeCommand:) withObject:@"GDC" afterDelay:0.02];
-    [self performSelector:@selector(SDL11) withObject:nil afterDelay:0.04];
-    [self performSelector:@selector(SDI2) withObject:nil afterDelay:0.06];
+    [self performSelector:@selector(writeCommand:) withObject:@"GMAC" afterDelay:0.04];
+    [self performSelector:@selector(SDL11) withObject:nil afterDelay:0.06];
+    [self performSelector:@selector(SDI2) withObject:nil afterDelay:0.08];
 }
 - (void)SDL11 {
     [self writeCommand:@"SDL:11"];
