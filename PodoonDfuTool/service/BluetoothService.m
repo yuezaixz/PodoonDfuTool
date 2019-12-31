@@ -210,6 +210,9 @@
             [self writeCommand:@"GVN"];
         } else if ([offlineStr rangeOfString:@"MC:"].location != NSNotFound) {
             [self.delegate notifymacLog:[offlineStr substringFromIndex:3] atPeripheral:peripheral];
+        } else if ([offlineStr rangeOfString:@"CurTime:"].location != NSNotFound) {
+           [self.delegate notifyTimeLog:[offlineStr substringFromIndex:8] atPeripheral:peripheral];
+           [self writeCommand:@"GMAC"];
         }
         
     }
@@ -218,7 +221,7 @@
 - (void)initAtFoundWrite {
     LOG_FUNC
     
-    [self writeCommand:@"GMAC"];
+    [self writeCommand:@"GTD"];
 }
 
 - (void)SDL11 {

@@ -11,11 +11,22 @@
 @implementation LogDevice
 
 -(NSString *)stringFormat {
-    return [NSString stringWithFormat:@"%@,%@,%ld,%@", self.macAddress, self.no?self.no:@"", self.connectCount, self.lastDate];
+    return [NSString stringWithFormat:@"%@,%@,%ld,%@,%@", self.macAddress, self.no?self.no:@"", self.connectCount, [LogDevice stringFromDateWithCommonFormat:self.lastDate], self.firmTime];
 }
 
 -(NSString *)stringDetailFormat {
     return [NSString stringWithFormat:@"MAC:%@,NO:%@,次数:%ld", self.macAddress, self.no?self.no:@"", self.connectCount];
+}
+
++ (NSString *)stringFromDateWithCommonFormat:(NSDate *)date {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
+    
+    //    NSTimeZone *gmtZone = [NSTimeZone timeZoneWithName:@"Asia/Shanghai"];
+    NSTimeZone* gmtZone = [NSTimeZone localTimeZone];
+    [dateFormatter setTimeZone:gmtZone];
+    [dateFormatter setDateFormat:@"MM-dd HH:mm"];
+    return [dateFormatter stringFromDate:date];
 }
 
 @end

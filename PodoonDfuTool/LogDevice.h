@@ -14,6 +14,7 @@
 @property (strong, nonatomic) NSString *macAddress;
 @property (strong, nonatomic) NSString *uuid;
 @property (strong, nonatomic) NSString *no;
+@property (strong, nonatomic) NSString *firmTime;
 @property (nonatomic) NSInteger connectCount;
 @property (strong, nonatomic) NSDate *lastDate;
 @property (strong, nonatomic) CBPeripheral *peripheral;

@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyDisConnect;
 - (void)notifyReady;
 - (void)notifymacLog:(NSString *)log  atPeripheral:(CBPeripheral *)peripheral;
+- (void)notifyTimeLog:(NSString *)log  atPeripheral:(CBPeripheral *)peripheral;
 - (bool)canconnect:(NSString *)uuidString;
 
 @end

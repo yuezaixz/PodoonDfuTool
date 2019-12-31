@@ -170,7 +170,26 @@
     [[BluetoothService sharedInstance] disconnect];
 }
 
-- (void)notifymacLog:(NSString *)mac atPeripheral:(CBPeripheral *)peripheral;{
+
+- (void)notifyTimeLog:(NSString *)mac atPeripheral:(CBPeripheral *)peripheral{
+    LogDevice *findDevice;
+    for (LogDevice *device in self.logList) {
+        if ([device.uuid isEqualToString:peripheral.identifier.UUIDString]) {
+            findDevice = device;
+        }
+    }
+    if (!findDevice) {
+        findDevice = [[LogDevice alloc] init];
+        findDevice.peripheral = peripheral;
+        findDevice.uuid = peripheral.identifier.UUIDString;
+        findDevice.macAddress = mac;
+        findDevice.connectCount = 0;
+        [self.logList addObject:findDevice];
+    }
+    findDevice.firmTime = mac;
+}
+
+- (void)notifymacLog:(NSString *)mac atPeripheral:(CBPeripheral *)peripheral{
     _hadConnect = true;
     LogDevice *findDevice;
     for (LogDevice *device in self.logList) {

@@ -44,7 +44,7 @@
 		8212F02F9C820783A6C24455 /* Pods-PodoonDfuTool.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PodoonDfuTool.debug.xcconfig"; path = "Target Support Files/Pods-PodoonDfuTool/Pods-PodoonDfuTool.debug.xcconfig"; sourceTree = "<group>"; };
 		A613311422BA19FF00E5F77C /* RMHTTPSessionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMHTTPSessionManager.h; sourceTree = "<group>"; };
 		A613311522BA19FF00E5F77C /* RMHTTPSessionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RMHTTPSessionManager.m; sourceTree = "<group>"; };
-		A6AFDED921DC48AE00F313D2 /* PodoonDfuTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PodoonDfuTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6AFDED921DC48AE00F313D2 /* 连接测试.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "连接测试.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6AFDEDC21DC48AE00F313D2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A6AFDEDD21DC48AE00F313D2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		A6AFDEDF21DC48AE00F313D2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -141,7 +141,7 @@
 		A6AFDEDA21DC48AE00F313D2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A6AFDED921DC48AE00F313D2 /* PodoonDfuTool.app */,
+				A6AFDED921DC48AE00F313D2 /* 连接测试.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -320,7 +320,7 @@
 			);
 			name = PodoonDfuTool;
 			productName = PodoonDfuTool;
-			productReference = A6AFDED921DC48AE00F313D2 /* PodoonDfuTool.app */;
+			productReference = A6AFDED921DC48AE00F313D2 /* 连接测试.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -500,7 +500,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -553,7 +553,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -573,8 +573,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.podoon.PCBATest;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.podoon.searchTool;
+				PRODUCT_NAME = "连接测试";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -591,8 +591,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.podoon.PCBATest;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.podoon.searchTool;
+				PRODUCT_NAME = "连接测试";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
