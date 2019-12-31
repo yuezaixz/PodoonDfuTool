@@ -37,6 +37,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>使用蓝牙进行固件升级</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>使用蓝牙进行固件升级</string>
 	<key>UILaunchStoryboardName</key>

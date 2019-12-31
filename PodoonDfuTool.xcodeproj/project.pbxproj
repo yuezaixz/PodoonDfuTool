@@ -10,10 +10,11 @@
 		3BC789DBE1E8BC0CCE62CC27 /* libPods-PodoonDfuTool.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B956D12766AD2C948D7423B /* libPods-PodoonDfuTool.a */; };
 		A6001B9B2300F9B20062C06A /* ZT_H905A_20190809-V2.0.44.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6001B9A2300F9B20062C06A /* ZT_H905A_20190809-V2.0.44.zip */; };
 		A6030F372356FAB7000CB5C2 /* ZT_H905A_20191015-V2.0.57.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6030F362356FAB7000CB5C2 /* ZT_H905A_20191015-V2.0.57.zip */; };
-		A624E47523AB3D2300CC3423 /* ZT_H905A_20191219-V2.0.68.zip in Resources */ = {isa = PBXBuildFile; fileRef = A624E47423AB3D2300CC3423 /* ZT_H905A_20191219-V2.0.68.zip */; };
+		A641733D23ACAD7B00DB57B1 /* ZT_H905A_20191220-V2.0.70.zip in Resources */ = {isa = PBXBuildFile; fileRef = A641733C23ACAD7B00DB57B1 /* ZT_H905A_20191220-V2.0.70.zip */; };
+		A651D76923BB40F000B402F6 /* ZT_H905A_20191230-V2.0.76.zip in Resources */ = {isa = PBXBuildFile; fileRef = A651D76823BB40EF00B402F6 /* ZT_H905A_20191230-V2.0.76.zip */; };
 		A666C3F123746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip in Resources */ = {isa = PBXBuildFile; fileRef = A666C3F023746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip */; };
+		A66CA6D623B34CB5006A70FD /* ZT_H905A_20191224-V2.0.73.zip in Resources */ = {isa = PBXBuildFile; fileRef = A66CA6D523B34CB5006A70FD /* ZT_H905A_20191224-V2.0.73.zip */; };
 		A690FEEB233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip in Resources */ = {isa = PBXBuildFile; fileRef = A690FEEA233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip */; };
-		A6AFC1E023A1D3FB0068BEFA /* ZT_H905A_20191211-V2.0.67.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6AFC1DF23A1D3FA0068BEFA /* ZT_H905A_20191211-V2.0.67.zip */; };
 		A6AFDEDE21DC48AE00F313D2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6AFDEDD21DC48AE00F313D2 /* AppDelegate.m */; };
 		A6AFDEE121DC48AE00F313D2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6AFDEE021DC48AE00F313D2 /* ViewController.m */; };
 		A6AFDEE421DC48AE00F313D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDEE221DC48AE00F313D2 /* Main.storyboard */; };
@@ -41,7 +42,6 @@
 		A6AFDF3821DC5A5500F313D2 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDF3621DC5A5500F313D2 /* SVProgressHUD.bundle */; };
 		A6AFDF3A21DC5D7C00F313D2 /* s130_ota.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDF3921DC5D7C00F313D2 /* s130_ota.zip */; };
 		A6AFDF3C21DC666200F313D2 /* s130_ota_zt.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDF3B21DC666100F313D2 /* s130_ota_zt.zip */; };
-		A6C017B9238E212500403F7E /* ZT_H905A_20191125-V2.0.65.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6C017B8238E212400403F7E /* ZT_H905A_20191125-V2.0.65.zip */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,10 +49,11 @@
 		9ACA71290D4CC50A3A426F12 /* Pods-PodoonDfuTool.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PodoonDfuTool.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PodoonDfuTool/Pods-PodoonDfuTool.debug.xcconfig"; sourceTree = "<group>"; };
 		A6001B9A2300F9B20062C06A /* ZT_H905A_20190809-V2.0.44.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20190809-V2.0.44.zip"; sourceTree = "<group>"; };
 		A6030F362356FAB7000CB5C2 /* ZT_H905A_20191015-V2.0.57.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191015-V2.0.57.zip"; sourceTree = "<group>"; };
-		A624E47423AB3D2300CC3423 /* ZT_H905A_20191219-V2.0.68.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191219-V2.0.68.zip"; sourceTree = "<group>"; };
+		A641733C23ACAD7B00DB57B1 /* ZT_H905A_20191220-V2.0.70.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191220-V2.0.70.zip"; sourceTree = "<group>"; };
+		A651D76823BB40EF00B402F6 /* ZT_H905A_20191230-V2.0.76.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191230-V2.0.76.zip"; sourceTree = "<group>"; };
 		A666C3F023746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191025-V2.0.58.zip"; sourceTree = "<group>"; };
+		A66CA6D523B34CB5006A70FD /* ZT_H905A_20191224-V2.0.73.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191224-V2.0.73.zip"; sourceTree = "<group>"; };
 		A690FEEA233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20190926-V2.0.55.zip"; sourceTree = "<group>"; };
-		A6AFC1DF23A1D3FA0068BEFA /* ZT_H905A_20191211-V2.0.67.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191211-V2.0.67.zip"; sourceTree = "<group>"; };
 		A6AFDED921DC48AE00F313D2 /* PodoonDfuTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PodoonDfuTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6AFDEDC21DC48AE00F313D2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A6AFDEDD21DC48AE00F313D2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -103,7 +104,6 @@
 		A6AFDF3621DC5A5500F313D2 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		A6AFDF3921DC5D7C00F313D2 /* s130_ota.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = s130_ota.zip; sourceTree = "<group>"; };
 		A6AFDF3B21DC666100F313D2 /* s130_ota_zt.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = s130_ota_zt.zip; sourceTree = "<group>"; };
-		A6C017B8238E212400403F7E /* ZT_H905A_20191125-V2.0.65.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191125-V2.0.65.zip"; sourceTree = "<group>"; };
 		BCC8ACAC1F9DE87B49B4E41A /* Pods-PodoonDfuTool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PodoonDfuTool.release.xcconfig"; path = "Pods/Target Support Files/Pods-PodoonDfuTool/Pods-PodoonDfuTool.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -255,9 +255,9 @@
 		A6AFDF1321DC4D7E00F313D2 /* firmwares */ = {
 			isa = PBXGroup;
 			children = (
-				A624E47423AB3D2300CC3423 /* ZT_H905A_20191219-V2.0.68.zip */,
-				A6AFC1DF23A1D3FA0068BEFA /* ZT_H905A_20191211-V2.0.67.zip */,
-				A6C017B8238E212400403F7E /* ZT_H905A_20191125-V2.0.65.zip */,
+				A651D76823BB40EF00B402F6 /* ZT_H905A_20191230-V2.0.76.zip */,
+				A66CA6D523B34CB5006A70FD /* ZT_H905A_20191224-V2.0.73.zip */,
+				A641733C23ACAD7B00DB57B1 /* ZT_H905A_20191220-V2.0.70.zip */,
 				A666C3F023746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip */,
 				A6030F362356FAB7000CB5C2 /* ZT_H905A_20191015-V2.0.57.zip */,
 				A690FEEA233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip */,
@@ -371,18 +371,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A6AFC1E023A1D3FB0068BEFA /* ZT_H905A_20191211-V2.0.67.zip in Resources */,
 				A6AFDF3821DC5A5500F313D2 /* SVProgressHUD.bundle in Resources */,
 				A6AFDEE921DC48B200F313D2 /* LaunchScreen.storyboard in Resources */,
 				A666C3F123746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip in Resources */,
-				A624E47523AB3D2300CC3423 /* ZT_H905A_20191219-V2.0.68.zip in Resources */,
 				A6AFDF3A21DC5D7C00F313D2 /* s130_ota.zip in Resources */,
 				A6AFDF3C21DC666200F313D2 /* s130_ota_zt.zip in Resources */,
 				A6AFDEE621DC48B200F313D2 /* Assets.xcassets in Resources */,
 				A6001B9B2300F9B20062C06A /* ZT_H905A_20190809-V2.0.44.zip in Resources */,
 				A690FEEB233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip in Resources */,
+				A641733D23ACAD7B00DB57B1 /* ZT_H905A_20191220-V2.0.70.zip in Resources */,
+				A651D76923BB40F000B402F6 /* ZT_H905A_20191230-V2.0.76.zip in Resources */,
+				A66CA6D623B34CB5006A70FD /* ZT_H905A_20191224-V2.0.73.zip in Resources */,
 				A6AFDEE421DC48AE00F313D2 /* Main.storyboard in Resources */,
-				A6C017B9238E212500403F7E /* ZT_H905A_20191125-V2.0.65.zip in Resources */,
 				A6030F372356FAB7000CB5C2 /* ZT_H905A_20191015-V2.0.57.zip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -580,7 +580,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 29;
 				DEVELOPMENT_TEAM = L6U7BB57HF;
 				INFOPLIST_FILE = PodoonDfuTool/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -601,7 +601,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 29;
 				DEVELOPMENT_TEAM = L6U7BB57HF;
 				INFOPLIST_FILE = PodoonDfuTool/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
