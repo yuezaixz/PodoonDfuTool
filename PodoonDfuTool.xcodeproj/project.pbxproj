@@ -12,6 +12,7 @@
 		A6030F372356FAB7000CB5C2 /* ZT_H905A_20191015-V2.0.57.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6030F362356FAB7000CB5C2 /* ZT_H905A_20191015-V2.0.57.zip */; };
 		A641733D23ACAD7B00DB57B1 /* ZT_H905A_20191220-V2.0.70.zip in Resources */ = {isa = PBXBuildFile; fileRef = A641733C23ACAD7B00DB57B1 /* ZT_H905A_20191220-V2.0.70.zip */; };
 		A651D76923BB40F000B402F6 /* ZT_H905A_20191230-V2.0.76.zip in Resources */ = {isa = PBXBuildFile; fileRef = A651D76823BB40EF00B402F6 /* ZT_H905A_20191230-V2.0.76.zip */; };
+		A651D77123BF1DE000B402F6 /* ZT_H905A_20200103-V2.0.77.zip in Resources */ = {isa = PBXBuildFile; fileRef = A651D77023BF1DE000B402F6 /* ZT_H905A_20200103-V2.0.77.zip */; };
 		A666C3F123746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip in Resources */ = {isa = PBXBuildFile; fileRef = A666C3F023746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip */; };
 		A66CA6D623B34CB5006A70FD /* ZT_H905A_20191224-V2.0.73.zip in Resources */ = {isa = PBXBuildFile; fileRef = A66CA6D523B34CB5006A70FD /* ZT_H905A_20191224-V2.0.73.zip */; };
 		A690FEEB233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip in Resources */ = {isa = PBXBuildFile; fileRef = A690FEEA233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip */; };
@@ -51,6 +52,7 @@
 		A6030F362356FAB7000CB5C2 /* ZT_H905A_20191015-V2.0.57.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191015-V2.0.57.zip"; sourceTree = "<group>"; };
 		A641733C23ACAD7B00DB57B1 /* ZT_H905A_20191220-V2.0.70.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191220-V2.0.70.zip"; sourceTree = "<group>"; };
 		A651D76823BB40EF00B402F6 /* ZT_H905A_20191230-V2.0.76.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191230-V2.0.76.zip"; sourceTree = "<group>"; };
+		A651D77023BF1DE000B402F6 /* ZT_H905A_20200103-V2.0.77.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20200103-V2.0.77.zip"; sourceTree = "<group>"; };
 		A666C3F023746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191025-V2.0.58.zip"; sourceTree = "<group>"; };
 		A66CA6D523B34CB5006A70FD /* ZT_H905A_20191224-V2.0.73.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20191224-V2.0.73.zip"; sourceTree = "<group>"; };
 		A690FEEA233D9CBE00F98249 /* ZT_H905A_20190926-V2.0.55.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20190926-V2.0.55.zip"; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 		A6AFDF1321DC4D7E00F313D2 /* firmwares */ = {
 			isa = PBXGroup;
 			children = (
+				A651D77023BF1DE000B402F6 /* ZT_H905A_20200103-V2.0.77.zip */,
 				A651D76823BB40EF00B402F6 /* ZT_H905A_20191230-V2.0.76.zip */,
 				A66CA6D523B34CB5006A70FD /* ZT_H905A_20191224-V2.0.73.zip */,
 				A641733C23ACAD7B00DB57B1 /* ZT_H905A_20191220-V2.0.70.zip */,
@@ -375,6 +378,7 @@
 				A6AFDEE921DC48B200F313D2 /* LaunchScreen.storyboard in Resources */,
 				A666C3F123746BC200E9FF34 /* ZT_H905A_20191025-V2.0.58.zip in Resources */,
 				A6AFDF3A21DC5D7C00F313D2 /* s130_ota.zip in Resources */,
+				A651D77123BF1DE000B402F6 /* ZT_H905A_20200103-V2.0.77.zip in Resources */,
 				A6AFDF3C21DC666200F313D2 /* s130_ota_zt.zip in Resources */,
 				A6AFDEE621DC48B200F313D2 /* Assets.xcassets in Resources */,
 				A6001B9B2300F9B20062C06A /* ZT_H905A_20190809-V2.0.44.zip in Resources */,
@@ -580,7 +584,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = L6U7BB57HF;
 				INFOPLIST_FILE = PodoonDfuTool/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -601,7 +605,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = L6U7BB57HF;
 				INFOPLIST_FILE = PodoonDfuTool/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

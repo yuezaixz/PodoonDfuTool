@@ -23,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [BluetoothService sharedInstance].delegate = self;
-    [BluetoothService sharedInstance].otaUrl = @"ZT_H905A_20191230-V2.0.76";
+    [BluetoothService sharedInstance].otaUrl = @"ZT_H905A_20200103-V2.0.77";
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -33,6 +33,7 @@
 
 - (IBAction)actionSelectFirmware:(id)sender {
     NSArray *firmwares = @[
+                        @"ZT_H905A_20200103-V2.0.77",
                            @"ZT_H905A_20191230-V2.0.76",
                            @"ZT_H905A_20191224-V2.0.73",
                            @"ZT_H905A_20191220-V2.0.70",
