@@ -182,11 +182,13 @@
         findDevice = [[LogDevice alloc] init];
         findDevice.peripheral = peripheral;
         findDevice.uuid = peripheral.identifier.UUIDString;
-        findDevice.macAddress = mac;
         findDevice.connectCount = 0;
         [self.logList addObject:findDevice];
     }
-    findDevice.firmTime = mac;
+    if (findDevice) {
+        findDevice.firmTime = mac;
+        
+    }
 }
 
 - (void)notifymacLog:(NSString *)mac atPeripheral:(CBPeripheral *)peripheral{
@@ -234,6 +236,8 @@
     }
 
     findDevice.connectCount += 1;
+    
+    findDevice.macAddress = mac;
     findDevice.lastDate = [NSDate date];
     [self performSelector:@selector(disconnectAndStop) withObject:nil afterDelay:2];
     
