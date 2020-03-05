@@ -227,7 +227,18 @@
     [self performSelector:@selector(writeCommand:) withObject:@"GMAC" afterDelay:0.04];
     [self performSelector:@selector(SDL11) withObject:nil afterDelay:0.06];
     [self performSelector:@selector(SDI2) withObject:nil afterDelay:0.08];
+    [self performSelector:@selector(adjustTime) withObject:nil afterDelay:0.10];
 }
+
+- (void)adjustTime {
+    NSDate *currentDate = [NSDate date];//获取当前时间，日期
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"HH:mm:ss"];
+    NSString *dateString = [dateFormatter stringFromDate:currentDate];
+    NSLog(@"STD:%@", dateString);
+    [self writeCommand:[NSString stringWithFormat:@"STD:%@", dateString]];
+}
+
 - (void)SDL11 {
     [self writeCommand:@"SDL:11"];
 }
