@@ -172,9 +172,14 @@
         self.model = @"M";
         [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
     }];
+    UIAlertAction *lAction = [UIAlertAction actionWithTitle:@"L" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        self.model = @"L";
+        [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
+    }];
     
     [alertVc addAction:sAction];
     [alertVc addAction:mAction];
+    [alertVc addAction:lAction];
     [self presentViewController:alertVc animated:YES completion:nil];
 }
 
