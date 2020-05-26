@@ -168,11 +168,11 @@
         self.model = @"S";
         [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
     }];
-    UIAlertAction *mAction = [UIAlertAction actionWithTitle:@"M" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *mAction = [UIAlertAction actionWithTitle:@"M" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self.model = @"M";
         [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
     }];
-    UIAlertAction *lAction = [UIAlertAction actionWithTitle:@"L" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *lAction = [UIAlertAction actionWithTitle:@"L" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self.model = @"L";
         [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
     }];
