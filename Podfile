@@ -6,6 +6,6 @@ target 'PodoonDfuTool' do
   # use_frameworks!
 
   # Pods for PodoonDfuTool
-  pod 'AFNetworking', '~> 3.0'
+  pod 'AFNetworking'
 
 end
