@@ -31,6 +31,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *pauseBtn;
 @property (weak, nonatomic) IBOutlet UIButton *noButton;
 @property (weak, nonatomic) IBOutlet UIButton *modelButton;
+@property (weak, nonatomic) IBOutlet UISwitch *modelSwitch;
+
 
 @property (strong, nonatomic) NSMutableArray *logList;
 @property (weak, nonatomic) IBOutlet UITableView *logTableView;
@@ -168,18 +170,33 @@
         self.model = @"S";
         [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
     }];
+    UIAlertAction *spAction = [UIAlertAction actionWithTitle:@"S+" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self.model = @"S+";
+        [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
+    }];
     UIAlertAction *mAction = [UIAlertAction actionWithTitle:@"M" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self.model = @"M";
+        [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
+    }];
+    UIAlertAction *mpAction = [UIAlertAction actionWithTitle:@"M+" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self.model = @"M+";
         [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
     }];
     UIAlertAction *lAction = [UIAlertAction actionWithTitle:@"L" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self.model = @"L";
         [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
     }];
+    UIAlertAction *lpAction = [UIAlertAction actionWithTitle:@"L+" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self.model = @"L+";
+        [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
+    }];
     
     [alertVc addAction:sAction];
+    [alertVc addAction:spAction];
     [alertVc addAction:mAction];
+    [alertVc addAction:mpAction];
     [alertVc addAction:lAction];
+    [alertVc addAction:lpAction];
     [self presentViewController:alertVc animated:YES completion:nil];
 }
 
@@ -447,7 +464,8 @@
         NSMutableDictionary *postData = @{
                                           @"mac_address": [self.macLog substringFromIndex:3],
                                           };
-        [session POST:@"https://service.runmaf.com/services/mobile/user/query_product_record"
+        
+        [session POST:self.modelSwitch.isOn ?  @"https://service.runmaf.com/services/mobile/user/query_product_record_new" : @"https://service.runmaf.com/services/mobile/user/query_product_record"
            parameters:[postData copy] progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * _Nullable msg) {
