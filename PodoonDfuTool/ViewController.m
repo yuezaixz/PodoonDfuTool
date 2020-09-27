@@ -134,10 +134,11 @@
                                       @"mac_address": self.macLog,
                                       @"voltage": self.ghvLog
                                       } mutableCopy];
-    if (self.model && [self.model length] == 1) {
+    if (self.model && [self.model length] >= 1) {
         [postData setObject:self.model forKey:@"model"];
     }
-    [session POST:@"https://service.runmaf.com/services/mobile/user/upload_product_record"
+    
+    [session POST: self.modelSwitch.isOn ?  @"https://service.runmaf.com/services/mobile/user/upload_product_record_new" : @"https://service.runmaf.com/services/mobile/user/upload_product_record"
        parameters:[postData copy] progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * _Nullable msg) {
@@ -465,7 +466,7 @@
                                           @"mac_address": [self.macLog substringFromIndex:3],
                                           };
         
-        [session POST:self.modelSwitch.isOn ?  @"https://service.runmaf.com/services/mobile/user/query_product_record_new" : @"https://service.runmaf.com/services/mobile/user/query_product_record"
+        [session POST:@"https://service.runmaf.com/services/mobile/user/query_product_record"
            parameters:[postData copy] progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * _Nullable msg) {
