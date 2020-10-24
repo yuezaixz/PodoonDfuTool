@@ -172,7 +172,10 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x8u-i2-8Cg">
                                         <rect key="frame" x="193" y="63.5" width="62" height="30"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="超限设置">
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="62" id="jAM-fk-ptV"/>
+                                        </constraints>
+                                        <state key="normal" title="超限:3">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -261,6 +264,7 @@
                         <outlet property="adjustFailLabel" destination="BlM-w0-6o5" id="SfZ-Ec-oCD"/>
                         <outlet property="doneButton" destination="mnv-oa-2bo" id="jx5-PC-x5S"/>
                         <outlet property="enterButton" destination="gsi-JU-jDc" id="cW9-lT-diK"/>
+                        <outlet property="limitButton" destination="x8u-i2-8Cg" id="uLS-7I-sbV"/>
                         <outlet property="limitFailLabel" destination="eNw-XD-igQ" id="kQM-Aj-lZs"/>
                         <outlet property="logTableView" destination="x5B-8T-gt5" id="Jzt-kp-wzJ"/>
                         <outlet property="promptLabel" destination="rdI-YI-b3J" id="OoJ-oV-uHw"/>

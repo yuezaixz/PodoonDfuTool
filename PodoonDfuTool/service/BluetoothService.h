@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyDisConnect;
 - (void)notifyReady;
 - (void)notifyLog:(NSString *)log;
+- (void)notifyVals:(NSArray *)valArray rIndex: (NSInteger) rIndex;
 // 进入或退出透传成功
 - (void)notifyTunelSucc;
 // 进入退出校准成功或开始发送数据成功

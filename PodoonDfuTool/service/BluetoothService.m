@@ -234,8 +234,17 @@
             } else {
                 [self.delegate notifyAdjustFail];
             }
-        } else if ([offlineStr rangeOfString:@"*R"].location != NSNotFound) {
-            
+        } else if ([offlineStr hasPrefix:@"R"]) {
+            NSInteger rIndex = [[offlineStr substringWithRange:NSMakeRange(1, 1)] integerValue];
+            NSArray *rVals = [[offlineStr substringFromIndex:3] componentsSeparatedByString:@","];
+            NSMutableArray *valArray = [NSMutableArray array];
+            for (NSString *hexString in rVals) {
+                unsigned int outVal;
+                NSScanner* scanner = [NSScanner scannerWithString:[NSString stringWithFormat:@"0x%@", hexString]];
+                [scanner scanHexInt:&outVal];
+                [valArray addObject:@(outVal)];
+            }
+            [self.delegate notifyVals:[valArray copy] rIndex:rIndex];
         }
         
         [self.delegate notifyLog:offlineStr];
