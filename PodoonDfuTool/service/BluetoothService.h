@@ -21,11 +21,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyDisConnect;
 - (void)notifyReady;
 - (void)notifyLog:(NSString *)log;
-- (void)notifyRemainDayLog:(NSString *)log;
-- (void)notifyghvLog:(NSString *)log;
-- (void)notifygvnLog:(NSString *)log;
-- (void)notifymacLog:(NSString *)log;
-- (void)notifySlpLog:(NSString *)log;
+// 进入或退出透传成功
+- (void)notifyTunelSucc;
+// 进入退出校准成功或开始发送数据成功
+- (void)notifyAdjustOrStartDataSucc;
+// 校准成功
+- (void)notifyAdjustSucc;
+// 校准失败
+- (void)notifyAdjustFail;
 
 @end
 
@@ -45,6 +48,19 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)disconnect;
 
 - (void)sendData:(NSString *)cmd;
+
+// 进入透传
+- (void)enterTunel;
+// 进入校准
+- (void)enterAdjust;
+// 开始校准
+- (void)startAdjust;
+// 退出校准
+- (void)exitAdjust;
+// 启动数据
+- (void)startData;
+// 退出透传
+- (void)exitTunel;
 
 @end
 

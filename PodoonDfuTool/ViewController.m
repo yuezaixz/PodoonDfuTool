@@ -26,49 +26,57 @@
 
 @end
 
-@interface ViewController ()<RMBluetoothServiceDelegate,UITableViewDelegate,UITableViewDataSource>
-@property (weak, nonatomic) IBOutlet UIButton *startButton;
-@property (weak, nonatomic) IBOutlet UIButton *pauseBtn;
-@property (weak, nonatomic) IBOutlet UIButton *noButton;
-@property (weak, nonatomic) IBOutlet UIButton *modelButton;
-@property (weak, nonatomic) IBOutlet UISwitch *modelSwitch;
+typedef enum : NSUInteger {
+    // 已进入应用，未连接
+    AdjustTypeNoConnect,
+    // 连接中
+    AdjustTypeConnecting,
+    // 连接成功，等待流程开始
+    AdjustTypeReady,
+    // 1、已进入透传
+    AdjustTypeTunelEntered,
+    // 2、已进入校准
+    AdjustTypeAdjustEntered,
+    // 3、开始校准中
+    AdjustTypeAdjusting,
+    // 3、校准成功
+    AdjustTypeAdjustSuccess,
+    // 3、校准失败
+    AdjustTypeAdjustAdjustFail,
+    // 3、校验失败
+    AdjustTypeAdjustLimitFail,
+    // 4、退出校准成功
+    AdjustTypeExitAdjusted,
+    // 5、开始数据成功
+    AdjustTypeStartDataed,
+    // 6、退出透传了，等待16通道检测
+    AdjustTypeExitTunel
+} AdjustType;
 
+@interface ViewController ()<RMBluetoothServiceDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @property (strong, nonatomic) NSMutableArray *logList;
 @property (weak, nonatomic) IBOutlet UITableView *logTableView;
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIButton *enterButton;
+@property (weak, nonatomic) IBOutlet UIButton *adjustButton;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
+@property (weak, nonatomic) IBOutlet UILabel *promptLabel;
+@property (weak, nonatomic) IBOutlet UILabel *successCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *adjustFailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *limitFailLabel;
+@property (weak, nonatomic) IBOutlet UIButton *startOrResetButton;
 
-@property (weak, nonatomic) IBOutlet UILabel *gvnLabel;
-@property (weak, nonatomic) IBOutlet UILabel *gvhLabel;
-@property (weak, nonatomic) IBOutlet UILabel *macLabel;
-@property (weak, nonatomic) IBOutlet UILabel *remainDayLabel;
-@property (strong, nonatomic) NSString *remainDayStr;
+@property (nonatomic) NSInteger successCount;
+@property (nonatomic) NSInteger adjustFailCount;
+@property (nonatomic) NSInteger limitFailCount;
 
-@property (strong, nonatomic) NSString *ghvLog;
-@property (strong, nonatomic) NSString *gvnLog;
-@property (strong, nonatomic) NSString *macLog;
-@property (strong, nonatomic) NSString *currentNO;
+@property (nonatomic) NSInteger limitVal;
 
-@property (strong, nonatomic) NSString *sstpVal;
+@property (nonatomic) AdjustType adjustType;
 
-@property (nonatomic) NSInteger valSSAS;
-@property (nonatomic) NSInteger valSSTS;
-@property (nonatomic) NSInteger valSSMS;
-@property (nonatomic) NSInteger valSSAA;
-@property (nonatomic) NSInteger valSSTA;
-@property (nonatomic) NSInteger valSSMA;
-@property (nonatomic) NSInteger valSSAF;
-@property (nonatomic) NSInteger valSSTF;
-@property (nonatomic) NSInteger valSSMF;
-@property (nonatomic) NSInteger valSSAB;
-@property (nonatomic) NSInteger valSSTB;
-@property (nonatomic) NSInteger valSSMB;
-@property (nonatomic) NSInteger valSSSC;
-
-@property (nonatomic) NSInteger valDay;
-
-@property (strong, nonatomic) NSString *model;
+@property (strong, nonatomic) NSMutableArray *forces;
 
 @end
 
@@ -77,11 +85,134 @@
     BOOL isPause_;
 }
 
+- (NSMutableArray *)forces {
+    if (!_forces) {
+        _forces = [[NSMutableArray alloc] initWithArray:@[@0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0]];
+    }
+    return _forces;
+}
+
+- (void)resetForeces {
+    _forces = [[NSMutableArray alloc] initWithArray:@[@0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0]];
+}
+
+- (void)setAdjustType:(AdjustType)adjustType {
+    _adjustType = adjustType;
+    
+    switch (_adjustType) {
+        case AdjustTypeNoConnect:
+            [self handleAdjustTypeNoConnect];
+            break;
+        case AdjustTypeReady:
+            [self handleAdjustTypeReady];
+            break;
+        case AdjustTypeTunelEntered:
+            [self handleAdjustTypeTunelEntered];
+            break;
+        case AdjustTypeAdjustEntered:
+            [self handleAdjustTypeAdjustEntered];
+            break;
+        case AdjustTypeAdjusting:
+            [self handleAdjustTypeAdjusting];
+            break;
+        case AdjustTypeAdjustSuccess:
+            [self handleAdjustTypeAdjustSuccess];
+            break;
+        case AdjustTypeAdjustAdjustFail:
+            [self handleAdjustTypeAdjustAdjustFail];
+            break;
+        case AdjustTypeAdjustLimitFail:
+            [self handleAdjustTypeAdjustLimitFail];
+            break;
+        case AdjustTypeConnecting:
+            [self handleAdjustTypeConnecting];
+        case AdjustTypeExitAdjusted:
+            [self handleAdjustTypeExitAdjusting];
+            break;
+        case AdjustTypeStartDataed:
+            [self handleAdjustTypeStartDataing];
+            break;
+        case AdjustTypeExitTunel:
+            [self handleAdjustTypeExitTunel];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+-(void)setSuccessCount:(NSInteger)successCount {
+    _successCount = successCount;
+    [self syncCount];
+}
+
+- (void)setLimitFailCount:(NSInteger)limitFailCount {
+    _limitFailCount = limitFailCount;
+    [self syncCount];
+}
+
+- (void)setAdjustFailCount:(NSInteger)adjustFailCount {
+    _adjustFailCount = adjustFailCount;
+    [self syncCount];
+}
+
+- (void)syncCount {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setInteger:self.successCount forKey:@"self.successCount"];
+    [ud setInteger:self.adjustFailCount forKey:@"self.adjustFailCount"];
+    [ud setInteger:self.limitFailCount forKey:@"self.limitFailCount"];
+    [ud synchronize];
+}
+
+- (void)loadCount {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    _successCount = [ud integerForKey:@"self.successCount"];
+    _adjustFailCount = [ud integerForKey:@"self.adjustFailCount"];
+    _limitFailCount = [ud integerForKey:@"self.limitFailCount"];
+    [self refreshCountLabel];
+}
+
+- (void)refreshCountLabel {
+    self.successCountLabel.text = [NSString stringWithFormat:@"%ld", self.successCount];
+    self.adjustFailLabel.text = [NSString stringWithFormat:@"%ld", self.adjustFailCount];
+    self.limitFailLabel.text = [NSString stringWithFormat:@"%ld", self.limitFailCount];
+}
+
+- (void)handleAdjustTypeNoConnect{
+}
+- (void)handleAdjustTypeReady{
+}
+- (void)handleAdjustTypeTunelEntered{
+}
+- (void)handleAdjustTypeAdjustEntered{
+}
+- (void)handleAdjustTypeAdjusting{
+}
+- (void)handleAdjustTypeAdjustSuccess{
+}
+- (void)handleAdjustTypeAdjustAdjustFail{
+}
+- (void)handleAdjustTypeAdjustLimitFail{
+}
+- (void)handleAdjustTypeConnecting {
+    
+}
+- (void)handleAdjustTypeExitAdjusting {
+    
+}
+- (void)handleAdjustTypeStartDataing {
+    
+}
+- (void)handleAdjustTypeExitTunel {
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.limitVal = 3;
+    [self loadCount];
     [BluetoothService sharedInstance].delegate = self;
     [self.logTableView setBackgroundColor:[UIColor whiteColor]];
-    self.valDay = -1;
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -91,300 +222,107 @@
 
 - (void)reload {
     [self.logTableView reloadData];
-
-    self.gvnLabel.text = self.gvnLog ?: @"版本";
-    self.gvhLabel.text = self.ghvLog ?: @"电量";
-    self.macLabel.text = self.macLog ?: @"物理地址";
 }
 
 - (void)clean {
     self.logList = nil;
-    self.gvnLog = self.ghvLog = self.macLog = nil;
-    [self.noButton setTitle:@"上报序号(点击复制)：--" forState:UIControlStateNormal];
     self.titleLabel.text = @"设备未连接";
     [self reload];
 }
 
 - (IBAction)actionStart:(id)sender {
-    if (isStart_) {
-        [[BluetoothService sharedInstance] stop];
-        [[BluetoothService sharedInstance] disconnect];
-        [self clean];
-        [self.startButton setTitle:@"开始" forState:UIControlStateNormal];
-    } else {
+    if (self.adjustType == AdjustTypeNoConnect) {
+        self.adjustType = AdjustTypeConnecting;
         [[BluetoothService sharedInstance] search];
-        [self.startButton setTitle:@"结束" forState:UIControlStateNormal];
+        [self.startOrResetButton setTitle:@"连接中" forState:UIControlStateNormal];
         [self clean];
+    } else if (self.adjustType != AdjustTypeConnecting) {
+        [self resetForeces];
+        self.successCount = 0;
+        self.adjustFailCount = 0;
+        self.limitFailCount = 0;
+        [self syncCount];
     }
-    isStart_ = !isStart_;
 }
 
 - (IBAction)actionPause:(id)sender {
-    if (!self.gvnLog || !self.ghvLog || !self.macLog) {
-         [SVProgressHUD showErrorWithStatus:@"未连接或无数据" duration:2];
-        return;
-    }
-    
-    __weak AFHTTPSessionManager *session = [RMHTTPSessionManager sharedManager];
-    
-    
-    NSParameterAssert(session); // prevent infinite loop
-    NSMutableDictionary *postData = [@{
-                                      @"version": self.gvnLog,
-                                      @"mac_address": self.macLog,
-                                      @"voltage": self.ghvLog
-                                      } mutableCopy];
-    if (self.model && [self.model length] >= 1) {
-        [postData setObject:self.model forKey:@"model"];
-    }
-    
-    [session POST: self.modelSwitch.isOn ?  @"https://service.runmaf.com/services/mobile/user/upload_product_record_new" : @"https://service.runmaf.com/services/mobile/user/upload_product_record"
-       parameters:[postData copy] progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * _Nullable msg) {
-        if (msg && [[msg objectForKey:@"success"] boolValue] && [msg objectForKey:@"data"]) {
-            self.currentNO = [msg objectForKey:@"data"];
-            [self.noButton setTitle:[NSString stringWithFormat:@"上报序号(点击复制)：%@",self.currentNO] forState:UIControlStateNormal];
-        }else{
-            [SVProgressHUD showErrorWithStatus:@"上报失败" duration:2];
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [SVProgressHUD showErrorWithStatus:@"上报失败" duration:2];
-    }];
+//    __weak AFHTTPSessionManager *session = [RMHTTPSessionManager sharedManager];
+//
+//
+//    NSParameterAssert(session); // prevent infinite loop
+//    NSMutableDictionary *postData = [@{
+//                                      @"version": self.gvnLog,
+//                                      @"mac_address": self.macLog,
+//                                      @"voltage": self.ghvLog
+//                                      } mutableCopy];
+//    if (self.model && [self.model length] >= 1) {
+//        [postData setObject:self.model forKey:@"model"];
+//    }
+//
+//    [session POST: self.modelSwitch.isOn ?  @"https://service.runmaf.com/services/mobile/user/upload_product_record_new" : @"https://service.runmaf.com/services/mobile/user/upload_product_record"
+//       parameters:[postData copy] progress:^(NSProgress * _Nonnull uploadProgress) {
+//
+//    } success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * _Nullable msg) {
+//        if (msg && [[msg objectForKey:@"success"] boolValue] && [msg objectForKey:@"data"]) {
+//            self.currentNO = [msg objectForKey:@"data"];
+//            [self.noButton setTitle:[NSString stringWithFormat:@"上报序号(点击复制)：%@",self.currentNO] forState:UIControlStateNormal];
+//        }else{
+//            [SVProgressHUD showErrorWithStatus:@"上报失败" duration:2];
+//        }
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        [SVProgressHUD showErrorWithStatus:@"上报失败" duration:2];
+//    }];
     
     
 }
 
 - (IBAction)actionCopy:(id)sender {
-    if (self.currentNO) {
-        [[UIPasteboard generalPasteboard] setString:self.currentNO];
-        [SVProgressHUD showSuccessWithStatus:@"复制成功" duration:2];
-    } else {
-        [SVProgressHUD showErrorWithStatus:@"编号不存在" duration:2];
-    }
-}
-
-- (IBAction)actionModel:(id)sender {
-    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"选择型号" message:nil preferredStyle:
-                                  UIAlertControllerStyleAlert];
-    UIAlertAction *sAction = [UIAlertAction actionWithTitle:@"S" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self.model = @"S";
-        [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
-    }];
-    UIAlertAction *spAction = [UIAlertAction actionWithTitle:@"S+" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self.model = @"S+";
-        [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
-    }];
-    UIAlertAction *mAction = [UIAlertAction actionWithTitle:@"M" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self.model = @"M";
-        [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
-    }];
-    UIAlertAction *mpAction = [UIAlertAction actionWithTitle:@"M+" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self.model = @"M+";
-        [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
-    }];
-    UIAlertAction *lAction = [UIAlertAction actionWithTitle:@"L" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self.model = @"L";
-        [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
-    }];
-    UIAlertAction *lpAction = [UIAlertAction actionWithTitle:@"L+" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self.model = @"L+";
-        [self.modelButton setTitle:[NSString stringWithFormat:@"型号:%@",self.model] forState:UIControlStateNormal];
-    }];
     
-    [alertVc addAction:sAction];
-    [alertVc addAction:spAction];
-    [alertVc addAction:mAction];
-    [alertVc addAction:mpAction];
-    [alertVc addAction:lAction];
-    [alertVc addAction:lpAction];
-    [self presentViewController:alertVc animated:YES completion:nil];
 }
 
-- (IBAction)actionCMD:(UIButton *)btn {
-    if ([btn.titleLabel.text isEqualToString:@"写入值"]) {
-        [SVProgressHUD showWithStatus:@"写入中"];
-        [self performSelector:@selector(writeCmd:) withObject:@"SSAS:120" afterDelay:0.02];
-        [self performSelector:@selector(writeCmd:) withObject:@"SSMS:6" afterDelay:0.04];
-        [self performSelector:@selector(writeCmd:) withObject:@"SSAF:90" afterDelay:0.06];
-        [self performSelector:@selector(writeCmd:) withObject:@"SSAB:60" afterDelay:0.08];
-        [self performSelector:@selector(writeCmd:) withObject:@"SSTB:20" afterDelay:0.1];
-        [self performSelector:@selector(writeCmd:) withObject:@"SSMB:4" afterDelay:0.12];
-        [SVProgressHUD performSelector:@selector(dismiss) withObject:nil afterDelay:0.2];
-    } else if ([btn.titleLabel.text isEqualToString:@"SCB"]) {
-        [self performSelector:@selector(writeCmd:) withObject:@"SCB:167" afterDelay:0.02];
-        [SVProgressHUD showSuccessWithStatus:@"发送成功" duration:1];
-    } else if ([btn.titleLabel.text isEqualToString:@"设SSTP"]) {
-        UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:
-                                      UIAlertControllerStyleAlert];
-        // 添加输入框 (注意:在UIAlertControllerStyleActionSheet样式下是不能添加下面这行代码的)
-        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.placeholder = @"请输入相似度";
-            textField.keyboardType = UIKeyboardTypeNumberPad;
-        }];
-        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-            self.sstpVal = [NSString stringWithFormat:@"SSTP:%@",[[alertVc textFields] objectAtIndex:0].text];
-        }];
-        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-        // 添加行为
-        [alertVc addAction:action2];
-        [alertVc addAction:action1];
-        [self presentViewController:alertVc animated:YES completion:nil];
-    } else if ([btn.titleLabel.text isEqualToString:@"写SSTP"]) {
-        if (self.sstpVal) {
-            [SVProgressHUD showSuccessWithStatus:self.sstpVal duration:1];
-            [self performSelector:@selector(writeCmd:) withObject:self.sstpVal afterDelay:0.02];
-        }
-    } else if ([btn.titleLabel.text isEqualToString:@"设阈值"]) {
-        UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:
-                                      UIAlertControllerStyleAlert];
-        // 添加输入框 (注意:在UIAlertControllerStyleActionSheet样式下是不能添加下面这行代码的)
-        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.placeholder = @"SSAS均方差综合侧卧门限";
-            textField.keyboardType = UIKeyboardTypeNumberPad;
-        }];
-        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.placeholder = @"SSTSTOP2综合侧卧门限";
-            textField.keyboardType = UIKeyboardTypeNumberPad;
-        }];
-        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.placeholder = @"SSMSMAX综合侧卧门限";
-            textField.keyboardType = UIKeyboardTypeNumberPad;
-        }];
-        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.placeholder = @"SSAA均方差强条件侧卧门限";
-            textField.keyboardType = UIKeyboardTypeNumberPad;
-        }];
-        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.placeholder = @"SSTATOP2强条件侧卧门限";
-            textField.keyboardType = UIKeyboardTypeNumberPad;
-        }];
-        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.placeholder = @"SSMAMAX强条件侧卧门限";
-            textField.keyboardType = UIKeyboardTypeNumberPad;
-        }];
-        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.placeholder = @"SSAF均方差综合仰卧门限";
-            textField.keyboardType = UIKeyboardTypeNumberPad;
-        }];
-        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.placeholder = @"SSTFTOP2综合仰卧门限";
-            textField.keyboardType = UIKeyboardTypeNumberPad;
-        }];
-        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.placeholder = @"SSMFMAX综合仰卧门限";
-            textField.keyboardType = UIKeyboardTypeNumberPad;
-        }];
-        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.placeholder = @"SSAB均方差强条件仰卧门限";
-            textField.keyboardType = UIKeyboardTypeNumberPad;
-        }];
-        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.placeholder = @"SSTBTOP2强条件仰卧门限";
-            textField.keyboardType = UIKeyboardTypeNumberPad;
-        }];
-        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.placeholder = @"SSMBMAX强条件仰卧门限";
-            textField.keyboardType = UIKeyboardTypeNumberPad;
-        }];
-        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.placeholder = @"SSSC灵敏度系数";
-            textField.keyboardType = UIKeyboardTypeNumberPad;
-        }];
-        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-            self.valSSAS = [[alertVc textFields] objectAtIndex:0].text?[[alertVc textFields] objectAtIndex:0].text.integerValue:0;
-            self.valSSTS = [[alertVc textFields] objectAtIndex:1].text?[[alertVc textFields] objectAtIndex:1].text.integerValue:0;
-            self.valSSMS = [[alertVc textFields] objectAtIndex:2].text?[[alertVc textFields] objectAtIndex:2].text.integerValue:0;
-            self.valSSAA = [[alertVc textFields] objectAtIndex:3].text?[[alertVc textFields] objectAtIndex:3].text.integerValue:0;
-            self.valSSTA = [[alertVc textFields] objectAtIndex:4].text?[[alertVc textFields] objectAtIndex:4].text.integerValue:0;
-            self.valSSMA = [[alertVc textFields] objectAtIndex:5].text?[[alertVc textFields] objectAtIndex:5].text.integerValue:0;
-            self.valSSAF = [[alertVc textFields] objectAtIndex:6].text?[[alertVc textFields] objectAtIndex:6].text.integerValue:0;
-            self.valSSTF = [[alertVc textFields] objectAtIndex:7].text?[[alertVc textFields] objectAtIndex:7].text.integerValue:0;
-            self.valSSMF = [[alertVc textFields] objectAtIndex:8].text?[[alertVc textFields] objectAtIndex:8].text.integerValue:0;
-            self.valSSAB = [[alertVc textFields] objectAtIndex:9].text?[[alertVc textFields] objectAtIndex:9].text.integerValue:0;
-            self.valSSTB = [[alertVc textFields] objectAtIndex:10].text?[[alertVc textFields] objectAtIndex:10].text.integerValue:0;
-            self.valSSMB = [[alertVc textFields] objectAtIndex:11].text?[[alertVc textFields] objectAtIndex:11].text.integerValue:0;
-            self.valSSSC = [[alertVc textFields] objectAtIndex:12].text?[[alertVc textFields] objectAtIndex:12].text.integerValue:0;
-        }];
-        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-        // 添加行为
-        [alertVc addAction:action2];
-        [alertVc addAction:action1];
-        [self presentViewController:alertVc animated:YES completion:nil];
-    } else if ([btn.titleLabel.text isEqualToString:@"写阈值"]) {
-        NSMutableArray *cmdList = [NSMutableArray array];
-        if (self.valSSAA && self.valSSAA != 0) {
-            [cmdList addObject:[NSString stringWithFormat:@"SSAS:%ld",self.valSSAS]];
-        }
-        if (self.valSSTS && self.valSSTS != 0) {
-            [cmdList addObject:[NSString stringWithFormat:@"SSTS:%ld",self.valSSTS]];
-        }
-        if (self.valSSMS && self.valSSMS != 0) {
-            [cmdList addObject:[NSString stringWithFormat:@"SSMS:%ld",self.valSSMS]];
-        }
-        if (self.valSSAA && self.valSSAA != 0) {
-            [cmdList addObject:[NSString stringWithFormat:@"SSAA:%ld",self.valSSAA]];
-        }
-        if (self.valSSTA && self.valSSTA != 0) {
-            [cmdList addObject:[NSString stringWithFormat:@"SSTA:%ld",self.valSSTA]];
-        }
-        if (self.valSSMA && self.valSSMA != 0) {
-            [cmdList addObject:[NSString stringWithFormat:@"SSMA:%ld",self.valSSMA]];
-        }
-        if (self.valSSAF && self.valSSAF != 0) {
-            [cmdList addObject:[NSString stringWithFormat:@"SSAF:%ld",self.valSSAF]];
-        }
-        if (self.valSSTF && self.valSSTF != 0) {
-            [cmdList addObject:[NSString stringWithFormat:@"SSTF:%ld",self.valSSTF]];
-        }
-        if (self.valSSMF && self.valSSMF != 0) {
-            [cmdList addObject:[NSString stringWithFormat:@"SSMF:%ld",self.valSSMF]];
-        }
-        if (self.valSSAB && self.valSSAB != 0) {
-            [cmdList addObject:[NSString stringWithFormat:@"SSAB:%ld",self.valSSAB]];
-        }
-        if (self.valSSTB && self.valSSTB != 0) {
-            [cmdList addObject:[NSString stringWithFormat:@"SSTB:%ld",self.valSSTB]];
-        }
-        if (self.valSSMB && self.valSSMB != 0) {
-            [cmdList addObject:[NSString stringWithFormat:@"SSMB:%ld",self.valSSMB]];
-        }
-        if (self.valSSSC && self.valSSSC != 0) {
-            [cmdList addObject:[NSString stringWithFormat:@"SSSC:%ld",self.valSSSC]];
-        }
-        double delayTime = 0.02;
-        for (NSString *cmd in cmdList) {
-            [self performSelector:@selector(writeCmd:) withObject:cmd afterDelay:delayTime];
-            delayTime += 0.02;
-        }
-    } else if ([btn.titleLabel.text isEqualToString:@"设天数"]) {
-       UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"输入天数" message:nil preferredStyle:
-                                     UIAlertControllerStyleAlert];
-       [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-           textField.placeholder = @"输入天数";
-           textField.keyboardType = UIKeyboardTypeNumberPad;
-       }];
-       UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-           self.valDay = [[alertVc textFields] objectAtIndex:0].text?[[alertVc textFields] objectAtIndex:0].text.integerValue:0;
-       }];
-       UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-       // 添加行为
-       [alertVc addAction:action2];
-       [alertVc addAction:action1];
-       [self presentViewController:alertVc animated:YES completion:nil];
-   } else if ([btn.titleLabel.text isEqualToString:@"写天数"]) {
-       if (self.valDay != -1) {
-           [self writeCmd:[NSString stringWithFormat:@"SDD:%ld", self.valDay*3600*24]];
-           [self performSelector:@selector(writeCmd:) withObject:@"GDC" afterDelay:0.2];
-       }
-   } else {
-    [[BluetoothService sharedInstance] sendData:btn.titleLabel.text];
-    }
+- (IBAction)actionEnter:(id)sender {
+    [[BluetoothService sharedInstance] enterTunel];
+    [SVProgressHUD showWithStatus:@"进入透传中"];
+}
+
+- (IBAction)actionAdjust:(id)sender {
+    [[BluetoothService sharedInstance] startAdjust];
+    [SVProgressHUD showWithStatus:@"校准中"];
+}
+
+- (IBAction)actionDone:(id)sender {
+    
+    [[BluetoothService sharedInstance] startData];
+    [SVProgressHUD showWithStatus:@"完成中"];
+}
+
+- (IBAction)actionLimitSetting:(id)sender {
+    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:
+                                  UIAlertControllerStyleAlert];
+    // 添加输入框 (注意:在UIAlertControllerStyleActionSheet样式下是不能添加下面这行代码的)
+    [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"请输入校验偏差范围";
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+    }];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        self.limitVal = [[[alertVc textFields] objectAtIndex:0].text integerValue];
+    }];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    // 添加行为
+    [alertVc addAction:action2];
+    [alertVc addAction:action1];
+    [self presentViewController:alertVc animated:YES completion:nil];
+
 }
 
 - (void)writeCmd:(NSString *)cmd {
     NSLog(@"write cmd : %@", cmd);
     [[BluetoothService sharedInstance] sendData:cmd];
+}
+
+- (void)writeCmd:(NSString *)cmd withDelay:(NSTimeInterval)delay {
+    NSLog(@"write cmd : %@ %f", cmd, delay);
+    [self performSelector:@selector(writeCmd:) withObject:cmd afterDelay:delay];
 }
 
 - (void)notifyLog:(NSString *)log{
@@ -423,8 +361,8 @@
     self.titleLabel.text = @"设备未连接";
     [[BluetoothService sharedInstance] stop];
     [self clean];
-    [self.startButton setTitle:@"开始" forState:UIControlStateNormal];
-    isStart_ = NO;
+    [self.startOrResetButton setTitle:@"复位" forState:UIControlStateNormal];
+    self.adjustType = AdjustTypeReady;
 }
 
 - (void)notifyReady{
@@ -440,44 +378,41 @@
     return [BluetoothService sharedInstance].peripheral != nil;
 }
 
-
-- (void)notifyghvLog:(NSString *)log{
-    self.ghvLog = log;
-    [self reload];
-}
-- (void)notifygvnLog:(NSString *)log{
-    self.gvnLog = log;
-    [self reload];
-}
-- (void)notifyRemainDayLog:(NSString *)log{
-    self.remainDayStr = log;
-    self.remainDayLabel.text = [NSString stringWithFormat:@"剩余:%@", log];
-    [SVProgressHUD showSuccessWithStatus:@"刷新剩余时间" duration:2];
-    [self reload];
-}
-- (void)notifymacLog:(NSString *)mac{
-    self.macLog = mac;
-    if (mac) {
-        __weak AFHTTPSessionManager *session = [RMHTTPSessionManager sharedManager];
-        
-        
-        NSParameterAssert(session); // prevent infinite loop
-        NSMutableDictionary *postData = @{
-                                          @"mac_address": [self.macLog substringFromIndex:3],
-                                          };
-        
-        [session POST:@"https://service.runmaf.com/services/mobile/user/query_product_record"
-           parameters:[postData copy] progress:^(NSProgress * _Nonnull uploadProgress) {
-            
-        } success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * _Nullable msg) {
-            if (msg && [[msg objectForKey:@"success"] boolValue] && [msg objectForKey:@"data"] && [[msg objectForKey:@"data"] objectForKey:@"no"]) {
-                self.currentNO = [[msg objectForKey:@"data"] objectForKey:@"no"];
-                [self.noButton setTitle:[NSString stringWithFormat:@"上报序号(点击复制)：%@",self.currentNO] forState:UIControlStateNormal];
-            }
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        }];
+// 进入或退出透传成功
+- (void)notifyTunelSucc {
+    if (self.adjustType == AdjustTypeReady) {
+        self.adjustType = AdjustTypeTunelEntered;
+        [[BluetoothService sharedInstance] enterAdjust];
+    } else if (self.adjustType == AdjustTypeStartDataed) {
+        self.adjustType = AdjustTypeExitTunel;
+        [SVProgressHUD dismiss];
+        // SDL:2 开始数据，并检测
+        [[BluetoothService sharedInstance] sendData:@"SDL:2"];
+        [self resetForeces];
+        [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"校验中，偏差%ld", self.limitVal]];
     }
-    [self reload];
+}
+// 进入退出校准成功或开始发送数据成功
+- (void)notifyAdjustOrStartDataSucc {
+    if (self.adjustType == AdjustTypeTunelEntered) {
+        self.adjustType = AdjustTypeAdjustEntered;
+        // 等待手动点击开始校准
+        [SVProgressHUD dismiss];
+    } else if (self.adjustType == AdjustTypeAdjustSuccess || self.adjustType == AdjustTypeAdjustAdjustFail) {
+        self.adjustType = AdjustTypeExitAdjusted;
+        [SVProgressHUD dismiss];
+    } else if (self.adjustType == AdjustTypeExitAdjusted) {
+        self.adjustType = AdjustTypeStartDataed;
+        [[BluetoothService sharedInstance] exitTunel];
+    }
+}
+// 校准成功
+- (void)notifyAdjustSucc {
+    self.adjustType = AdjustTypeAdjustSuccess;
+}
+// 校准失败
+- (void)notifyAdjustFail {
+    self.adjustType = AdjustTypeAdjustAdjustFail;
 }
 
 #pragma mark - uitableview deleagate

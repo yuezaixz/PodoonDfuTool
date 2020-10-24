@@ -93,6 +93,30 @@
         [self writeCommand:cmd];
     }
 }
+// 进入透传
+- (void)enterTunel {
+    [self sendData: @"SUB:1"];
+}
+// 进入校准
+- (void)enterAdjust {
+    [self sendData: @"SUC:AB003E"];
+}
+// 开始校准
+- (void)startAdjust {
+    [self sendData: @"SUC:AB005E"];
+}
+// 退出校准
+- (void)exitAdjust {
+    [self sendData: @"SUC:AB013E"];
+}
+// 启动数据
+- (void)startData {
+    [self sendData: @"SUC:AB011E"];
+}
+// 退出透传
+- (void)exitTunel {
+    [self sendData: @"SUB:0"];
+}
 
 //根据tag值搜索设备
 - (void)searchPeripherals{
@@ -200,18 +224,18 @@
         }
         uint8_t *footData = [tempData bytes];
         NSString *offlineStr = [[NSString stringWithFormat:@"%s",footData] substringWithRange:NSMakeRange(0, tempData.length)];
-        if ([offlineStr rangeOfString:@"Batt"].location != NSNotFound) {
-            [self.delegate notifyghvLog:offlineStr];
-            [self writeCommand:@"GVN"];
-        } else if ([offlineStr rangeOfString:@"FW"].location != NSNotFound) {
-            [self.delegate notifygvnLog:offlineStr];
-            [self writeCommand:@"GMAC"];
-        } else if ([offlineStr rangeOfString:@"DownCnt:"].location != NSNotFound) {
-           [self.delegate notifyRemainDayLog:[offlineStr substringFromIndex:8]];
-        } else if ([offlineStr rangeOfString:@"MC:"].location != NSNotFound) {
-            [self.delegate notifymacLog:offlineStr];
-        } else if ([offlineStr rangeOfString:@"Slp:"].location != NSNotFound) {
-            [self.delegate notifySlpLog:offlineStr];
+        if ([offlineStr rangeOfString:@"RecvACK:SUB"].location != NSNotFound) {
+            [self.delegate notifyTunelSucc];
+        } else if ([offlineStr rangeOfString:@"RecvACK:SUC"].location != NSNotFound) {
+            [self.delegate notifyAdjustOrStartDataSucc];
+        } else if ([offlineStr rangeOfString:@"*5"].location != NSNotFound) {
+            if ([offlineStr rangeOfString:@"*5S000#"].location != NSNotFound) {
+                [self.delegate notifyAdjustSucc];
+            } else {
+                [self.delegate notifyAdjustFail];
+            }
+        } else if ([offlineStr rangeOfString:@"*R"].location != NSNotFound) {
+            
         }
         
         [self.delegate notifyLog:offlineStr];
@@ -223,11 +247,11 @@
     LOG_FUNC
     
     [self writeCommand:@"GHV"];
-    [self performSelector:@selector(writeCommand:) withObject:@"GDC" afterDelay:0.02];
-    [self performSelector:@selector(writeCommand:) withObject:@"GMAC" afterDelay:0.04];
-    [self performSelector:@selector(SDL11) withObject:nil afterDelay:0.06];
-    [self performSelector:@selector(SDI2) withObject:nil afterDelay:0.08];
-    [self performSelector:@selector(adjustTime) withObject:nil afterDelay:0.10];
+//    [self performSelector:@selector(writeCommand:) withObject:@"GDC" afterDelay:0.02];
+//    [self performSelector:@selector(writeCommand:) withObject:@"GMAC" afterDelay:0.04];
+//    [self performSelector:@selector(SDL11) withObject:nil afterDelay:0.06];
+//    [self performSelector:@selector(SDI2) withObject:nil afterDelay:0.08];
+//    [self performSelector:@selector(adjustTime) withObject:nil afterDelay:0.10];
 }
 
 - (void)adjustTime {
