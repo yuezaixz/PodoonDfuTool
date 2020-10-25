@@ -153,6 +153,7 @@ typedef enum : NSUInteger {
             break;
         case AdjustTypeConnecting:
             [self handleAdjustTypeConnecting];
+            break;
         case AdjustTypeExitAdjusted:
             [self handleAdjustTypeExitAdjusting];
             break;
@@ -305,7 +306,7 @@ typedef enum : NSUInteger {
         self.limitVal = 3;
     }
     
-    [self.limitButton setTitle:[NSString stringWithFormat:@"%ld", self.limitVal] forState:UIControlStateNormal];
+    [self.limitButton setTitle:[NSString stringWithFormat:@"超限:%ld", self.limitVal] forState:UIControlStateNormal];
     [self loadCount];
     [BluetoothService sharedInstance].delegate = self;
     [self.logTableView setBackgroundColor:[UIColor whiteColor]];
@@ -330,7 +331,9 @@ typedef enum : NSUInteger {
     if (self.adjustType == AdjustTypeNoConnect) {
         self.adjustType = AdjustTypeConnecting;
         [[BluetoothService sharedInstance] search];
-        [self.startOrResetButton setTitle:@"连接中" forState:UIControlStateNormal];
+        self.startOrResetButton.enabled = NO;
+        [SVProgressHUD showWithStatus:@"连接中"];
+        [self.startOrResetButton setTitle:@"开始" forState:UIControlStateNormal];
         [self clean];
     } else if (self.adjustType != AdjustTypeConnecting) {
         [self resetForeces];
@@ -483,16 +486,21 @@ typedef enum : NSUInteger {
 - (void)notifyDisConnect{
     [SVProgressHUD showErrorWithStatus:@"设备已断开" duration:2];
     
+    self.adjustType = AdjustTypeNoConnect;
     self.titleLabel.text = @"设备未连接";
     [[BluetoothService sharedInstance] stop];
     [self clean];
-    [self.startOrResetButton setTitle:@"复位" forState:UIControlStateNormal];
+    [self.startOrResetButton setTitle:@"开始" forState:UIControlStateNormal];
     self.adjustType = AdjustTypeReady;
 }
 
 - (void)notifyReady{
     self.titleLabel.text = @"设备已连接";
+    self.adjustType = AdjustTypeReady;
+    [SVProgressHUD dismiss];
     [SVProgressHUD showSuccessWithStatus:@"连接成功" duration:2];
+    self.startOrResetButton.enabled = YES;
+    [self.startOrResetButton setTitle:@"复位" forState:UIControlStateNormal];
 }
 
 - (void)notifySlpLog:(NSString *)log {

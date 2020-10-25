@@ -75,8 +75,12 @@
                                             <constraint firstAttribute="width" constant="150" id="WAA-MM-6Gf"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="进入校准模式">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <state key="disabled" backgroundImage="pano.fill" catalog="system">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
                                             <action selector="actionEnter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Psg-Rq-E1C"/>
@@ -89,8 +93,12 @@
                                             <constraint firstAttribute="width" constant="85" id="miG-qg-eil"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="校准">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <state key="disabled" backgroundImage="pano.fill" catalog="system">
+                                            <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
                                             <action selector="actionAdjust:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BIl-zc-IXJ"/>
@@ -180,7 +188,6 @@
                                         </state>
                                         <connections>
                                             <action selector="actionLimitSetting:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Eap-z1-x58"/>
-                                            <action selector="actionStart:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Aj0-Gs-KI2"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QdN-Gu-JQS">
@@ -191,8 +198,6 @@
                                         </state>
                                         <connections>
                                             <action selector="actionCopy:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vOf-W1-VNz"/>
-                                            <action selector="actionLimitSetting:" destination="BYZ-38-t0r" eventType="touchUpInside" id="O3z-Wg-Wiw"/>
-                                            <action selector="actionStart:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RZc-yN-xqi"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mnv-oa-2bo">
@@ -202,8 +207,12 @@
                                             <constraint firstAttribute="width" constant="85" id="PhK-Zh-CTi"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="完成">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <state key="disabled" backgroundImage="pano.fill" catalog="system">
+                                            <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
                                             <action selector="actionDone:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rpC-Yo-Omi"/>
@@ -279,6 +288,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="pano.fill" catalog="system" width="128" height="82"/>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
