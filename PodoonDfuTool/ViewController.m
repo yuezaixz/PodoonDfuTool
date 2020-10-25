@@ -70,6 +70,7 @@ typedef enum : NSUInteger {
 @property (weak, nonatomic) IBOutlet UILabel *adjustFailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *limitFailLabel;
 @property (weak, nonatomic) IBOutlet UIButton *startOrResetButton;
+@property (weak, nonatomic) IBOutlet UILabel *forceLabel;
 
 @property (nonatomic) NSInteger successCount;
 @property (nonatomic) NSInteger adjustFailCount;
@@ -78,6 +79,8 @@ typedef enum : NSUInteger {
 @property (nonatomic) NSInteger limitVal;
 
 @property (nonatomic) AdjustType adjustType;
+
+@property (nonatomic) BOOL isExitNow;
 
 @property (strong, nonatomic) NSMutableArray *forces;
 
@@ -103,6 +106,15 @@ typedef enum : NSUInteger {
 
 - (void)resetForeces {
     _forces = [[NSMutableArray alloc] initWithArray:@[@-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1]];
+    [self refreshForcesLabel];
+}
+
+- (void)refreshForcesLabel {
+    NSMutableString *forceStr = [NSMutableString string];
+    for (NSString *forceItem in self.forces) {
+        [forceStr appendFormat:@"%@,", forceItem];
+    }
+    self.forceLabel.text = [forceStr copy];
 }
 
 - (BOOL)forcesIsCompletly {
@@ -114,13 +126,16 @@ typedef enum : NSUInteger {
     return YES;
 }
 
-- (BOOL)forcesIsCorrect {
+- (NSInteger)forcesIsCorrect {
     for (NSNumber *force in _forces) {
+        if (force.integerValue == -1) {
+            return 2;
+        }
         if (force.integerValue < 100 - _limitVal || force.integerValue > 100 + _limitVal) {
-            return NO;
+            return 0;
         }
     }
-    return YES;
+    return 1;
 }
 
 - (void)setAdjustType:(AdjustType)adjustType {
@@ -175,16 +190,19 @@ typedef enum : NSUInteger {
 -(void)setSuccessCount:(NSInteger)successCount {
     _successCount = successCount;
     [self syncCount];
+    [self refreshCountLabel];
 }
 
 - (void)setLimitFailCount:(NSInteger)limitFailCount {
     _limitFailCount = limitFailCount;
     [self syncCount];
+    [self refreshCountLabel];
 }
 
 - (void)setAdjustFailCount:(NSInteger)adjustFailCount {
     _adjustFailCount = adjustFailCount;
     [self syncCount];
+    [self refreshCountLabel];
 }
 
 - (void)syncCount {
@@ -252,14 +270,17 @@ typedef enum : NSUInteger {
     self.doneButton.enabled = YES;
     self.adjustFailCount += 1;
     [self syncCount];
+    [self refreshCountLabel];
 }
 - (void)handleAdjustTypeAdjustLimitFail{
     self.promptLabel.text = @"校验失败";
-    self.enterButton.enabled = NO;
+    [SVProgressHUD showErrorWithStatus:@"校验失败" duration:1];
+    self.enterButton.enabled = YES;
     self.adjustButton.enabled = NO;
     self.doneButton.enabled = YES;
     self.limitFailCount += 1;
     [self syncCount];
+    [self refreshCountLabel];
 }
 - (void)handleAdjustTypeConnecting {
     self.promptLabel.text = @"连接中";
@@ -290,11 +311,13 @@ typedef enum : NSUInteger {
 }
 - (void)handleAdjustTypeCheckSuccess {
     self.promptLabel.text = @"校准校验成功";
+    [SVProgressHUD showSuccessWithStatus:@"校验成功" duration:1];
     self.enterButton.enabled = NO;
     self.adjustButton.enabled = NO;
     self.doneButton.enabled = YES;
     self.successCount += 1;
     [self syncCount];
+    [self refreshCountLabel];
 }
 
 - (void)viewDidLoad {
@@ -340,6 +363,7 @@ typedef enum : NSUInteger {
         self.successCount = 0;
         self.adjustFailCount = 0;
         self.limitFailCount = 0;
+        [self refreshCountLabel];
         [self syncCount];
     }
 }
@@ -382,15 +406,18 @@ typedef enum : NSUInteger {
     }
     
     [[UIPasteboard generalPasteboard] setString:result];
-    [SVProgressHUD showSuccessWithStatus:@"设置成功" duration:2];
+    [SVProgressHUD showSuccessWithStatus:@"设置成功" duration:1];
 }
 
 - (IBAction)actionEnter:(id)sender {
+    self.adjustType = AdjustTypeReady;
+    self.isExitNow = NO;
     [[BluetoothService sharedInstance] enterTunel];
     [SVProgressHUD showWithStatus:@"进入透传中"];
 }
 
 - (IBAction)actionAdjust:(id)sender {
+    self.adjustType = AdjustTypeAdjusting;
     [[BluetoothService sharedInstance] startAdjust];
     [SVProgressHUD showWithStatus:@"校准中"];
 }
@@ -399,11 +426,13 @@ typedef enum : NSUInteger {
     if (self.adjustType == AdjustTypeAdjustAdjustFail) {
         [[BluetoothService sharedInstance] exitAdjust];
         [SVProgressHUD showWithStatus:@"退出中"];
+        self.isExitNow = YES;
     } else if (self.adjustType == AdjustTypeAdjustLimitFail) {
         self.adjustType = AdjustTypeReady;
+        [SVProgressHUD showSuccessWithStatus:@"已重置" duration:2];
     } else {
         self.adjustType = AdjustTypeReady;
-        [SVProgressHUD showWithStatus:@"完成中"];
+        [SVProgressHUD showSuccessWithStatus:@"操作成功" duration:2];
     }
 }
 
@@ -417,7 +446,7 @@ typedef enum : NSUInteger {
     }];
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         self.limitVal = [[[alertVc textFields] objectAtIndex:0].text integerValue];
-        [self.limitButton setTitle:[NSString stringWithFormat:@"%ld", self.limitVal] forState:UIControlStateNormal];
+        [self.limitButton setTitle:[NSString stringWithFormat:@"超限:%ld", self.limitVal] forState:UIControlStateNormal];
     }];
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     // 添加行为
@@ -439,7 +468,7 @@ typedef enum : NSUInteger {
 
 - (void)notifyLog:(NSString *)log{
     if (![self hadConnected]) {
-        [SVProgressHUD showErrorWithStatus:@"设备未连接" duration:2];
+        [SVProgressHUD showErrorWithStatus:@"设备未连接" duration:1];
         return;
     }
     if (!isPause_) {
@@ -456,16 +485,17 @@ typedef enum : NSUInteger {
 }
 
 - (void)notifyVals:(NSArray *)valArray rIndex:(NSInteger)rIndex {
-    if (self.adjustType != AdjustTypeExitTunel) {
-        return;
-    }
+    [self refreshForcesLabel];
     for (int i = 0; i < valArray.count; i++) {
         self.forces[(rIndex - 1) * 6 + i] = valArray[i];
     }
+    if (self.adjustType != AdjustTypeExitTunel) {
+        return;
+    }
     if ([self forcesIsCompletly]) {
-        if ([self forcesIsCorrect]) {
+        if ([self forcesIsCorrect] == 1) {
             self.adjustType = AdjustTypeCheckSuccess;
-        } else {
+        } else if ([self forcesIsCorrect] == 0) {
             self.adjustType = AdjustTypeAdjustLimitFail;
         }
     }
@@ -484,7 +514,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)notifyDisConnect{
-    [SVProgressHUD showErrorWithStatus:@"设备已断开" duration:2];
+    [SVProgressHUD showErrorWithStatus:@"设备已断开" duration:1];
     
     self.adjustType = AdjustTypeNoConnect;
     self.titleLabel.text = @"设备未连接";
@@ -498,7 +528,7 @@ typedef enum : NSUInteger {
     self.titleLabel.text = @"设备已连接";
     self.adjustType = AdjustTypeReady;
     [SVProgressHUD dismiss];
-    [SVProgressHUD showSuccessWithStatus:@"连接成功" duration:2];
+    [SVProgressHUD showSuccessWithStatus:@"连接成功" duration:1];
     self.startOrResetButton.enabled = YES;
     [self.startOrResetButton setTitle:@"复位" forState:UIControlStateNormal];
 }
@@ -517,19 +547,25 @@ typedef enum : NSUInteger {
         self.adjustType = AdjustTypeTunelEntered;
         [[BluetoothService sharedInstance] enterAdjust];
     } else if (self.adjustType == AdjustTypeStartDataed) {
-        self.adjustType = AdjustTypeExitTunel;
         [SVProgressHUD dismiss];
-        // SDL:2 开始数据，并检测
-        [[BluetoothService sharedInstance] sendData:@"SDL:2"];
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            if (self.adjustType != AdjustTypeAdjustLimitFail || self.adjustType != AdjustTypeCheckSuccess) {
-                self.adjustType = AdjustTypeAdjustLimitFail;
-            }
-        });
-        
-        [self resetForeces];
-        [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"校验中，偏差%ld", self.limitVal]];
+        if (self.isExitNow) {
+            self.adjustType = AdjustTypeReady;
+        } else {
+            self.adjustType = AdjustTypeExitTunel;
+            // SDL:2 开始数据，并检测
+            [[BluetoothService sharedInstance] sendData:@"SDL:2"];
+            
+            // 暂时不定时失败了，默认认为肯定还有16个点的值
+    //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    //            if (self.adjustType != AdjustTypeAdjustLimitFail && self.adjustType != AdjustTypeCheckSuccess) {
+    //                self.adjustType = AdjustTypeAdjustLimitFail;
+    //            }
+    //        });
+            
+            [self resetForeces];
+            [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"校验中，偏差%ld", self.limitVal]];
+        }
     }
 }
 // 进入退出校准成功或开始发送数据成功
@@ -538,12 +574,12 @@ typedef enum : NSUInteger {
         self.adjustType = AdjustTypeAdjustEntered;
         // 等待手动点击开始校准
         [SVProgressHUD dismiss];
-        [SVProgressHUD showSuccessWithStatus:@"进入透传成功" duration:2];
+        [SVProgressHUD showSuccessWithStatus:@"进入透传成功" duration:1];
     } else if (self.adjustType == AdjustTypeAdjustSuccess || self.adjustType == AdjustTypeAdjustAdjustFail) {
         self.adjustType = AdjustTypeExitAdjusted;
-        [[BluetoothService sharedInstance] exitAdjust];
+        [[BluetoothService sharedInstance] startData];
 //        [SVProgressHUD dismiss];
-//        [SVProgressHUD showSuccessWithStatus:@"校准完成" duration:2];
+//        [SVProgressHUD showSuccessWithStatus:@"校准完成" duration:1];
     } else if (self.adjustType == AdjustTypeExitAdjusted) {
         self.adjustType = AdjustTypeStartDataed;
         [[BluetoothService sharedInstance] exitTunel];
@@ -552,10 +588,12 @@ typedef enum : NSUInteger {
 // 校准成功
 - (void)notifyAdjustSucc {
     self.adjustType = AdjustTypeAdjustSuccess;
+    [[BluetoothService sharedInstance] exitAdjust];
 }
 // 校准失败
 - (void)notifyAdjustFail {
     self.adjustType = AdjustTypeAdjustAdjustFail;
+    [SVProgressHUD showErrorWithStatus:@"校准失败" duration:1];
 }
 
 #pragma mark - uitableview deleagate

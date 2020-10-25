@@ -234,7 +234,7 @@
             } else {
                 [self.delegate notifyAdjustFail];
             }
-        } else if ([offlineStr hasPrefix:@"R"]) {
+        } else if ([offlineStr hasPrefix:@"R1"] || [offlineStr hasPrefix:@"R2"] || [offlineStr hasPrefix:@"R3"]) {
             NSInteger rIndex = [[offlineStr substringWithRange:NSMakeRange(1, 1)] integerValue];
             NSArray *rVals = [[offlineStr substringFromIndex:3] componentsSeparatedByString:@","];
             NSMutableArray *valArray = [NSMutableArray array];
@@ -256,7 +256,7 @@
     LOG_FUNC
     
     [self writeCommand:@"GHV"];
-//    [self performSelector:@selector(writeCommand:) withObject:@"GDC" afterDelay:0.02];
+    [self performSelector:@selector(writeCommand:) withObject:@"SDL:2" afterDelay:0.02];
 //    [self performSelector:@selector(writeCommand:) withObject:@"GMAC" afterDelay:0.04];
 //    [self performSelector:@selector(SDL11) withObject:nil afterDelay:0.06];
 //    [self performSelector:@selector(SDI2) withObject:nil afterDelay:0.08];

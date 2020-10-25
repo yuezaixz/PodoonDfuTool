@@ -253,12 +253,19 @@
                                     <constraint firstItem="vQf-bf-EZM" firstAttribute="trailing" secondItem="eNw-XD-igQ" secondAttribute="trailing" id="ur2-bk-Oqb"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oVm-Zn-Wo0">
+                                <rect key="frame" x="107" y="21.5" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" systemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="2nP-Ii-jwO" secondAttribute="bottom" id="1Ai-C5-CGz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2nP-Ii-jwO" secondAttribute="trailing" id="3av-1W-rmG"/>
+                            <constraint firstItem="oVm-Zn-Wo0" firstAttribute="leading" secondItem="TyO-8d-khh" secondAttribute="trailing" constant="8" symbolic="YES" id="77v-hG-5Ah"/>
                             <constraint firstItem="TyO-8d-khh" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="11" id="8Jz-EE-ahu"/>
                             <constraint firstItem="2nP-Ii-jwO" firstAttribute="top" secondItem="x5B-8T-gt5" secondAttribute="bottom" id="GsH-SA-p1n"/>
                             <constraint firstItem="x5B-8T-gt5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="McU-c5-QVv"/>
@@ -266,6 +273,7 @@
                             <constraint firstItem="x5B-8T-gt5" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="40" id="fPd-d8-VjS"/>
                             <constraint firstItem="TyO-8d-khh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="12" id="myU-d2-R0q"/>
                             <constraint firstItem="x5B-8T-gt5" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="r0t-Bd-3Ry"/>
+                            <constraint firstItem="oVm-Zn-Wo0" firstAttribute="centerY" secondItem="TyO-8d-khh" secondAttribute="centerY" id="xLD-th-ELc"/>
                         </constraints>
                     </view>
                     <connections>
@@ -273,6 +281,7 @@
                         <outlet property="adjustFailLabel" destination="BlM-w0-6o5" id="SfZ-Ec-oCD"/>
                         <outlet property="doneButton" destination="mnv-oa-2bo" id="jx5-PC-x5S"/>
                         <outlet property="enterButton" destination="gsi-JU-jDc" id="cW9-lT-diK"/>
+                        <outlet property="forceLabel" destination="oVm-Zn-Wo0" id="wTm-sX-POG"/>
                         <outlet property="limitButton" destination="x8u-i2-8Cg" id="uLS-7I-sbV"/>
                         <outlet property="limitFailLabel" destination="eNw-XD-igQ" id="kQM-Aj-lZs"/>
                         <outlet property="logTableView" destination="x5B-8T-gt5" id="Jzt-kp-wzJ"/>
@@ -289,6 +298,9 @@
     </scenes>
     <resources>
         <image name="pano.fill" catalog="system" width="128" height="82"/>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
