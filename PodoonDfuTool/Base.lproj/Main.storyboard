@@ -155,7 +155,7 @@
                                             <constraint firstAttribute="width" constant="70" id="arV-M3-Xvd"/>
                                             <constraint firstAttribute="height" constant="30" id="mPY-7h-XnU"/>
                                         </constraints>
-                                        <state key="normal" title="GLC"/>
+                                        <state key="normal" title="SRC"/>
                                         <connections>
                                             <action selector="actionCMD:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jiz-va-cMX"/>
                                         </connections>
