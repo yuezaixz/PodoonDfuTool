@@ -9,7 +9,6 @@
 #import "BluetoothService.h"
 #import "DFUHelper.h"
 #include "DFUHelper.h"
-#import <AFNetworking/AFNetworking.h>
 #import "SVProgressHUD.h"
 
 #define BT_Service_FOOT [CBUUID UUIDWithString:@"6E400001-B5A3-F393-E0A9-E50E24DCCA9E"]
@@ -177,7 +176,7 @@
         [self performSelector:@selector(startDFU) withObject:nil afterDelay:0.2];
         isStartOTA_ = NO;
         isDFU_ = YES;
-    } else if (([peripheral.name rangeOfString:@"ZT"].location != NSNotFound && RSSI.integerValue > -55 && RSSI.integerValue != 127) || (self.isVersion && self.uuidStr && [self.uuidStr isEqualToString:peripheral.identifier.UUIDString]) ) {
+    } else if (([peripheral.name rangeOfString:@"ZT"].location != NSNotFound && RSSI.integerValue > -50 && RSSI.integerValue != 127) || (self.isVersion && self.uuidStr && [self.uuidStr isEqualToString:peripheral.identifier.UUIDString]) ) {
         [self.delegate notifyDiscover];
         self.connectingPeripheral = peripheral;
         [self.centermanager connectPeripheral:peripheral options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES]
@@ -260,7 +259,8 @@
     LOG_FUNC
     [self.delegate notifyWriteDfu];
     if (self.isVersion) {
-        [self performSelector:@selector(readVersion) withObject:nil afterDelay:0.5];
+        [self performSelector:@selector(readMacaddress) withObject:nil afterDelay:0.2];
+        [self performSelector:@selector(readVersion) withObject:nil afterDelay:0.4];
         self.isVersion = NO;
     } else {
         [self writeCommand:@"dfu"];
@@ -269,6 +269,10 @@
 
 - (void)readVersion {
     [self writeCommand:@"GVN"];
+}
+
+- (void)readMacaddress {
+    [self writeCommand:@"GMAC"];
 }
 
 - (void)writeCommand:(NSString *)command {
@@ -291,6 +295,8 @@
         NSString *offlineStr = [NSString stringWithFormat:@"%s",footData];
         if (self.delegate && [self.delegate respondsToSelector:@selector(notifyVersion:)] && [offlineStr rangeOfString:@"FW Ver"].location != NSNotFound) {
             [self.delegate notifyVersion:[offlineStr substringFromIndex:7] ];
+        } else if ([offlineStr rangeOfString:@"MC:"].location != NSNotFound) {
+            [self.delegate notifymacLog:offlineStr];
         }
     }
 }
