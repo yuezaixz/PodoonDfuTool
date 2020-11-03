@@ -6,6 +6,6 @@ target 'PodoonDfuTool' do
   # use_frameworks!
 
   # Pods for PodoonDfuTool
-  pod 'AFNetworking'
+  pod 'AFNetworking', '~> 3.2.1', :subspecs => ['Reachability', 'Serialization', 'Security', 'NSURLSession']
 
 end

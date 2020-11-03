@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "BluetoothService.h"
+#import "RMHTTPSessionManager.h"
 
 @interface ViewController ()<RMBluetoothServiceDelegate>
 
@@ -87,8 +88,28 @@
 }
 
 
-- (void)notifymacLog:(NSString *)version {
-    self.macAddressLabel.text = version;
+- (void)notifymacLog:(NSString *)mac {
+    if (mac) {
+        __weak AFHTTPSessionManager *session = [RMHTTPSessionManager sharedManager];
+        
+        
+        NSParameterAssert(session); // prevent infinite loop
+        NSMutableDictionary *postData = @{
+                                          @"mac_address": [mac substringFromIndex:3],
+                                          };
+        
+        [session POST:@"https://service.runmaf.com/services/mobile/user/query_product_record"
+           parameters:[postData copy] progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * _Nullable msg) {
+            if (msg && [[msg objectForKey:@"success"] boolValue] && [msg objectForKey:@"data"] && [[msg objectForKey:@"data"] objectForKey:@"no"]) {
+                NSString *currentNO = [[msg objectForKey:@"data"] objectForKey:@"no"];
+                
+                self.macAddressLabel.text = currentNO;
+            }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        }];
+    }
 }
 
 - (void)removeDevice{
