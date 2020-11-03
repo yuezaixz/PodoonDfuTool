@@ -23,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [BluetoothService sharedInstance].delegate = self;
-    [BluetoothService sharedInstance].otaUrl = @"ZT_H905A_20201101-V2.2.83";
+    [BluetoothService sharedInstance].otaUrl = @"ZT_H905A_20201102-V2.2.84";
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -33,9 +33,9 @@
 
 - (IBAction)actionSelectFirmware:(id)sender {
     NSArray *firmwares = @[
+        @"ZT_H905A_20201102-V2.2.84",
         @"ZT_H905A_20201101-V2.2.83",
-        @"ZT_H905A_20201101-V2.2.91",
-        @"ZT_H905A_20201007-V2.2.89"
+        @"ZT_H905A_20201101-V2.2.91"
                            ];
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"选择固件"
                                                                              message:@""
