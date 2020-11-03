@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *mainLabel;
 @property (weak, nonatomic) IBOutlet UIButton *firmwareBtn;
 @property (weak, nonatomic) IBOutlet UILabel *version;
+@property (weak, nonatomic) IBOutlet UILabel *macAddressLabel;
 
 @end
 
@@ -83,6 +84,11 @@
     [BluetoothService sharedInstance].uuidStr = nil;
     
     [self performSelector:@selector(removeDevice) withObject:nil afterDelay:1];
+}
+
+
+- (void)notifymacLog:(NSString *)version {
+    self.macAddressLabel.text = version;
 }
 
 - (void)removeDevice{

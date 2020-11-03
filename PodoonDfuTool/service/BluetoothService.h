@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifySuccessDfu;
 - (void)notifyFailDfu;
 - (void)notifyVersion:(NSString *)version;
+- (void)notifymacLog:(NSString *)version;
 
 @end
 
