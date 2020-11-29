@@ -12,77 +12,28 @@
 #import "RMHTTPSessionManager.h"
 #import <AFNetworking.h>
 
-@interface LogTableViewCell:UITableViewCell
-
-@property (weak, nonatomic) IBOutlet UILabel *logLabel;
-
-@end
-
-@implementation LogTableViewCell
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-}
-
-@end
-
-typedef enum : NSUInteger {
-    // 已进入应用，未连接
-    AdjustTypeNoConnect,
-    // 连接中
-    AdjustTypeConnecting,
-    // 连接成功，等待流程开始
-    AdjustTypeReady,
-    // 1、已进入透传
-    AdjustTypeTunelEntered,
-    // 2、已进入校准
-    AdjustTypeAdjustEntered,
-    // 3、开始校准中
-    AdjustTypeAdjusting,
-    // 3、校准成功
-    AdjustTypeAdjustSuccess,
-    // 3、校准失败
-    AdjustTypeAdjustAdjustFail,
-    // 3、校验失败
-    AdjustTypeAdjustLimitFail,
-    // 4、退出校准成功
-    AdjustTypeExitAdjusted,
-    // 5、开始数据成功
-    AdjustTypeStartDataed,
-    // 6、退出透传了，等待16通道检测
-    AdjustTypeExitTunel,
-    // 7、校验成功
-    AdjustTypeCheckSuccess
-} AdjustType;
-
 @interface ViewController ()<RMBluetoothServiceDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @property (strong, nonatomic) NSMutableArray *logList;
 @property (weak, nonatomic) IBOutlet UITableView *logTableView;
 
-@property (weak, nonatomic) IBOutlet UIButton *limitButton;
+@property (weak, nonatomic) IBOutlet UIButton *startButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *noAirbagAdjustButton;
+@property (weak, nonatomic) IBOutlet UIButton *airbagAdjustButton;
+@property (weak, nonatomic) IBOutlet UIButton *saveDefaultButton;
+@property (weak, nonatomic) IBOutlet UIButton *getDefaultButton;
+
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UIButton *enterButton;
-@property (weak, nonatomic) IBOutlet UIButton *adjustButton;
-@property (weak, nonatomic) IBOutlet UIButton *doneButton;
-@property (weak, nonatomic) IBOutlet UILabel *promptLabel;
-@property (weak, nonatomic) IBOutlet UILabel *successCountLabel;
-@property (weak, nonatomic) IBOutlet UILabel *adjustFailLabel;
-@property (weak, nonatomic) IBOutlet UILabel *limitFailLabel;
-@property (weak, nonatomic) IBOutlet UIButton *startOrResetButton;
-@property (weak, nonatomic) IBOutlet UILabel *forceLabel;
 
-@property (nonatomic) NSInteger successCount;
-@property (nonatomic) NSInteger adjustFailCount;
-@property (nonatomic) NSInteger limitFailCount;
+@property (weak, nonatomic) IBOutlet UILabel *presureLabel;
+@property (weak, nonatomic) IBOutlet UILabel *defaultValLabel;
+@property (weak, nonatomic) IBOutlet UILabel *currValLabel;
+@property (weak, nonatomic) IBOutlet UILabel *resultLabel;
 
-@property (nonatomic) NSInteger limitVal;
-
-@property (nonatomic) AdjustType adjustType;
-
-@property (nonatomic) BOOL isExitNow;
-
-@property (strong, nonatomic) NSMutableArray *forces;
+@property (nonatomic) NSInteger airPresulre;
+@property (nonatomic) NSInteger defaultVal;
+@property (nonatomic) NSInteger currVal;
 
 @end
 
@@ -91,246 +42,10 @@ typedef enum : NSUInteger {
     BOOL isPause_;
 }
 
-- (NSMutableArray *)forces {
-    if (!_forces) {
-        _forces = [[NSMutableArray alloc] initWithArray:@[@-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1]];
-    }
-    return _forces;
-}
-
-- (void)setLimitVal:(NSInteger)limitVal {
-    _limitVal = limitVal;
-    [[NSUserDefaults standardUserDefaults] setInteger:_limitVal forKey:@"limitVal"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (void)resetForeces {
-    _forces = [[NSMutableArray alloc] initWithArray:@[@-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1, @-1]];
-    [self refreshForcesLabel];
-}
-
-- (void)refreshForcesLabel {
-    NSMutableString *forceStr = [NSMutableString string];
-    for (NSString *forceItem in self.forces) {
-        [forceStr appendFormat:@"%@,", forceItem];
-    }
-    self.forceLabel.text = [forceStr copy];
-}
-
-- (BOOL)forcesIsCompletly {
-    for (NSNumber *force in _forces) {
-        if (force.integerValue == -1) {
-            return NO;
-        }
-    }
-    return YES;
-}
-
-- (NSInteger)forcesIsCorrect {
-    for (NSNumber *force in _forces) {
-        if (force.integerValue == -1) {
-            return 2;
-        }
-        if (force.integerValue < 100 - _limitVal || force.integerValue > 100 + _limitVal) {
-            return 0;
-        }
-    }
-    return 1;
-}
-
-- (void)setAdjustType:(AdjustType)adjustType {
-    _adjustType = adjustType;
-    
-    switch (_adjustType) {
-        case AdjustTypeNoConnect:
-            [self handleAdjustTypeNoConnect];
-            break;
-        case AdjustTypeReady:
-            [self handleAdjustTypeReady];
-            break;
-        case AdjustTypeTunelEntered:
-            [self handleAdjustTypeTunelEntered];
-            break;
-        case AdjustTypeAdjustEntered:
-            [self handleAdjustTypeAdjustEntered];
-            break;
-        case AdjustTypeAdjusting:
-            [self handleAdjustTypeAdjusting];
-            break;
-        case AdjustTypeAdjustSuccess:
-            [self handleAdjustTypeAdjustSuccess];
-            break;
-        case AdjustTypeAdjustAdjustFail:
-            [self handleAdjustTypeAdjustAdjustFail];
-            break;
-        case AdjustTypeAdjustLimitFail:
-            [self handleAdjustTypeAdjustLimitFail];
-            break;
-        case AdjustTypeConnecting:
-            [self handleAdjustTypeConnecting];
-            break;
-        case AdjustTypeExitAdjusted:
-            [self handleAdjustTypeExitAdjusting];
-            break;
-        case AdjustTypeStartDataed:
-            [self handleAdjustTypeStartDataing];
-            break;
-        case AdjustTypeExitTunel:
-            [self handleAdjustTypeExitTunel];
-            break;
-        case AdjustTypeCheckSuccess:
-            [self handleAdjustTypeCheckSuccess];
-            break;
-            
-        default:
-            break;
-    }
-}
-
--(void)setSuccessCount:(NSInteger)successCount {
-    _successCount = successCount;
-    [self syncCount];
-    [self refreshCountLabel];
-}
-
-- (void)setLimitFailCount:(NSInteger)limitFailCount {
-    _limitFailCount = limitFailCount;
-    [self syncCount];
-    [self refreshCountLabel];
-}
-
-- (void)setAdjustFailCount:(NSInteger)adjustFailCount {
-    _adjustFailCount = adjustFailCount;
-    [self syncCount];
-    [self refreshCountLabel];
-}
-
-- (void)syncCount {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud setInteger:self.successCount forKey:@"self.successCount"];
-    [ud setInteger:self.adjustFailCount forKey:@"self.adjustFailCount"];
-    [ud setInteger:self.limitFailCount forKey:@"self.limitFailCount"];
-    [ud synchronize];
-}
-
-- (void)loadCount {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    _successCount = [ud integerForKey:@"self.successCount"];
-    _adjustFailCount = [ud integerForKey:@"self.adjustFailCount"];
-    _limitFailCount = [ud integerForKey:@"self.limitFailCount"];
-    [self refreshCountLabel];
-}
-
-- (void)refreshCountLabel {
-    self.successCountLabel.text = [NSString stringWithFormat:@"%ld", self.successCount];
-    self.adjustFailLabel.text = [NSString stringWithFormat:@"%ld", self.adjustFailCount];
-    self.limitFailLabel.text = [NSString stringWithFormat:@"%ld", self.limitFailCount];
-}
-
-- (void)handleAdjustTypeNoConnect{
-    self.promptLabel.text = @"未连接";
-    self.enterButton.enabled = NO;
-    self.adjustButton.enabled = NO;
-    self.doneButton.enabled = NO;
-}
-- (void)handleAdjustTypeReady{
-    self.promptLabel.text = @"等待开始流程";
-    self.enterButton.enabled = YES;
-    self.adjustButton.enabled = NO;
-    self.doneButton.enabled = NO;
-}
-- (void)handleAdjustTypeTunelEntered{
-    self.promptLabel.text = @"进入透传成功";
-    self.enterButton.enabled = NO;
-    self.adjustButton.enabled = NO;
-    self.doneButton.enabled = NO;
-}
-- (void)handleAdjustTypeAdjustEntered{
-    self.promptLabel.text = @"进入透传及校准成功";
-    self.enterButton.enabled = NO;
-    self.adjustButton.enabled = YES;
-    self.doneButton.enabled = NO;
-}
-- (void)handleAdjustTypeAdjusting{
-    self.promptLabel.text = @"校准进行中";
-    self.enterButton.enabled = NO;
-    self.adjustButton.enabled = NO;
-    self.doneButton.enabled = NO;
-}
-- (void)handleAdjustTypeAdjustSuccess{
-    self.promptLabel.text = @"校准成功，等待退出校准";
-    self.enterButton.enabled = NO;
-    self.adjustButton.enabled = NO;
-    self.doneButton.enabled = YES;
-}
-- (void)handleAdjustTypeAdjustAdjustFail{
-    self.promptLabel.text = @"校准失败";
-    self.enterButton.enabled = NO;
-    self.adjustButton.enabled = YES;
-    self.doneButton.enabled = YES;
-    self.adjustFailCount += 1;
-    [self syncCount];
-    [self refreshCountLabel];
-}
-- (void)handleAdjustTypeAdjustLimitFail{
-    self.promptLabel.text = @"校验失败";
-    [SVProgressHUD showErrorWithStatus:@"校验失败" duration:1];
-    self.enterButton.enabled = YES;
-    self.adjustButton.enabled = NO;
-    self.doneButton.enabled = YES;
-    self.limitFailCount += 1;
-    [self syncCount];
-    [self refreshCountLabel];
-}
-- (void)handleAdjustTypeConnecting {
-    self.promptLabel.text = @"连接中";
-    self.enterButton.enabled = NO;
-    self.adjustButton.enabled = NO;
-    self.doneButton.enabled = NO;
-    
-}
-- (void)handleAdjustTypeExitAdjusting {
-    self.promptLabel.text = @"退出校准中";
-    self.enterButton.enabled = NO;
-    self.adjustButton.enabled = NO;
-    self.doneButton.enabled = NO;
-    
-}
-- (void)handleAdjustTypeStartDataing {
-    self.promptLabel.text = @"开始发送数据中";
-    self.enterButton.enabled = NO;
-    self.adjustButton.enabled = NO;
-    self.doneButton.enabled = NO;
-    
-}
-- (void)handleAdjustTypeExitTunel {
-    self.promptLabel.text = @"退出透传中";
-    self.enterButton.enabled = NO;
-    self.adjustButton.enabled = NO;
-    self.doneButton.enabled = NO;
-}
-- (void)handleAdjustTypeCheckSuccess {
-    self.promptLabel.text = @"校准校验成功";
-    [SVProgressHUD showSuccessWithStatus:@"校验成功" duration:1];
-    self.enterButton.enabled = NO;
-    self.adjustButton.enabled = NO;
-    self.doneButton.enabled = YES;
-    self.successCount += 1;
-    [self syncCount];
-    [self refreshCountLabel];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.adjustType = AdjustTypeNoConnect;
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"limitVal"]) {
-        _limitVal = [[NSUserDefaults standardUserDefaults] integerForKey:@"limitVal"];
-    } else {
-        self.limitVal = 3;
-    }
-    
-    [self.limitButton setTitle:[NSString stringWithFormat:@"超限:%ld", self.limitVal] forState:UIControlStateNormal];
-    [self loadCount];
+    isStart_ = NO;
+    [self clean];
     [BluetoothService sharedInstance].delegate = self;
     [self.logTableView setBackgroundColor:[UIColor whiteColor]];
 }
@@ -344,27 +59,32 @@ typedef enum : NSUInteger {
     [self.logTableView reloadData];
 }
 
+- (void)cleanVal {
+    _airPresulre = 0;
+    _defaultVal = 0;
+    _currVal = 0;
+}
+
 - (void)clean {
+    [self cleanVal];
+    
     self.logList = nil;
     self.titleLabel.text = @"设备未连接";
-    [self reload];
+//    [self reload];
 }
 
 - (IBAction)actionStart:(id)sender {
-    if (self.adjustType == AdjustTypeNoConnect) {
-        self.adjustType = AdjustTypeConnecting;
+    if (!isStart_) {
+        isStart_ = YES;
         [[BluetoothService sharedInstance] search];
-        self.startOrResetButton.enabled = NO;
+        self.startButton.enabled = NO;
         [SVProgressHUD showWithStatus:@"连接中"];
-        [self.startOrResetButton setTitle:@"开始" forState:UIControlStateNormal];
-        [self clean];
-    } else if (self.adjustType != AdjustTypeConnecting) {
-        [self resetForeces];
-        self.successCount = 0;
-        self.adjustFailCount = 0;
-        self.limitFailCount = 0;
-        [self refreshCountLabel];
-        [self syncCount];
+        [self.startButton setTitle:@"断开" forState:UIControlStateNormal];
+        [self cleanVal];
+    } else {
+        [self cleanVal];
+        [[BluetoothService sharedInstance] exitAdjust];
+        [SVProgressHUD showWithStatus:@"退出中"];
     }
 }
 
@@ -399,61 +119,20 @@ typedef enum : NSUInteger {
     
 }
 
-- (IBAction)actionCopy:(id)sender {
-    NSMutableString *result = [NSMutableString string];
-    for (NSString *logItem in self.logList) {
-        [result appendFormat:@"%@\n", logItem];
-    }
-    
-    [[UIPasteboard generalPasteboard] setString:result];
-    [SVProgressHUD showSuccessWithStatus:@"设置成功" duration:1];
-}
-
-- (IBAction)actionEnter:(id)sender {
-    self.adjustType = AdjustTypeReady;
-    self.isExitNow = NO;
-    [[BluetoothService sharedInstance] enterTunel];
+- (IBAction)actionNoAirbagPresure:(id)sender {
     [SVProgressHUD showWithStatus:@"进入透传中"];
 }
 
-- (IBAction)actionAdjust:(id)sender {
-    self.adjustType = AdjustTypeAdjusting;
-    [[BluetoothService sharedInstance] startAdjust];
-    [SVProgressHUD showWithStatus:@"校准中"];
+- (IBAction)actionAirbagPresure:(id)sender {
+    [SVProgressHUD showWithStatus:@"进入透传中"];
 }
 
-- (IBAction)actionDone:(id)sender {
-    if (self.adjustType == AdjustTypeAdjustAdjustFail) {
-        [[BluetoothService sharedInstance] exitAdjust];
-        [SVProgressHUD showWithStatus:@"退出中"];
-        self.isExitNow = YES;
-    } else if (self.adjustType == AdjustTypeAdjustLimitFail) {
-        self.adjustType = AdjustTypeReady;
-        [SVProgressHUD showSuccessWithStatus:@"已重置" duration:2];
-    } else {
-        self.adjustType = AdjustTypeReady;
-        [SVProgressHUD showSuccessWithStatus:@"操作成功" duration:2];
-    }
+- (IBAction)actionSaveDefault:(id)sender {
+    [SVProgressHUD showWithStatus:@"进入透传中"];
 }
 
-- (IBAction)actionLimitSetting:(id)sender {
-    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:
-                                  UIAlertControllerStyleAlert];
-    // 添加输入框 (注意:在UIAlertControllerStyleActionSheet样式下是不能添加下面这行代码的)
-    [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = @"请输入校验偏差范围";
-        textField.keyboardType = UIKeyboardTypeNumberPad;
-    }];
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        self.limitVal = [[[alertVc textFields] objectAtIndex:0].text integerValue];
-        [self.limitButton setTitle:[NSString stringWithFormat:@"超限:%ld", self.limitVal] forState:UIControlStateNormal];
-    }];
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-    // 添加行为
-    [alertVc addAction:action2];
-    [alertVc addAction:action1];
-    [self presentViewController:alertVc animated:YES completion:nil];
-
+- (IBAction)actionGetDefault:(id)sender {
+    [SVProgressHUD showWithStatus:@"进入透传中"];
 }
 
 - (void)writeCmd:(NSString *)cmd {
@@ -467,14 +146,14 @@ typedef enum : NSUInteger {
 }
 
 - (void)notifyLog:(NSString *)log{
-    if (![self hadConnected]) {
-        [SVProgressHUD showErrorWithStatus:@"设备未连接" duration:1];
-        return;
-    }
-    if (!isPause_) {
-        [self.logList insertObject:log atIndex:0];
-        [self.logTableView reloadData];
-    }
+//    if (![self hadConnected]) {
+//        [SVProgressHUD showErrorWithStatus:@"设备未连接" duration:1];
+//        return;
+//    }
+//    if (!isPause_) {
+//        [self.logList insertObject:log atIndex:0];
+//        [self.logTableView reloadData];
+//    }
 }
 
 -(NSMutableArray *)logList {
@@ -482,23 +161,6 @@ typedef enum : NSUInteger {
         _logList = [NSMutableArray array];
     }
     return _logList;
-}
-
-- (void)notifyVals:(NSArray *)valArray rIndex:(NSInteger)rIndex {
-    [self refreshForcesLabel];
-    for (int i = 0; i < valArray.count; i++) {
-        self.forces[(rIndex - 1) * 6 + i] = valArray[i];
-    }
-    if (self.adjustType != AdjustTypeExitTunel) {
-        return;
-    }
-    if ([self forcesIsCompletly]) {
-        if ([self forcesIsCorrect] == 1) {
-            self.adjustType = AdjustTypeCheckSuccess;
-        } else if ([self forcesIsCorrect] == 0) {
-            self.adjustType = AdjustTypeAdjustLimitFail;
-        }
-    }
 }
 
 - (void)notifyDiscover{
@@ -513,87 +175,47 @@ typedef enum : NSUInteger {
     self.titleLabel.text = @"设备未连接";
 }
 
+- (void)notifyReady{
+    self.titleLabel.text = @"设备已连接";
+    [SVProgressHUD dismiss];
+    [SVProgressHUD showSuccessWithStatus:@"连接成功" duration:1];
+    self.startButton.enabled = YES;
+    [self.startButton setTitle:@"断开" forState:UIControlStateNormal];
+}
+
 - (void)notifyDisConnect{
     [SVProgressHUD showErrorWithStatus:@"设备已断开" duration:1];
     
-    self.adjustType = AdjustTypeNoConnect;
+    isStart_ = NO;
     self.titleLabel.text = @"设备未连接";
     [[BluetoothService sharedInstance] stop];
     [self clean];
-    [self.startOrResetButton setTitle:@"开始" forState:UIControlStateNormal];
-    self.adjustType = AdjustTypeReady;
-}
-
-- (void)notifyReady{
-    self.titleLabel.text = @"设备已连接";
-    self.adjustType = AdjustTypeReady;
-    [SVProgressHUD dismiss];
-    [SVProgressHUD showSuccessWithStatus:@"连接成功" duration:1];
-    self.startOrResetButton.enabled = YES;
-    [self.startOrResetButton setTitle:@"复位" forState:UIControlStateNormal];
-}
-
-- (void)notifySlpLog:(NSString *)log {
-    self.titleLabel.text = log;
+    [self.startButton setTitle:@"开始" forState:UIControlStateNormal];
 }
 
 - (BOOL)hadConnected {
     return [BluetoothService sharedInstance].peripheral != nil;
 }
 
-// 进入或退出透传成功
-- (void)notifyTunelSucc {
-    if (self.adjustType == AdjustTypeReady) {
-        self.adjustType = AdjustTypeTunelEntered;
-        [[BluetoothService sharedInstance] enterAdjust];
-    } else if (self.adjustType == AdjustTypeStartDataed) {
-        [SVProgressHUD dismiss];
-        
-        if (self.isExitNow) {
-            self.adjustType = AdjustTypeReady;
-        } else {
-            self.adjustType = AdjustTypeExitTunel;
-            // SDL:2 开始数据，并检测
-            [[BluetoothService sharedInstance] sendData:@"SDL:2"];
-            
-            // 暂时不定时失败了，默认认为肯定还有16个点的值
-    //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    //            if (self.adjustType != AdjustTypeAdjustLimitFail && self.adjustType != AdjustTypeCheckSuccess) {
-    //                self.adjustType = AdjustTypeAdjustLimitFail;
-    //            }
-    //        });
-            
-            [self resetForeces];
-            [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"校验中，偏差%ld", self.limitVal]];
-        }
-    }
+-(void)notifyMacAddress:(NSString *)macAddress {
+    self.titleLabel.text = macAddress;
 }
-// 进入退出校准成功或开始发送数据成功
-- (void)notifyAdjustOrStartDataSucc {
-    if (self.adjustType == AdjustTypeTunelEntered) {
-        self.adjustType = AdjustTypeAdjustEntered;
-        // 等待手动点击开始校准
-        [SVProgressHUD dismiss];
-        [SVProgressHUD showSuccessWithStatus:@"进入透传成功" duration:1];
-    } else if (self.adjustType == AdjustTypeAdjustSuccess || self.adjustType == AdjustTypeAdjustAdjustFail) {
-        self.adjustType = AdjustTypeExitAdjusted;
-        [[BluetoothService sharedInstance] startData];
-//        [SVProgressHUD dismiss];
-//        [SVProgressHUD showSuccessWithStatus:@"校准完成" duration:1];
-    } else if (self.adjustType == AdjustTypeExitAdjusted) {
-        self.adjustType = AdjustTypeStartDataed;
-        [[BluetoothService sharedInstance] exitTunel];
-    }
+
+- (void)notifyNoAirbagSucc {
+    
 }
-// 校准成功
-- (void)notifyAdjustSucc {
-    self.adjustType = AdjustTypeAdjustSuccess;
-    [[BluetoothService sharedInstance] exitAdjust];
+- (void)notifyAirbagSucc {
+    
 }
-// 校准失败
-- (void)notifyAdjustFail {
-    self.adjustType = AdjustTypeAdjustAdjustFail;
-    [SVProgressHUD showErrorWithStatus:@"校准失败" duration:1];
+- (void)notifySaveDefaultSucc {
+    
+}
+- (void)notifyGetDefault:(NSInteger)slp currCST:(NSInteger)currCST defaultCST:(NSInteger)defaultCST {
+    
+}
+
+- (void)notifyAirPresure: (NSInteger)airPresure {
+    
 }
 
 #pragma mark - uitableview deleagate
@@ -611,10 +233,7 @@ typedef enum : NSUInteger {
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LogTableViewCell *cell = [self.logTableView dequeueReusableCellWithIdentifier:@"LogTableViewCell" forIndexPath:indexPath];
-    NSString *log = [self.logList objectAtIndex:indexPath.row];
-    cell.logLabel.text = log;
-    return cell;
+    return [[UITableViewCell alloc] init];
 }
 
 @end

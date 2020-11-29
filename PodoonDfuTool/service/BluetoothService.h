@@ -21,15 +21,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyDisConnect;
 - (void)notifyReady;
 - (void)notifyLog:(NSString *)log;
-- (void)notifyVals:(NSArray *)valArray rIndex: (NSInteger) rIndex;
-// 进入或退出透传成功
-- (void)notifyTunelSucc;
-// 进入退出校准成功或开始发送数据成功
-- (void)notifyAdjustOrStartDataSucc;
-// 校准成功
-- (void)notifyAdjustSucc;
-// 校准失败
-- (void)notifyAdjustFail;
+
+- (void)notifyNoAirbagSucc;
+- (void)notifyAirbagSucc;
+- (void)notifySaveDefaultSucc;
+- (void)notifyGetDefault:(NSInteger)slp currCST:(NSInteger)currCST defaultCST:(NSInteger)defaultCST;
+
+- (void)notifyAirPresure: (NSInteger)airPresure;
+- (void)notifyMacAddress: (NSString *)macAddress;
 
 @end
 
@@ -51,17 +50,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)sendData:(NSString *)cmd;
 
 // 进入透传
-- (void)enterTunel;
+- (void)noairbagAdjust;
 // 进入校准
-- (void)enterAdjust;
+- (void)airbagAdjust;
 // 开始校准
-- (void)startAdjust;
+- (void)saveDefault;
 // 退出校准
-- (void)exitAdjust;
-// 启动数据
-- (void)startData;
-// 退出透传
-- (void)exitTunel;
+- (void)getDefault;
 
 @end
 

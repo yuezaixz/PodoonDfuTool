@@ -93,30 +93,24 @@
         [self writeCommand:cmd];
     }
 }
+
 // 进入透传
-- (void)enterTunel {
-    [self sendData: @"SUB:1"];
+- (void)noairbagAdjust{
+    [self sendData: @"SCB:167"];
 }
 // 进入校准
-- (void)enterAdjust {
-    [self sendData: @"SUC:AB003E"];
+- (void)airbagAdjust{
+    [self sendData: @"SCD:167"];
 }
 // 开始校准
-- (void)startAdjust {
-    [self sendData: @"SUC:AB005E"];
+- (void)saveDefault{
+    [self sendData: @"SCS"];
 }
 // 退出校准
-- (void)exitAdjust {
-    [self sendData: @"SUC:AB013E"];
+- (void)getDefault{
+    [self sendData: @"GCD"];
 }
-// 启动数据
-- (void)startData {
-    [self sendData: @"SUC:AB011E"];
-}
-// 退出透传
-- (void)exitTunel {
-    [self sendData: @"SUB:0"];
-}
+
 
 //根据tag值搜索设备
 - (void)searchPeripherals{
@@ -224,27 +218,20 @@
         }
         uint8_t *footData = [tempData bytes];
         NSString *offlineStr = [[NSString stringWithFormat:@"%s",footData] substringWithRange:NSMakeRange(0, tempData.length)];
-        if ([offlineStr rangeOfString:@"RecvACK:SUB"].location != NSNotFound) {
-            [self.delegate notifyTunelSucc];
-        } else if ([offlineStr rangeOfString:@"RecvACK:SUC"].location != NSNotFound) {
-            [self.delegate notifyAdjustOrStartDataSucc];
-        } else if ([offlineStr rangeOfString:@"*5"].location != NSNotFound) {
-            if ([offlineStr rangeOfString:@"*5S000#"].location != NSNotFound) {
-                [self.delegate notifyAdjustSucc];
-            } else {
-                [self.delegate notifyAdjustFail];
-            }
-        } else if ([offlineStr hasPrefix:@"R1"] || [offlineStr hasPrefix:@"R2"] || [offlineStr hasPrefix:@"R3"]) {
-            NSInteger rIndex = [[offlineStr substringWithRange:NSMakeRange(1, 1)] integerValue];
-            NSArray *rVals = [[offlineStr substringFromIndex:3] componentsSeparatedByString:@","];
-            NSMutableArray *valArray = [NSMutableArray array];
-            for (NSString *hexString in rVals) {
-                unsigned int outVal;
-                NSScanner* scanner = [NSScanner scannerWithString:[NSString stringWithFormat:@"0x%@", hexString]];
-                [scanner scanHexInt:&outVal];
-                [valArray addObject:@(outVal)];
-            }
-            [self.delegate notifyVals:[valArray copy] rIndex:rIndex];
+        if ([offlineStr rangeOfString:@"RecvACK:SCB"].location != NSNotFound) {
+            [self.delegate notifyNoAirbagSucc];
+        } else if ([offlineStr rangeOfString:@"RecvACK:SCD"].location != NSNotFound) {
+            [self.delegate notifyAirbagSucc];
+        } else if ([offlineStr rangeOfString:@"RecvACK:SCS"].location != NSNotFound) {
+            [self.delegate notifySaveDefaultSucc];
+        } else if ([offlineStr rangeOfString:@"Slp:"].location != NSNotFound) {
+            offlineStr = [offlineStr substringFromIndex:4];
+            
+        } else if ([offlineStr rangeOfString:@"SS:"].location != NSNotFound) {
+            offlineStr = [offlineStr substringFromIndex:3];
+            
+        } else if ([offlineStr rangeOfString:@"MC:"].location != NSNotFound) {
+            [self.delegate notifyMacAddress:[offlineStr substringFromIndex:3]];
         }
         
         [self.delegate notifyLog:offlineStr];
@@ -256,8 +243,8 @@
     LOG_FUNC
     
     [self writeCommand:@"GHV"];
-    [self performSelector:@selector(writeCommand:) withObject:@"SDL:2" afterDelay:0.02];
-//    [self performSelector:@selector(writeCommand:) withObject:@"GMAC" afterDelay:0.04];
+//    [self performSelector:@selector(writeCommand:) withObject:@"SDL:2" afterDelay:0.02];
+    [self performSelector:@selector(writeCommand:) withObject:@"GMAC" afterDelay:0.04];
 //    [self performSelector:@selector(SDL11) withObject:nil afterDelay:0.06];
 //    [self performSelector:@selector(SDI2) withObject:nil afterDelay:0.08];
 //    [self performSelector:@selector(adjustTime) withObject:nil afterDelay:0.10];
