@@ -235,12 +235,18 @@
             if (rVals.count == 2 && ((NSString *)rVals[1]).length > 4) {
                 offlineStr = [rVals[1] substringFromIndex:4];
                 NSArray *rVals2 = [offlineStr componentsSeparatedByString:@":"];
-                if (rVals2.count == 2) {
+                if (rVals2.count > 0) {
                     NSString *val1Str = rVals[0];
                     NSInteger val1 = [val1Str integerValue];
                     
-                    NSInteger val2 = [rVals[0] integerValue];
-                    NSInteger val3 = [rVals[1] integerValue];
+                    NSInteger val2 = -1;
+                    NSInteger val3 = -1;
+                    if (rVals2.count == 1) {
+                        val3 = [rVals[0] integerValue];
+                    } else {
+                        val2 = [rVals[0] integerValue];
+                        val3 = [rVals[1] integerValue];
+                    }
                     
                     [self.delegate notifyGetDefault:val1 currCST:val2 defaultCST:val3];
                 }
@@ -269,7 +275,7 @@
     LOG_FUNC
     
     [self writeCommand:@"GHV"];
-    [self performSelector:@selector(writeCommand:) withObject:@"SDL:2" afterDelay:0.02];
+    [self performSelector:@selector(writeCommand:) withObject:@"SDL:8" afterDelay:0.02];
     [self performSelector:@selector(writeCommand:) withObject:@"GMAC" afterDelay:0.04];
 //    [self performSelector:@selector(SDL11) withObject:nil afterDelay:0.06];
 //    [self performSelector:@selector(SDI2) withObject:nil afterDelay:0.08];

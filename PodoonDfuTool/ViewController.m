@@ -34,6 +34,9 @@
 @property (nonatomic) NSInteger airPresulre;
 @property (nonatomic) NSInteger defaultVal;
 @property (nonatomic) NSInteger currVal;
+@property (strong, nonatomic) NSString *logSS;
+@property (strong, nonatomic) NSString *logResult;
+@property (strong, nonatomic) NSString *logOther;
 
 @end
 
@@ -150,6 +153,14 @@
 }
 
 - (void)notifyLog:(NSString *)log{
+    if ([log rangeOfString:@"RecvACK:SCB"].location != NSNotFound || [log rangeOfString:@"RecvACK:SCS"].location != NSNotFound || [log rangeOfString:@"RecvACK:SCD"].location != NSNotFound) {
+        self.logOther = log;
+    } else if ([log rangeOfString:@"Slp:"].location != NSNotFound) {
+        self.logResult = log;
+    } else if ([log rangeOfString:@"SS:"].location != NSNotFound) {
+        self.logSS = log;
+    }
+    self.resultLabel.text = [NSString stringWithFormat:@"命令返回：%@\n校准：%@\n气压：%@", _logOther?:@"--", _logResult?:@"--", _logSS?:@"--" ];
 //    if (![self hadConnected]) {
 //        [SVProgressHUD showErrorWithStatus:@"设备未连接" duration:1];
 //        return;
