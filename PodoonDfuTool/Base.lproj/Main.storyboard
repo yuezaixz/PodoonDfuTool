@@ -90,7 +90,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="mnv-oa-2bo" firstAttribute="top" secondItem="gsi-JU-jDc" secondAttribute="bottom" constant="16" id="4ui-M4-3HF"/>
                                     <constraint firstItem="dvw-JN-l2r" firstAttribute="leading" secondItem="2nP-Ii-jwO" secondAttribute="leading" constant="16" id="68n-My-UMO"/>
@@ -149,7 +149,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="dB7-pr-Cyk" firstAttribute="leading" secondItem="vNP-Lp-aFI" secondAttribute="leading" id="9EA-8z-bCm"/>
                                     <constraint firstItem="00j-OM-Bed" firstAttribute="leading" secondItem="dB7-pr-Cyk" secondAttribute="trailing" constant="16" id="GBl-aX-7pD"/>
@@ -178,7 +178,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="TtX-CB-7ox" firstAttribute="leading" secondItem="e6o-kx-q14" secondAttribute="trailing" constant="16" id="4x3-Sq-cuT"/>
                                     <constraint firstItem="e6o-kx-q14" firstAttribute="leading" secondItem="nga-G7-H1t" secondAttribute="leading" id="6e6-T4-k8N"/>
@@ -207,7 +207,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="QvL-2o-HfQ" firstAttribute="leading" secondItem="rpt-Wo-GTT" secondAttribute="leading" id="0o6-V5-1lj"/>
                                     <constraint firstAttribute="bottom" secondItem="QvL-2o-HfQ" secondAttribute="bottom" constant="5" id="5ch-AJ-oe8"/>
@@ -236,7 +236,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="zpU-ea-70l" secondAttribute="bottom" constant="8" id="8px-h0-6x7"/>
                                     <constraint firstItem="zpU-ea-70l" firstAttribute="centerX" secondItem="gPe-dM-51P" secondAttribute="centerX" id="Xdi-1C-vlL"/>
@@ -275,7 +275,6 @@
                         <outlet property="airbagAdjustButton" destination="gsi-JU-jDc" id="a3d-RU-HvO"/>
                         <outlet property="currValLabel" destination="JLB-oi-rhm" id="wri-2U-LMG"/>
                         <outlet property="defaultValLabel" destination="TtX-CB-7ox" id="6Yb-nt-yPf"/>
-                        <outlet property="forceLabel" destination="oVm-Zn-Wo0" id="wTm-sX-POG"/>
                         <outlet property="getDefaultButton" destination="mnv-oa-2bo" id="XZA-OI-HNt"/>
                         <outlet property="noAirbagAdjustButton" destination="I4D-D6-DI4" id="1QD-oC-z6l"/>
                         <outlet property="presureLabel" destination="00j-OM-Bed" id="Iw7-a6-HnD"/>
@@ -321,9 +320,6 @@
         </systemColor>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

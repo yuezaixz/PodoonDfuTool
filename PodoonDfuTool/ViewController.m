@@ -83,8 +83,8 @@
         [self cleanVal];
     } else {
         [self cleanVal];
-        [[BluetoothService sharedInstance] exitAdjust];
-        [SVProgressHUD showWithStatus:@"退出中"];
+        [[BluetoothService sharedInstance] disconnect];
+        [SVProgressHUD showWithStatus:@"断开中"];
     }
 }
 
@@ -120,19 +120,23 @@
 }
 
 - (IBAction)actionNoAirbagPresure:(id)sender {
-    [SVProgressHUD showWithStatus:@"进入透传中"];
+    [self writeCmd:@"SCB:167"];
+    [SVProgressHUD showSuccessWithStatus:@"执行无气囊校准" duration:10];
 }
 
 - (IBAction)actionAirbagPresure:(id)sender {
-    [SVProgressHUD showWithStatus:@"进入透传中"];
+    [self writeCmd:@"SCD:167"];
+    [SVProgressHUD showSuccessWithStatus:@"执行带气囊校准" duration:10];
 }
 
 - (IBAction)actionSaveDefault:(id)sender {
-    [SVProgressHUD showWithStatus:@"进入透传中"];
+    [self writeCmd:@"SCS"];
+    [SVProgressHUD showSuccessWithStatus:@"保存气压校准值" duration:10];
 }
 
 - (IBAction)actionGetDefault:(id)sender {
-    [SVProgressHUD showWithStatus:@"进入透传中"];
+    [self writeCmd:@"GCD"];
+    [SVProgressHUD showSuccessWithStatus:@"读取气压校准值" duration:10];
 }
 
 - (void)writeCmd:(NSString *)cmd {
@@ -203,19 +207,32 @@
 
 - (void)notifyNoAirbagSucc {
     
+    [SVProgressHUD dismiss];
+    [SVProgressHUD showSuccessWithStatus:@"执行无气囊校准成功" duration:1.0];
 }
 - (void)notifyAirbagSucc {
     
+    [SVProgressHUD dismiss];
+    [SVProgressHUD showSuccessWithStatus:@"执行带气囊校准成功" duration:1.0];
 }
 - (void)notifySaveDefaultSucc {
     
+    [SVProgressHUD dismiss];
+    [SVProgressHUD showSuccessWithStatus:@"保存气压校准值成功" duration:1.0];
 }
 - (void)notifyGetDefault:(NSInteger)slp currCST:(NSInteger)currCST defaultCST:(NSInteger)defaultCST {
+    _currVal = currCST;
+    _defaultVal = defaultCST;
     
+    self.defaultValLabel.text = [NSString stringWithFormat:@"%ld", defaultCST];
+    self.currValLabel.text = [NSString stringWithFormat:@"%ld", currCST];
+    [SVProgressHUD dismiss];
+    [SVProgressHUD showSuccessWithStatus:@"读取气压校准值成功" duration:1.0];
 }
 
 - (void)notifyAirPresure: (NSInteger)airPresure {
-    
+    _airPresulre = airPresure;
+    self.presureLabel.text = [NSString stringWithFormat:@"%ld", airPresure];
 }
 
 #pragma mark - uitableview deleagate

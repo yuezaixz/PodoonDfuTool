@@ -218,23 +218,49 @@
         }
         uint8_t *footData = [tempData bytes];
         NSString *offlineStr = [[NSString stringWithFormat:@"%s",footData] substringWithRange:NSMakeRange(0, tempData.length)];
+        NSLog(@"%@", offlineStr);
         if ([offlineStr rangeOfString:@"RecvACK:SCB"].location != NSNotFound) {
+            [self.delegate notifyLog:offlineStr];
             [self.delegate notifyNoAirbagSucc];
         } else if ([offlineStr rangeOfString:@"RecvACK:SCD"].location != NSNotFound) {
+            [self.delegate notifyLog:offlineStr];
             [self.delegate notifyAirbagSucc];
         } else if ([offlineStr rangeOfString:@"RecvACK:SCS"].location != NSNotFound) {
+            [self.delegate notifyLog:offlineStr];
             [self.delegate notifySaveDefaultSucc];
         } else if ([offlineStr rangeOfString:@"Slp:"].location != NSNotFound) {
+            [self.delegate notifyLog:offlineStr];
             offlineStr = [offlineStr substringFromIndex:4];
-            
+            NSArray *rVals = [offlineStr componentsSeparatedByString:@","];
+            if (rVals.count == 2 && ((NSString *)rVals[1]).length > 4) {
+                offlineStr = [rVals[1] substringFromIndex:4];
+                NSArray *rVals2 = [offlineStr componentsSeparatedByString:@":"];
+                if (rVals2.count == 2) {
+                    NSString *val1Str = rVals[0];
+                    NSInteger val1 = [val1Str integerValue];
+                    
+                    NSInteger val2 = [rVals[0] integerValue];
+                    NSInteger val3 = [rVals[1] integerValue];
+                    
+                    [self.delegate notifyGetDefault:val1 currCST:val2 defaultCST:val3];
+                }
+                
+            }
         } else if ([offlineStr rangeOfString:@"SS:"].location != NSNotFound) {
+            [self.delegate notifyLog:offlineStr];
             offlineStr = [offlineStr substringFromIndex:3];
+//            "SS:%04d,%04d,%d,%d,%d"
+            NSArray *rVals = [offlineStr componentsSeparatedByString:@","];
+            if (rVals.count > 1) {
+                NSInteger val1 = [rVals[0] integerValue];
+                [self.delegate notifyAirPresure:val1];
+            }
             
         } else if ([offlineStr rangeOfString:@"MC:"].location != NSNotFound) {
             [self.delegate notifyMacAddress:[offlineStr substringFromIndex:3]];
         }
         
-        [self.delegate notifyLog:offlineStr];
+//        [self.delegate notifyLog:offlineStr];
         
     }
 }
@@ -243,7 +269,7 @@
     LOG_FUNC
     
     [self writeCommand:@"GHV"];
-//    [self performSelector:@selector(writeCommand:) withObject:@"SDL:2" afterDelay:0.02];
+    [self performSelector:@selector(writeCommand:) withObject:@"SDL:2" afterDelay:0.02];
     [self performSelector:@selector(writeCommand:) withObject:@"GMAC" afterDelay:0.04];
 //    [self performSelector:@selector(SDL11) withObject:nil afterDelay:0.06];
 //    [self performSelector:@selector(SDI2) withObject:nil afterDelay:0.08];
