@@ -11,6 +11,7 @@
 		A680CD11254EB8C100CCC477 /* ZT_H905A_20201101-V2.2.91.zip in Resources */ = {isa = PBXBuildFile; fileRef = A680CD10254EB8C100CCC477 /* ZT_H905A_20201101-V2.2.91.zip */; };
 		A680CD18254EC0C500CCC477 /* ZT_H905A_20201101-V2.2.83.zip in Resources */ = {isa = PBXBuildFile; fileRef = A680CD17254EC0C500CCC477 /* ZT_H905A_20201101-V2.2.83.zip */; };
 		A68FE30B2551226F00AC05C9 /* RMHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A68FE30A2551226F00AC05C9 /* RMHTTPSessionManager.m */; };
+		A6A44E052591BDA000DDE041 /* ZT_H905A_20201217-V2.2.92.zip in Resources */ = {isa = PBXBuildFile; fileRef = A6A44E042591BDA000DDE041 /* ZT_H905A_20201217-V2.2.92.zip */; };
 		A6AFDEDE21DC48AE00F313D2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6AFDEDD21DC48AE00F313D2 /* AppDelegate.m */; };
 		A6AFDEE121DC48AE00F313D2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6AFDEE021DC48AE00F313D2 /* ViewController.m */; };
 		A6AFDEE421DC48AE00F313D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6AFDEE221DC48AE00F313D2 /* Main.storyboard */; };
@@ -48,6 +49,7 @@
 		A680CD17254EC0C500CCC477 /* ZT_H905A_20201101-V2.2.83.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20201101-V2.2.83.zip"; sourceTree = "<group>"; };
 		A68FE3092551226F00AC05C9 /* RMHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMHTTPSessionManager.h; sourceTree = "<group>"; };
 		A68FE30A2551226F00AC05C9 /* RMHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMHTTPSessionManager.m; sourceTree = "<group>"; };
+		A6A44E042591BDA000DDE041 /* ZT_H905A_20201217-V2.2.92.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "ZT_H905A_20201217-V2.2.92.zip"; sourceTree = "<group>"; };
 		A6AFDED921DC48AE00F313D2 /* PodoonDfuTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PodoonDfuTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6AFDEDC21DC48AE00F313D2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A6AFDEDD21DC48AE00F313D2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 		A6AFDF1321DC4D7E00F313D2 /* firmwares */ = {
 			isa = PBXGroup;
 			children = (
+				A6A44E042591BDA000DDE041 /* ZT_H905A_20201217-V2.2.92.zip */,
 				A6D19FD4255033CD00EACDCD /* ZT_H905A_20201102-V2.2.84.zip */,
 				A680CD17254EC0C500CCC477 /* ZT_H905A_20201101-V2.2.83.zip */,
 				A680CD10254EB8C100CCC477 /* ZT_H905A_20201101-V2.2.91.zip */,
@@ -368,6 +371,7 @@
 				A680CD11254EB8C100CCC477 /* ZT_H905A_20201101-V2.2.91.zip in Resources */,
 				A6AFDEE921DC48B200F313D2 /* LaunchScreen.storyboard in Resources */,
 				A6AFDF3A21DC5D7C00F313D2 /* s130_ota.zip in Resources */,
+				A6A44E052591BDA000DDE041 /* ZT_H905A_20201217-V2.2.92.zip in Resources */,
 				A6AFDF3C21DC666200F313D2 /* s130_ota_zt.zip in Resources */,
 				A680CD18254EC0C500CCC477 /* ZT_H905A_20201101-V2.2.83.zip in Resources */,
 				A6D19FD5255033CD00EACDCD /* ZT_H905A_20201102-V2.2.84.zip in Resources */,
@@ -570,7 +574,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 54;
+				CURRENT_PROJECT_VERSION = 55;
 				DEVELOPMENT_TEAM = L6U7BB57HF;
 				INFOPLIST_FILE = PodoonDfuTool/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -591,7 +595,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 54;
+				CURRENT_PROJECT_VERSION = 55;
 				DEVELOPMENT_TEAM = L6U7BB57HF;
 				INFOPLIST_FILE = PodoonDfuTool/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
