@@ -212,6 +212,10 @@
             [self.delegate notifymacLog:offlineStr];
         } else if ([offlineStr rangeOfString:@"Slp:"].location != NSNotFound) {
             [self.delegate notifySlpLog:offlineStr];
+        } else if ([offlineStr rangeOfString:@"RecvACK:STD:"].location != NSNotFound) {
+            [self.delegate notifySTDSuccess];
+        } else if ([offlineStr rangeOfString:@"CurTime:"].location != NSNotFound) {
+            [self.delegate notifyGTDLog:offlineStr];
         }
         
         [self.delegate notifyLog:offlineStr];

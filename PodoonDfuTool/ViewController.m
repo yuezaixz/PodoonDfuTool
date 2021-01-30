@@ -201,6 +201,33 @@
     [alertVc addAction:lpAction];
     [self presentViewController:alertVc animated:YES completion:nil];
 }
+- (IBAction)actionSyncTime:(id)sender {
+    NSString *cmd = [NSString stringWithFormat:@"STD:%@", [self currentDateStr]];
+    
+    [self writeCmd:cmd];
+}
+
+-(void)notifySTDSuccess {
+    [SVProgressHUD showSuccessWithStatus:@"时间同步成功"];
+    [self writeCmd:@"GTD"];
+}
+
+- (void)notifyGTDLog:(NSString *)log {
+    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:log preferredStyle:
+                                  UIAlertControllerStyleAlert];
+    
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+    [alertVc addAction:action2];
+    [self presentViewController:alertVc animated:YES completion:nil];
+}
+
+- (NSString *)currentDateStr{
+    NSDate *currentDate = [NSDate date];//获取当前时间，日期
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];// 创建一个时间格式化对象
+    [dateFormatter setDateFormat:@"HH:mm:ss"];//设定时间格式,这里可以设置成自己需要的格式
+    NSString *dateString = [dateFormatter stringFromDate:currentDate];//将时间转化成字符串
+    return dateString;
+}
 
 - (IBAction)actionCMD:(UIButton *)btn {
     if ([btn.titleLabel.text isEqualToString:@"写入值"]) {
