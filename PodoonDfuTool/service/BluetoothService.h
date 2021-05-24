@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyAirbagSucc;
 - (void)notifySaveDefaultSucc;
 - (void)notifyGetDefault:(NSInteger)slp currCST:(NSInteger)currCST defaultCST:(NSInteger)defaultCST;
+- (void)notifyGetCurrent:(NSInteger)currentCST defaultSLP:(NSInteger)defaultSLP currCST:(NSInteger)currCST defaultCST:(NSInteger)defaultCST;
 
 - (void)notifyAirPresure: (NSInteger)airPresure;
 - (void)notifyMacAddress: (NSString *)macAddress;

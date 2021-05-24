@@ -252,6 +252,22 @@
                 }
                 
             }
+        } else if ([offlineStr rangeOfString:@"SO:"].location != NSNotFound) {
+            [self.delegate notifyLog:offlineStr];
+            offlineStr = [offlineStr substringFromIndex:3];
+            NSArray *rVals = [offlineStr componentsSeparatedByString:@","];
+            if (rVals.count == 4) {
+                NSMutableArray *valArray = [NSMutableArray array];
+                for (NSString *hexString in rVals) {
+                    unsigned int outVal;
+                    NSScanner* scanner = [NSScanner scannerWithString:[NSString stringWithFormat:@"0x%@", hexString]];
+                    [scanner scanHexInt:&outVal];
+                    [valArray addObject:@(outVal)];
+                }
+                
+                [self.delegate notifyGetCurrent:[valArray[0] integerValue] defaultSLP:[valArray[1] integerValue] currCST:[valArray[2] integerValue] defaultCST:[valArray[3] integerValue]];
+                
+            }
         } else if ([offlineStr rangeOfString:@"SS:"].location != NSNotFound) {
             [self.delegate notifyLog:offlineStr];
             offlineStr = [offlineStr substringFromIndex:3];

@@ -241,6 +241,16 @@
     [SVProgressHUD showSuccessWithStatus:@"读取气压校准值成功" duration:1.0];
 }
 
+-(void)notifyGetCurrent:(NSInteger)currentCST defaultSLP:(NSInteger)defaultSLP currCST:(NSInteger)currCST defaultCST:(NSInteger)defaultCST {
+    _currVal = currCST;
+    _defaultVal = defaultCST;
+    
+    self.defaultValLabel.text = [NSString stringWithFormat:@"%ld", defaultCST];
+    self.currValLabel.text = [NSString stringWithFormat:@"%ld", currCST];
+    [SVProgressHUD dismiss];
+    [SVProgressHUD showSuccessWithStatus:@"读取气压校准值成功" duration:1.0];
+}
+
 - (void)notifyAirPresure: (NSInteger)airPresure {
     _airPresulre = airPresure;
     self.presureLabel.text = [NSString stringWithFormat:@"%ld", airPresure];
