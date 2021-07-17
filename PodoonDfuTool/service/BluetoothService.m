@@ -255,7 +255,7 @@
         } else if ([offlineStr rangeOfString:@"SO:"].location != NSNotFound) {
             [self.delegate notifyLog:offlineStr];
             offlineStr = [offlineStr substringFromIndex:3];
-            NSArray *rVals = [offlineStr componentsSeparatedByString:@","];
+            NSArray *rVals = [offlineStr componentsSeparatedByString:@":"];
             if (rVals.count == 4) {
                 NSMutableArray *valArray = [NSMutableArray array];
                 for (NSString *hexString in rVals) {
